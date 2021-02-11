@@ -30,7 +30,7 @@ public class DiasSemana implements Serializable {
     @Column(name = "nome_dia", nullable = false, length = 10)
     private String nome;
     
-    @ManyToMany(mappedBy = "profissional")
+    @ManyToMany(mappedBy = "diasSemana")
     private List<Profissional> profissionais;
     
     public Long getId() {

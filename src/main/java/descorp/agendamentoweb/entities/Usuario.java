@@ -30,7 +30,7 @@ import javax.persistence.Table;
 @Inheritance(strategy = InheritanceType.JOINED) 
 @DiscriminatorColumn(name = "DISC_USUARIO", 
         discriminatorType = DiscriminatorType.STRING, length = 1)
-public class Usuario implements Serializable {
+public abstract class Usuario implements Serializable {
     /*
      * @Id informa que o atributo representa a chave primária.
      * @GeneratedValue informa como gerar a chave primária.
@@ -38,21 +38,21 @@ public class Usuario implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    protected Long id;
     /*
      * Por padrão, se o nome do atributo é o nome do campo na tabela, nada
      * precisa ser feito em termos de mapeamento.
      */
     @Column(name = "email", nullable = false, length = 50)
-    private String email;
+    protected String email;
     @Column(name = "telefone", nullable = false, length = 20)
-    private String telefone;
+    protected String telefone;
     @Column(name = "senha", nullable = false, length = 20)
-    private String senha;
+    protected String senha;
     
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Agendamento> agendamentos;
+    protected List<Agendamento> agendamentos;
 
     public Long getId() {
         return id;

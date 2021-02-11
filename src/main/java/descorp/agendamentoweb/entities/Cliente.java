@@ -30,10 +30,6 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="id_usuario", referencedColumnName = "id")
 public class Cliente extends Usuario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     @Column(name = "nome", nullable = false, length = 60)
     private String nome;
     @Column(name = "cpf", nullable = false, length = 15)
@@ -46,49 +42,11 @@ public class Cliente extends Usuario implements Serializable {
                 @JoinColumn(name = "procedimento_id")})
     private List<Procedimento> procedimentos;
     
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
-            return false;
-        }
-        Cliente other = (Cliente) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "descorp.agendamento.web.entities.Cliente[ id=" + id + " ]";
-    }
-
-    /**
-     * @return the nome
-     */
-    public String getNome() {
+    public String getNome(){
         return nome;
     }
-
-    /**
-     * @param nome the nome to set
-     */
+    
     public void setNome(String nome) {
         this.nome = nome;
     }

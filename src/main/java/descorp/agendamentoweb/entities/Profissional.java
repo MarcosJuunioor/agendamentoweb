@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.util.Date;
 
 /**
  *
@@ -43,10 +44,10 @@ public class Profissional implements Serializable {
     private String especializacao;
     @Temporal(TemporalType.TIME)
     @Column(name = "hora_inicial", nullable = false)
-    private Time horaInicial;
+    private Date horaInicial;
     @Temporal(TemporalType.TIME)
     @Column(name = "hora_final", nullable = false)
-    private Time horaFinal;
+    private Date horaFinal;
     
     @OneToMany(mappedBy = "profissional", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
@@ -59,7 +60,7 @@ public class Profissional implements Serializable {
                 @JoinColumn(name = "dias_semana_id")})
     private List<DiasSemana> diasSemana; 
     
-    @ManyToMany(mappedBy = "procedimento")
+    @ManyToMany(mappedBy = "profissionais")
     private List<Procedimento> procedimentos;
     
     public Long getId() {
@@ -94,19 +95,19 @@ public class Profissional implements Serializable {
         this.especializacao = especializacao;
     }
 
-    public Time getHoraInicial() {
+    public Date getHoraInicial() {
         return horaInicial;
     }
 
-    public void setHoraInicial(Time horaInicial) {
+    public void setHoraInicial(Date horaInicial) {
         this.horaInicial = horaInicial;
     }
 
-    public Time getHoraFinal() {
+    public Date getHoraFinal() {
         return horaFinal;
     }
 
-    public void setHoraFinal(Time horaFinal) {
+    public void setHoraFinal(Date horaFinal) {
         this.horaFinal = horaFinal;
     }
 

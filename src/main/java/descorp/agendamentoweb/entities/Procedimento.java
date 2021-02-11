@@ -22,7 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
+import java.util.Date;
 /**
  *
  * @author Tayná
@@ -41,7 +41,7 @@ public class Procedimento implements Serializable {
     private String nome;
     @Temporal(TemporalType.TIME)
     @Column(name = "duracao_procedimento", nullable = false)
-    private Time duracao;
+    private Date duracao;
     
     @OneToMany(mappedBy = "procedimento", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, orphanRemoval = true)
@@ -54,7 +54,7 @@ public class Procedimento implements Serializable {
                 @JoinColumn(name = "profissional_id")})
     private List<Profissional> profissionais;
     
-    @ManyToMany(mappedBy = "cliente")
+    @ManyToMany(mappedBy = "procedimentos")
     private List<Cliente> clientes;
     
     public Long getId() {
@@ -81,11 +81,11 @@ public class Procedimento implements Serializable {
         this.nome = nome;
     }
 
-    public Time getDuracao() {
+    public Date getDuracao() {
         return duracao;
     }
 
-    public void setDuracao(Time duracao) {
+    public void setDuracao(Date duracao) {
         this.duracao = duracao;
     }
 
