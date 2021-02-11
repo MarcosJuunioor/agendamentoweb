@@ -3,19 +3,19 @@
     <!--############## USUARIO ##############--> 
     <!-- Usuario ID 1 -->
     <USUARIO disc_usuario="U" 
-                email="marcosjuunioor2@gmail.com" 
-                senha="123456" 
-                telefone="8191501944"/>
+             email="marcosjuunioor2@gmail.com" 
+             senha="123456" 
+             telefone="8191501944"/>
     <!-- Usuario ID 2 -->
     <USUARIO disc_usuario="U" 
-                email="tayna@gmail.com" 
-                senha="654321" 
-                telefone="8197445188"/>
+             email="tayna@gmail.com" 
+             senha="654321" 
+             telefone="8197445188"/>
     <!-- Usuario ID 3 -->
     <USUARIO disc_usuario="U" 
-                email="eveline@gmail.com" 
-                senha="128322" 
-                telefone="8188441409"/>
+             email="eveline@gmail.com" 
+             senha="128322" 
+             telefone="8188441409"/>
     
     <!--############## CLIENTE ##############--> 
     <!-- Cliente ID 1 -->
@@ -26,10 +26,6 @@
     <CLIENTE    ID_USUARIO="2" 
                 CPF="94144359900" 
                 nome="Tayná Alexandra"/>
-    <!-- Cliente ID 3 -->
-    <CLIENTE    ID_USUARIO="3" 
-                CPF="94144359911" 
-                nome="Eveline Maria"/>
     
     <!--############## ENDEREÇO ##############--> 
     <!-- Endereço ID 1 -->
@@ -39,10 +35,77 @@
                 estado="Pernambuco"
                 numero="240"
                 rua="Lima Campos"/>
+    
+    <!--############## ESTABELECIMENTO ##############--> 
+    <!-- Estabelecimento ID 1 (associado ao usuário Eveline) -->
+    <ESTABELECIMENTO   id_usuario="3" 
+                       cnpj="1234567891011" 
+                       razao_social="Eveline TI"
+                       id_endereco="1"/>
    
     
+    <!--############## SALA ##############--> 
+    <!-- Sala ID 1 -->
+    <SALA       num_sala="300" 
+                id_estabelecimento="1" />
     
+    <!--############## PROCEDIMENTO ##############--> 
+    <!-- Procedimento ID 1 -->
+    <PROCEDIMENTO       duracao_procedimento="1:30:00" 
+                        natureza_procedimento="Estético" 
+                        nome_procedimento="Limpeza de sobrancelha"/>
     
+    <!--############## PROFISSIONAL ##############--> 
+    <!-- Profissional ID 1 -->
+    <PROFISSIONAL       especializacao="Limpeza de Pele" 
+                        hora_final="17:00:00"
+                        hora_inicial="08:00:00" 
+                        nome_profissional="Rafaela Silva"
+                        profissao="Esteticista"/>
     
+    <!--############## DIAS DA SEMANA ##############--> 
+    <!-- DIAS DA SEMANA ID 1 -->
+    <DIAS_SEMANA   nome_dia="segunda"/>
+    <!-- DIAS DA SEMANA ID 2 -->
+    <DIAS_SEMANA   nome_dia="terça"/>
+    <!-- DIAS DA SEMANA ID 3 -->
+    <DIAS_SEMANA   nome_dia="quarta"/>
+    <!-- DIAS DA SEMANA ID 4 -->
+    <DIAS_SEMANA   nome_dia="quinta"/>
+    <!-- DIAS DA SEMANA ID 5 -->
+    <DIAS_SEMANA   nome_dia="sexta"/>
+    <!-- DIAS DA SEMANA ID 6 -->
+    <DIAS_SEMANA   nome_dia="sábado"/>
+    <!-- DIAS DA SEMANA ID 7 -->
+    <DIAS_SEMANA   nome_dia="domingo"/>
+    
+    <!--############## AGENDAMENTO ##############--> 
+    <!-- AGENDAMENTO ID 1 -->
+    <AGENDAMENTO       data="2021-02-15" 
+                       hora="09:00"
+                       procedimento_id="1" 
+                       profissional_id="1"
+                       usuario_id="2"/>
+     
+    <!--############## CLIENTE_HAS_PROCEDIMENTO ##############--> 
+    <!-- CLIENTE_HAS_PROCEDIMENTO ID 1 -->
+    <CLIENTE_HAS_PROCEDIMENTO       cliente_id="2" 
+                                    procedimento_id="1"/>   
+    
+    <!--############## PROFISSIONAL_HAS_DIAS_SEMANA ##############--> 
+    <!-- PROFISSIONAL_HAS_DIAS_SEMANA ID 1 -->
+    <PROFISSIONAL_HAS_DIAS_SEMANA       profissional_id="1" 
+                                        dias_semana_id="1"/>   
+    <!-- PROFISSIONAL_HAS_DIAS_SEMANA ID 2 -->
+    <PROFISSIONAL_HAS_DIAS_SEMANA       profissional_id="1" 
+                                        dias_semana_id="3"/>
+    <!-- PROFISSIONAL_HAS_DIAS_SEMANA ID 3 -->
+    <PROFISSIONAL_HAS_DIAS_SEMANA       profissional_id="1" 
+                                        dias_semana_id="5"/>  
+    
+    <!--############## PROCEDIMENTO_PROFISSIONAL ##############--> 
+    <!-- PROCEDIMENTO_PROFISSIONAL ID 1 -->
+    <PROCEDIMENTO_PROFISSIONAL       profissional_id="1" 
+                                     procedimento_id="1"/> 
     
 </dataset>
