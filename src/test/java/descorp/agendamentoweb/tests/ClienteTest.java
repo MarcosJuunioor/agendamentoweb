@@ -35,8 +35,6 @@ public class ClienteTest extends GenericTest{
         
     }
     
-        
-    
     private static Cliente criarCliente() {
         Cliente cliente = new Cliente();
         cliente.setEmail("jose@gmail.com");

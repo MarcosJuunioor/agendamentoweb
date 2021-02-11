@@ -61,7 +61,7 @@ public class Endereco implements Serializable {
 
     public void adicionarEstabelecimento(Estabelecimento estabelecimento) {
         if (this.estabelecimentos == null) {
-            this.estabelecimentos = new ArrayList<>();
+            this.estabelecimentos = new ArrayList<Estabelecimento>();
         }
 
         this.estabelecimentos.add(estabelecimento);
