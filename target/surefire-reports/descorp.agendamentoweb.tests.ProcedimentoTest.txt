@@ -1,0 +1,56 @@
+-------------------------------------------------------------------------------
+Test set: descorp.agendamentoweb.tests.ProcedimentoTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.79 sec <<< FAILURE!
+descorp.agendamentoweb.tests.ProcedimentoTest  Time elapsed: 0.79 sec  <<< ERROR!
+java.lang.RuntimeException: Exception processing table name='ENDERECO'
+	at descorp.agendamentoweb.tests.DbUnitUtil.inserirDados(DbUnitUtil.java:42)
+	at descorp.agendamentoweb.tests.GenericTest.setUpClass(GenericTest.java:30)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.RunBefores.invokeMethod(RunBefores.java:33)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+Caused by: org.dbunit.DatabaseUnitException: Exception processing table name='ENDERECO'
+	at org.dbunit.operation.AbstractBatchOperation.execute(AbstractBatchOperation.java:240)
+	at org.dbunit.operation.CompositeOperation.execute(CompositeOperation.java:79)
+	at descorp.agendamentoweb.tests.DbUnitUtil.inserirDados(DbUnitUtil.java:38)
+	... 25 more
+Caused by: java.sql.SQLIntegrityConstraintViolationException: A coluna 'ID' não aceita valor nulo.
+	at org.apache.derby.client.am.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.client.am.SqlException.getSQLException(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.execute(Unknown Source)
+	at org.dbunit.database.statement.SimplePreparedStatement.addBatch(SimplePreparedStatement.java:85)
+	at org.dbunit.database.statement.AutomaticPreparedBatchStatement.addBatch(AutomaticPreparedBatchStatement.java:70)
+	at org.dbunit.operation.AbstractBatchOperation.execute(AbstractBatchOperation.java:224)
+	... 27 more
+Caused by: ERROR 23502: A coluna 'ID' não aceita valor nulo.
+	at org.apache.derby.client.am.ClientStatement.completeExecute(Unknown Source)
+	at org.apache.derby.client.net.NetStatementReply.parseEXCSQLSTTreply(Unknown Source)
+	at org.apache.derby.client.net.NetStatementReply.readExecute(Unknown Source)
+	at org.apache.derby.client.net.StatementReply.readExecute(Unknown Source)
+	at org.apache.derby.client.net.NetPreparedStatement.readExecute_(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.readExecute(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.flowExecute(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.executeX(Unknown Source)
+	... 31 more
+

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="1" failures="0" name="descorp.agendamentoweb.tests.ProcedimentoTest" time="0.79" errors="1" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.vm.version" value="11.0.9+7-LTS"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-11.0.9\bin"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\marco\OneDrive\Faculdade\5º Período\Descorp\agendamentoweb"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="https://openjdk.java.net/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\marco\OneDrive\Faculdade\5º Período\Descorp\agendamentoweb"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="java.runtime.version" value="11.0.9+7-LTS"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\marco\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="maven.ext.class.path" value="C:\Program Files\NetBeans-12.0\netbeans\java\maven-nblib\netbeans-eventspy.jar"/>
+    <property name="classworlds.conf" value="C:\Program Files\NetBeans-12.0\netbeans\java\maven\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-11.0.9\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python38\Scripts\;C:\Python38\;C:\Python27\;C:\Python27\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Desenvolvimento JavaWeb\apache-maven-3.6.3\bin;C:\Program Files\Java\jdk1.8.0_211\bin;C:\Program Files\Java\jdk-11.0.9\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\marco\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\marco\AppData\Roaming\npm;C:\Users\marco\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk-11.0.9\bin;;."/>
+    <property name="maven.conf" value="C:\Program Files\NetBeans-12.0\netbeans\java\maven\bin\../conf"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="55.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="library.jansi.path" value="C:\Program Files\NetBeans-12.0\netbeans\java\maven\bin\..\lib\jansi-native"/>
+    <property name="user.home" value="C:\Users\marco"/>
+    <property name="user.timezone" value="America/Sao_Paulo"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="11"/>
+    <property name="user.name" value="marco"/>
+    <property name="java.class.path" value="C:\Program Files\NetBeans-12.0\netbeans\java\maven\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="11"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans-12.0\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 clean install"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-11.0.9"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="11.0.9"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Program Files\NetBeans-12.0\netbeans\java\maven\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.version.date" value="2020-10-20"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="java.vendor.version" value="18.9"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="descorp.agendamentoweb.tests.ProcedimentoTest" name="descorp.agendamentoweb.tests.ProcedimentoTest" time="0.79">
+    <error message="Exception processing table name=&apos;ENDERECO&apos;" type="java.lang.RuntimeException">java.lang.RuntimeException: Exception processing table name=&apos;ENDERECO&apos;
+	at descorp.agendamentoweb.tests.DbUnitUtil.inserirDados(DbUnitUtil.java:42)
+	at descorp.agendamentoweb.tests.GenericTest.setUpClass(GenericTest.java:30)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+	at org.junit.internal.runners.statements.RunBefores.invokeMethod(RunBefores.java:33)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+Caused by: org.dbunit.DatabaseUnitException: Exception processing table name=&apos;ENDERECO&apos;
+	at org.dbunit.operation.AbstractBatchOperation.execute(AbstractBatchOperation.java:240)
+	at org.dbunit.operation.CompositeOperation.execute(CompositeOperation.java:79)
+	at descorp.agendamentoweb.tests.DbUnitUtil.inserirDados(DbUnitUtil.java:38)
+	... 25 more
+Caused by: java.sql.SQLIntegrityConstraintViolationException: A coluna &apos;ID&apos; não aceita valor nulo.
+	at org.apache.derby.client.am.SQLExceptionFactory.getSQLException(Unknown Source)
+	at org.apache.derby.client.am.SqlException.getSQLException(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.execute(Unknown Source)
+	at org.dbunit.database.statement.SimplePreparedStatement.addBatch(SimplePreparedStatement.java:85)
+	at org.dbunit.database.statement.AutomaticPreparedBatchStatement.addBatch(AutomaticPreparedBatchStatement.java:70)
+	at org.dbunit.operation.AbstractBatchOperation.execute(AbstractBatchOperation.java:224)
+	... 27 more
+Caused by: ERROR 23502: A coluna &apos;ID&apos; não aceita valor nulo.
+	at org.apache.derby.client.am.ClientStatement.completeExecute(Unknown Source)
+	at org.apache.derby.client.net.NetStatementReply.parseEXCSQLSTTreply(Unknown Source)
+	at org.apache.derby.client.net.NetStatementReply.readExecute(Unknown Source)
+	at org.apache.derby.client.net.StatementReply.readExecute(Unknown Source)
+	at org.apache.derby.client.net.NetPreparedStatement.readExecute_(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.readExecute(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.flowExecute(Unknown Source)
+	at org.apache.derby.client.am.ClientPreparedStatement.executeX(Unknown Source)
+	... 31 more
+</error>
+    <system-out>[EL Fine]: moxy: 2021-02-11 14:33:17.428--Thread(Thread[main,5,main])--SAXParserFactory instance: com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl@2b5825fa
+[EL Fine]: server: 2021-02-11 14:33:17.446--Thread(Thread[main,5,main])--Configured server platform: org.eclipse.persistence.platform.server.NoServerPlatform
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Endereco] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the one to many mapping element [field estabelecimentos] is being defaulted to: class descorp.agendamentoweb.entities.Estabelecimento.
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Profissional] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to many mapping element [field procedimentos] is being defaulted to: class descorp.agendamentoweb.entities.Procedimento.
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the one to many mapping element [field agendamentos] is being defaulted to: class descorp.agendamentoweb.entities.Agendamento.
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to many mapping element [field diasSemana] is being defaulted to: class descorp.agendamentoweb.entities.DiasSemana.
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Sala] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.474--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the one to one mapping element [field estabelecimento] is being defaulted to: class descorp.agendamentoweb.entities.Estabelecimento.
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Usuario] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the one to many mapping element [field agendamentos] is being defaulted to: class descorp.agendamentoweb.entities.Agendamento.
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Cliente] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to many mapping element [field procedimentos] is being defaulted to: class descorp.agendamentoweb.entities.Procedimento.
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Agendamento] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to one mapping element [field usuario] is being defaulted to: class descorp.agendamentoweb.entities.Usuario.
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to one mapping element [field procedimento] is being defaulted to: class descorp.agendamentoweb.entities.Procedimento.
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to one mapping element [field profissional] is being defaulted to: class descorp.agendamentoweb.entities.Profissional.
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Estabelecimento] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.49--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to one mapping element [field endereco] is being defaulted to: class descorp.agendamentoweb.entities.Endereco.
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the one to one mapping element [field sala] is being defaulted to: class descorp.agendamentoweb.entities.Sala.
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.Procedimento] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the one to many mapping element [field agendamentos] is being defaulted to: class descorp.agendamentoweb.entities.Agendamento.
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to many mapping element [field clientes] is being defaulted to: class descorp.agendamentoweb.entities.Cliente.
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to many mapping element [field profissionais] is being defaulted to: class descorp.agendamentoweb.entities.Profissional.
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The access type for the persistent class [class descorp.agendamentoweb.entities.DiasSemana] is set to [FIELD].
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target entity (reference) class for the many to many mapping element [field profissionais] is being defaulted to: class descorp.agendamentoweb.entities.Profissional.
+[EL Config]: metadata: 2021-02-11 14:33:17.505--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Endereco] is being defaulted to: Endereco.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The column name for element [id] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Profissional] is being defaulted to: Profissional.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The column name for element [id] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Sala] is being defaulted to: Sala.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The column name for element [id] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Cliente] is being defaulted to: Cliente.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Usuario] is being defaulted to: Usuario.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The column name for element [id] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.521--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Agendamento] is being defaulted to: Agendamento.
+[EL Config]: metadata: 2021-02-11 14:33:17.537--ServerSession(1406253491)--Thread(Thread[main,5,main])--The column name for element [id] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.537--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Estabelecimento] is being defaulted to: Estabelecimento.
+[EL Config]: metadata: 2021-02-11 14:33:17.537--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.Procedimento] is being defaulted to: Procedimento.
+[EL Config]: metadata: 2021-02-11 14:33:17.537--ServerSession(1406253491)--Thread(Thread[main,5,main])--The column name for element [id] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.557--ServerSession(1406253491)--Thread(Thread[main,5,main])--The alias name for the entity class [class descorp.agendamentoweb.entities.DiasSemana] is being defaulted to: DiasSemana.
+[EL Config]: metadata: 2021-02-11 14:33:17.559--ServerSession(1406253491)--Thread(Thread[main,5,main])--The column name for element [id] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.56--ServerSession(1406253491)--Thread(Thread[main,5,main])--The source primary key column name for the many to many mapping [field diasSemana] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.56--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target primary key column name for the many to many mapping [field diasSemana] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.561--ServerSession(1406253491)--Thread(Thread[main,5,main])--The source primary key column name for the many to many mapping [field procedimentos] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.561--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target primary key column name for the many to many mapping [field procedimentos] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.561--ServerSession(1406253491)--Thread(Thread[main,5,main])--The source primary key column name for the many to many mapping [field profissionais] is being defaulted to: ID.
+[EL Config]: metadata: 2021-02-11 14:33:17.561--ServerSession(1406253491)--Thread(Thread[main,5,main])--The target primary key column name for the many to many mapping [field profissionais] is being defaulted to: ID.
+[EL Info]: 2021-02-11 14:33:17.581--ServerSession(1406253491)--Thread(Thread[main,5,main])--EclipseLink, version: Eclipse Persistence Services - 2.7.8.v20201217-ecdf3c32c4
+[EL Fine]: connection: 2021-02-11 14:33:17.581--ServerSession(1406253491)--Connection(379121284)--Thread(Thread[main,5,main])--connecting(DatabaseLogin(
+	platform=&gt;DerbyPlatform
+	user name=&gt; &quot;agendamento_web&quot;
+	datasource URL=&gt; &quot;jdbc:derby://localhost:1527/agendamento_web;create=true&quot;
+))
+[EL Config]: connection: 2021-02-11 14:33:17.591--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--Connected: jdbc:derby://localhost:1527/agendamento_web;create=true
+	User: agendamento_web
+	Database: Apache Derby  Version: 10.14.2.0 - (1828579)
+	Driver: Apache Derby Network Client JDBC Driver  Version: 10.14.2.0 - (1828579)
+[EL Warning]: metadata: 2021-02-11 14:33:17.592--ServerSession(1406253491)--Thread(Thread[main,5,main])--Reverting the lazy setting on the OneToOne or ManyToOne attribute [endereco] for the entity class [class descorp.agendamentoweb.entities.Estabelecimento] since weaving was not enabled or did not occur.
+[EL Warning]: metadata: 2021-02-11 14:33:17.594--ServerSession(1406253491)--Thread(Thread[main,5,main])--Reverting the lazy setting on the OneToOne or ManyToOne attribute [sala] for the entity class [class descorp.agendamentoweb.entities.Estabelecimento] since weaving was not enabled or did not occur.
+[EL Warning]: metadata: 2021-02-11 14:33:17.594--ServerSession(1406253491)--Thread(Thread[main,5,main])--Reverting the lazy setting on the OneToOne or ManyToOne attribute [estabelecimento] for the entity class [class descorp.agendamentoweb.entities.Sala] since weaving was not enabled or did not occur.
+[EL Warning]: metadata: 2021-02-11 14:33:17.594--ServerSession(1406253491)--Thread(Thread[main,5,main])--Reverting the lazy setting on the OneToOne or ManyToOne attribute [usuario] for the entity class [class descorp.agendamentoweb.entities.Agendamento] since weaving was not enabled or did not occur.
+[EL Warning]: metadata: 2021-02-11 14:33:17.594--ServerSession(1406253491)--Thread(Thread[main,5,main])--Reverting the lazy setting on the OneToOne or ManyToOne attribute [procedimento] for the entity class [class descorp.agendamentoweb.entities.Agendamento] since weaving was not enabled or did not occur.
+[EL Warning]: metadata: 2021-02-11 14:33:17.594--ServerSession(1406253491)--Thread(Thread[main,5,main])--Reverting the lazy setting on the OneToOne or ManyToOne attribute [profissional] for the entity class [class descorp.agendamentoweb.entities.Agendamento] since weaving was not enabled or did not occur.
+[EL Fine]: connection: 2021-02-11 14:33:17.66--ServerSession(1406253491)--Thread(Thread[main,5,main])--/file:/C:/Users/marco/OneDrive/Faculdade/5º Período/Descorp/agendamentoweb/target/classes/_agendamento_web login successful
+[EL Fine]: sql: 2021-02-11 14:33:17.668--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE sala DROP CONSTRAINT sladstabelecimento
+[EL Fine]: sql: 2021-02-11 14:33:17.694--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE cliente DROP CONSTRAINT cliente_id_usuario
+[EL Fine]: sql: 2021-02-11 14:33:17.698--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE agendamento DROP CONSTRAINT gendamentosuarioid
+[EL Fine]: sql: 2021-02-11 14:33:17.712--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE agendamento DROP CONSTRAINT gndmntoprfssonalid
+[EL Fine]: sql: 2021-02-11 14:33:17.724--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE agendamento DROP CONSTRAINT gndmntoprcdmentoid
+[EL Fine]: sql: 2021-02-11 14:33:17.736--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE estabelecimento DROP CONSTRAINT stblecimentodsario
+[EL Fine]: sql: 2021-02-11 14:33:17.74--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE estabelecimento DROP CONSTRAINT stblcimentodndreco
+[EL Fine]: sql: 2021-02-11 14:33:17.754--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE profissional_has_dias_semana DROP CONSTRAINT prfssnlhsdprfssnld
+[EL Fine]: sql: 2021-02-11 14:33:17.768--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE profissional_has_dias_semana DROP CONSTRAINT prfssnlhsdssdssmnd
+[EL Fine]: sql: 2021-02-11 14:33:17.78--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE procedimento_profissional DROP CONSTRAINT prcdmntprfprfssnld
+[EL Fine]: sql: 2021-02-11 14:33:17.79--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE procedimento_profissional DROP CONSTRAINT prcdmntprfprcdmntd
+[EL Fine]: sql: 2021-02-11 14:33:17.803--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE cliente_has_procedimento DROP CONSTRAINT clnthsprcdprcdmntd
+[EL Fine]: sql: 2021-02-11 14:33:17.815--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE cliente_has_procedimento DROP CONSTRAINT clnthsprcdmntclntd
+[EL Fine]: sql: 2021-02-11 14:33:17.827--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE endereco
+[EL Fine]: sql: 2021-02-11 14:33:17.849--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE profissional
+[EL Fine]: sql: 2021-02-11 14:33:17.867--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE sala
+[EL Fine]: sql: 2021-02-11 14:33:17.884--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE usuario
+[EL Fine]: sql: 2021-02-11 14:33:17.904--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE cliente
+[EL Fine]: sql: 2021-02-11 14:33:17.925--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE agendamento
+[EL Fine]: sql: 2021-02-11 14:33:17.971--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE estabelecimento
+[EL Fine]: sql: 2021-02-11 14:33:17.991--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE procedimento
+[EL Fine]: sql: 2021-02-11 14:33:18.009--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE dias_semana
+[EL Fine]: sql: 2021-02-11 14:33:18.031--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE profissional_has_dias_semana
+[EL Fine]: sql: 2021-02-11 14:33:18.048--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE procedimento_profissional
+[EL Fine]: sql: 2021-02-11 14:33:18.074--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DROP TABLE cliente_has_procedimento
+[EL Fine]: sql: 2021-02-11 14:33:18.093--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--DELETE FROM SEQUENCE WHERE SEQ_NAME = &apos;SEQ_GEN&apos;
+[EL Fine]: sql: 2021-02-11 14:33:18.104--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE endereco (ID BIGINT NOT NULL, bairro VARCHAR(20) NOT NULL, cep VARCHAR(9) NOT NULL, cidade VARCHAR(30) NOT NULL, estado VARCHAR(20) NOT NULL, numero INTEGER NOT NULL, rua VARCHAR(45) NOT NULL, PRIMARY KEY (ID))
+[EL Fine]: sql: 2021-02-11 14:33:18.147--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE profissional (ID BIGINT NOT NULL, especializacao VARCHAR(45) NOT NULL, hora_final TIME NOT NULL, hora_inicial TIME NOT NULL, nome_profissional VARCHAR(45) NOT NULL, profissao VARCHAR(45) NOT NULL, PRIMARY KEY (ID))
+[EL Fine]: sql: 2021-02-11 14:33:18.194--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE sala (ID BIGINT NOT NULL, num_sala INTEGER NOT NULL, id_estabelecimento BIGINT, PRIMARY KEY (ID))
+[EL Fine]: sql: 2021-02-11 14:33:18.215--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE usuario (ID BIGINT GENERATED BY DEFAULT AS IDENTITY NOT NULL, DISC_USUARIO VARCHAR(1), email VARCHAR(50) NOT NULL, senha VARCHAR(20) NOT NULL, telefone VARCHAR(20) NOT NULL, PRIMARY KEY (ID))
+[EL Fine]: sql: 2021-02-11 14:33:18.234--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE cliente (id_usuario BIGINT NOT NULL, cpf VARCHAR(15) NOT NULL, nome VARCHAR(60) NOT NULL, PRIMARY KEY (id_usuario))
+[EL Fine]: sql: 2021-02-11 14:33:18.252--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE agendamento (ID BIGINT NOT NULL, data DATE NOT NULL, hora VARCHAR(45) NOT NULL, horarios_disponiveis_id INTEGER NOT NULL, procedimento_id BIGINT, profissional_id BIGINT, usuario_id BIGINT, PRIMARY KEY (ID))
+[EL Fine]: sql: 2021-02-11 14:33:18.272--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE estabelecimento (id_usuario BIGINT NOT NULL, cnpj VARCHAR(30) NOT NULL, razaoSocial VARCHAR(50) NOT NULL, id_endereco BIGINT, PRIMARY KEY (id_usuario))
+[EL Fine]: sql: 2021-02-11 14:33:18.304--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE procedimento (ID BIGINT NOT NULL, duracao_procedimento TIME NOT NULL, natureza_procedimento VARCHAR(45) NOT NULL, nome_procedimento VARCHAR(45) NOT NULL, PRIMARY KEY (ID))
+[EL Fine]: sql: 2021-02-11 14:33:18.324--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE dias_semana (ID BIGINT NOT NULL, nome_dia VARCHAR(10) NOT NULL, PRIMARY KEY (ID))
+[EL Fine]: sql: 2021-02-11 14:33:18.344--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE profissional_has_dias_semana (profissional_id BIGINT NOT NULL, dias_semana_id BIGINT NOT NULL, PRIMARY KEY (profissional_id, dias_semana_id))
+[EL Fine]: sql: 2021-02-11 14:33:18.365--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE procedimento_profissional (profissional_id BIGINT NOT NULL, procedimento_id BIGINT NOT NULL, PRIMARY KEY (profissional_id, procedimento_id))
+[EL Fine]: sql: 2021-02-11 14:33:18.391--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--CREATE TABLE cliente_has_procedimento (cliente_id BIGINT NOT NULL, procedimento_id BIGINT NOT NULL, PRIMARY KEY (cliente_id, procedimento_id))
+[EL Fine]: sql: 2021-02-11 14:33:18.412--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE sala ADD CONSTRAINT sladstabelecimento FOREIGN KEY (id_estabelecimento) REFERENCES usuario (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.43--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE cliente ADD CONSTRAINT cliente_id_usuario FOREIGN KEY (id_usuario) REFERENCES usuario (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.434--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE agendamento ADD CONSTRAINT gendamentosuarioid FOREIGN KEY (usuario_id) REFERENCES usuario (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.449--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE agendamento ADD CONSTRAINT gndmntoprfssonalid FOREIGN KEY (profissional_id) REFERENCES profissional (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.464--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE agendamento ADD CONSTRAINT gndmntoprcdmentoid FOREIGN KEY (procedimento_id) REFERENCES procedimento (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.482--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE estabelecimento ADD CONSTRAINT stblecimentodsario FOREIGN KEY (id_usuario) REFERENCES usuario (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.487--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE estabelecimento ADD CONSTRAINT stblcimentodndreco FOREIGN KEY (id_endereco) REFERENCES endereco (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.501--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE profissional_has_dias_semana ADD CONSTRAINT prfssnlhsdprfssnld FOREIGN KEY (profissional_id) REFERENCES profissional (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.517--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE profissional_has_dias_semana ADD CONSTRAINT prfssnlhsdssdssmnd FOREIGN KEY (dias_semana_id) REFERENCES dias_semana (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.533--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE procedimento_profissional ADD CONSTRAINT prcdmntprfprfssnld FOREIGN KEY (profissional_id) REFERENCES profissional (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.55--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE procedimento_profissional ADD CONSTRAINT prcdmntprfprcdmntd FOREIGN KEY (procedimento_id) REFERENCES procedimento (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.565--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE cliente_has_procedimento ADD CONSTRAINT clnthsprcdprcdmntd FOREIGN KEY (procedimento_id) REFERENCES procedimento (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.576--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--ALTER TABLE cliente_has_procedimento ADD CONSTRAINT clnthsprcdmntclntd FOREIGN KEY (cliente_id) REFERENCES usuario (ID)
+[EL Fine]: sql: 2021-02-11 14:33:18.604--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--SELECT * FROM SEQUENCE WHERE SEQ_NAME = &apos;SEQ_GEN&apos;
+[EL Fine]: sql: 2021-02-11 14:33:18.605--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--INSERT INTO SEQUENCE(SEQ_NAME, SEQ_COUNT) values (&apos;SEQ_GEN&apos;, 0)
+[EL Fine]: connection: 2021-02-11 14:33:18.749--ServerSession(1406253491)--Connection(281421502)--Thread(Thread[main,5,main])--disconnect
+[EL Fine]: connection: 2021-02-11 14:33:18.749--ServerSession(1406253491)--Thread(Thread[main,5,main])--/file:/C:/Users/marco/OneDrive/Faculdade/5º Período/Descorp/agendamentoweb/target/classes/_agendamento_web logout successful
+[EL Fine]: connection: 2021-02-11 14:33:18.749--ServerSession(1406253491)--Connection(379121284)--Thread(Thread[main,5,main])--disconnect
+</system-out>
+  </testcase>
+</testsuite>

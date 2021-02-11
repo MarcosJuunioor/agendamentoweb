@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>    
+    <!--############## USUARIO ##############--> 
+    <!-- Usuario ID 1 -->
+    <USUARIO disc_usuario="U" 
+                email="marcosjuunioor2@gmail.com" 
+                senha="123456" 
+                telefone="8191501944"/>
+    <!-- Usuario ID 2 -->
+    <USUARIO disc_usuario="U" 
+                email="tayna@gmail.com" 
+                senha="654321" 
+                telefone="8197445188"/>
+    <!-- Usuario ID 3 -->
+    <USUARIO disc_usuario="U" 
+                email="eveline@gmail.com" 
+                senha="128322" 
+                telefone="8188441409"/>
+    
+    <!--############## CLIENTE ##############--> 
+    <!-- Cliente ID 1 -->
+    <CLIENTE    ID_USUARIO="1" 
+                CPF="01230637445" 
+                nome="Marcos Antonio"/>
+    <!-- Cliente ID 2 -->
+    <CLIENTE    ID_USUARIO="2" 
+                CPF="94144359900" 
+                nome="Tayná Alexandra"/>
+    <!-- Cliente ID 3 -->
+    <CLIENTE    ID_USUARIO="3" 
+                CPF="94144359911" 
+                nome="Eveline Maria"/>
+    
+    <!--############## ENDEREÇO ##############--> 
+    <!-- Endereço ID 1 -->
+    <ENDERECO   bairro="Jordão" 
+                cep="51250490" 
+                cidade="Recife"
+                estado="Pernambuco"
+                numero="240"
+                rua="Lima Campos"/>
+   
+    
+    
+    
+    
+    
+</dataset>

@@ -27,6 +27,7 @@ public class GenericTest {
     @BeforeClass
     public static void setUpClass() {
         emf = Persistence.createEntityManagerFactory("agendamento_web");
+        DbUnitUtil.inserirDados();
     }
 
     @AfterClass

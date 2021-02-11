@@ -25,13 +25,13 @@ public class ProcedimentoTest extends GenericTest {
         assertNotNull(procedimento.getId());
     }
     
-    @Test
+    /*@Test
     public void consultarProcedimento(){
         Procedimento procedimento = em.find(Procedimento.class, 1L);
         assertEquals("Estético", procedimento.getNatureza());
         assertEquals("Limpeza de pele.", procedimento.getNome());
         assertEquals(getDuracao(), procedimento.getDuracao());
-    }
+    } */
     
             
     
