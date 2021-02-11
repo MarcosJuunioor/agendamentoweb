@@ -21,7 +21,6 @@ public class ClienteTest extends GenericTest{
         em.persist(cliente);
         em.flush();
         assertNotNull(cliente.getId());
-        System.out.print(cliente.getId());
     }
     
     @Test
