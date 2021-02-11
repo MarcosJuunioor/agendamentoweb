@@ -6,5 +6,4 @@ descorp\agendamentoweb\entities\Estabelecimento.class
 descorp\agendamentoweb\entities\Procedimento.class
 descorp\agendamentoweb\entities\DiasSemana.class
 descorp\agendamentoweb\entities\Sala.class
-descorp\agendamentoweb\entities\ClienteTeste.class
 descorp\agendamentoweb\entities\Profissional.class
