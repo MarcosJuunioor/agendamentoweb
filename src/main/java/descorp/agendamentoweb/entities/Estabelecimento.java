@@ -36,7 +36,7 @@ public class Estabelecimento extends Usuario implements Serializable {
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private Endereco endereco;
     
-    @Column(name = "razaoSocial", nullable = false, length = 50)
+    @Column(name = "razao_social", nullable = false, length = 50)
     private String razaoSocial;
     @Column(name = "cnpj", nullable = false, length = 30)
     private String CNPJ;

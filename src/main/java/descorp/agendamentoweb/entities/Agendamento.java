@@ -30,16 +30,13 @@ public class Agendamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(TemporalType.DATE)
     @Column(name = "data", nullable = false)
     private Date data;
     @Column(name = "hora", nullable = false, length = 45)
     private String hora;
-    @Column(name = "horarios_disponiveis_id", nullable = false)
-    private int horariosDisponiveis;
-    
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "procedimento_id", referencedColumnName = "id")
     private Procedimento procedimento;
@@ -72,14 +69,6 @@ public class Agendamento implements Serializable {
 
     public void setHora(String hora) {
         this.hora = hora;
-    }
-
-    public int getHorariosDisponiveis() {
-        return horariosDisponiveis;
-    }
-
-    public void setHorariosDisponiveis(int horariosDisponiveis) {
-        this.horariosDisponiveis = horariosDisponiveis;
     }
     
     public Procedimento getProcedimento() {

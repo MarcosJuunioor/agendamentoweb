@@ -21,10 +21,9 @@ public class ClienteTest extends GenericTest{
         em.persist(cliente);
         em.flush();
         assertNotNull(cliente.getId());
-        System.out.print(cliente.getId());
     }
     
-    @Test
+   /* @Test
     public void consultarCliente(){
         Cliente cliente = em.find(Cliente.class, 1L);
         assertEquals("jose@gmail.com", cliente.getEmail());
@@ -33,7 +32,7 @@ public class ClienteTest extends GenericTest{
         assertEquals("José", cliente.getNome());
         assertEquals("12345678910", cliente.getCPF());
         
-    }
+    } */
     
     private static Cliente criarCliente() {
         Cliente cliente = new Cliente();
