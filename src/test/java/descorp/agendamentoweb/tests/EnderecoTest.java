@@ -24,17 +24,17 @@ public class EnderecoTest extends GenericTest {
         System.out.println();
         System.out.println(endereco.getId());
     }
-    /*
+    
     @Test
     public void consultarEndereco() {
         Endereco endereco = em.find(Endereco.class, 1L);
-        assertEquals("11111111", endereco.getCep());
-        assertEquals("Rua 1", endereco.getRua());
-        assertEquals(41, (int)endereco.getNumero());
-        assertEquals("Boa Vista", endereco.getBairro());
+        assertEquals("51250490", endereco.getCep());
+        assertEquals("Lima Campos", endereco.getRua());
+        assertEquals(240, (int)endereco.getNumero());
+        assertEquals("Jordão", endereco.getBairro());
         assertEquals("Recife", endereco.getCidade());
-        assertEquals("PE", endereco.getEstado());
-    }*/
+        assertEquals("Pernambuco", endereco.getEstado());
+    }
 
     private static Endereco criarEndereco() {
         Endereco endereco = new Endereco();

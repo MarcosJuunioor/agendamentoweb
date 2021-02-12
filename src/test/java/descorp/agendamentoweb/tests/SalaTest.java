@@ -24,12 +24,12 @@ public class SalaTest extends GenericTest {
         assertNotNull(sala.getId());
         System.out.print(sala.getId());
     }
-    /*
+    
     @Test
     public void consultarSala(){
         Sala sala = em.find(Sala.class, 1L);
-        assertEquals(144, (int)sala.getNumSala());
-    }*/
+        assertEquals(300, (int)sala.getNumSala());
+    }
     
     private static Sala criarSala() {
         Sala sala = new Sala();

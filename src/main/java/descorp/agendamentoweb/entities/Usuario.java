@@ -93,4 +93,5 @@ public abstract class Usuario implements Serializable {
     public void setAgendamentos(List<Agendamento> agendamentos) {
         this.agendamentos = agendamentos;
     }
+    
 }

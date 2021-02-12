@@ -29,15 +29,15 @@ public class ProfissionalTest extends GenericTest{
         System.out.print(profissional.getId());
     }
     
-    /*@Test
+    @Test
     public void consultarProfissional(){
         Profissional profissional = em.find(Profissional.class, 1L);
-        assertEquals("Maria José", profissional.getNome());
-        assertEquals("Médico", profissional.getProfissao());
-        assertEquals("otorrinolaringologista", profissional.getEspecializacao());
-        assertEquals(getHoraInicial(), profissional.getHoraInicial());
-        assertEquals(getHoraFinal(), profissional.getHoraFinal()); 
-    }*/
+        assertEquals("Rafaela Silva", profissional.getNome());
+        assertEquals("Esteticista", profissional.getProfissao());
+        assertEquals("Limpeza de Pele", profissional.getEspecializacao());
+        assertEquals(getHoraInicial().getHours(), profissional.getHoraInicial().getHours());
+        assertEquals(getHoraFinal().getHours(), profissional.getHoraFinal().getHours()); 
+    }
                 
     private static Profissional criarProfissional() {
         Profissional profissional = new Profissional();
@@ -61,7 +61,7 @@ public class ProfissionalTest extends GenericTest{
     
     private static Date getHoraFinal(){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, 12);
+        calendar.set(Calendar.HOUR, 17);
         calendar.set(Calendar.MINUTE, 00);
         calendar.set(Calendar.SECOND, 00);
         

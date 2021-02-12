@@ -25,19 +25,19 @@ public class ProcedimentoTest extends GenericTest {
         assertNotNull(procedimento.getId());
     }
     
-    /*@Test
+    @Test
     public void consultarProcedimento(){
         Procedimento procedimento = em.find(Procedimento.class, 1L);
-        assertEquals("EstÃ©tico", procedimento.getNatureza());
-        assertEquals("Limpeza de pele.", procedimento.getNome());
-        assertEquals(getDuracao(), procedimento.getDuracao());
-    } */
+        assertEquals("Estético", procedimento.getNatureza());
+        assertEquals("Limpeza de sobrancelha", procedimento.getNome());
+        assertEquals(getDuracao().getHours(), procedimento.getDuracao().getHours());
+    } 
     
             
     
     private static Procedimento criarProcedimento() {
         Procedimento procedimento = new Procedimento();
-        procedimento.setNatureza("EstÃ©tico");
+        procedimento.setNatureza("Estético");
         procedimento.setNome("Limpeza de pele.");
         procedimento.setDuracao(getDuracao());
         return procedimento;
@@ -45,8 +45,8 @@ public class ProcedimentoTest extends GenericTest {
 
     private static Date getDuracao(){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, 2);
-        calendar.set(Calendar.MINUTE, 00);
+        calendar.set(Calendar.HOUR, 1);
+        calendar.set(Calendar.MINUTE, 30);
         calendar.set(Calendar.SECOND, 00);
         
         return calendar.getTime();

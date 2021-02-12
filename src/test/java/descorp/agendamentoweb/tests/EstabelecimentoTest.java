@@ -21,20 +21,17 @@ public class EstabelecimentoTest extends GenericTest{
         em.persist(estabelecimento);
         em.flush();
         assertNotNull(estabelecimento.getId());
-        System.out.println();
-        System.out.print(estabelecimento.getId());
     }
-/*
+
     @Test
     public void consultarEstabelecimento(){
-        Estabelecimento estabelecimento = em.find(Estabelecimento.class, 1L);
-        System.out.println(estabelecimento.getEmail());
-        assertEquals("recanto-beleza@gmail.com", estabelecimento.getEmail());
-        assertEquals("81988771548", estabelecimento.getTelefone());
-        assertEquals("5487", estabelecimento.getSenha());
-        assertEquals("Recanto da Beleza", estabelecimento.getRazaoSocial());
-        assertEquals("00156458000199", estabelecimento.getCNPJ());
-    }*/
+        Estabelecimento estabelecimento = em.find(Estabelecimento.class, 3L);
+        assertEquals("eveline@gmail.com", estabelecimento.getEmail());
+        assertEquals("8188441409", estabelecimento.getTelefone());
+        assertEquals("128322", estabelecimento.getSenha());
+        assertEquals("Eveline Esteticista", estabelecimento.getRazaoSocial());
+        assertEquals("1234567891011", estabelecimento.getCNPJ());
+    }
     
     private static Estabelecimento criarEstabelecimento() {
         Estabelecimento estabelecimento = new Estabelecimento();

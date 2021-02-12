@@ -23,16 +23,17 @@ public class ClienteTest extends GenericTest{
         assertNotNull(cliente.getId());
     }
     
-   /*@Test
+   @Test
     public void consultarCliente(){
         Cliente cliente = em.find(Cliente.class, 1L);
-        assertEquals("jose@gmail.com", cliente.getEmail());
-        assertEquals("81988771456", cliente.getTelefone());
-        assertEquals("1234", cliente.getSenha());
-        assertEquals("Jose", cliente.getNome());
-        assertEquals("12345678910", cliente.getCPF());
+        assertNotNull(cliente);
+        assertEquals("marcosjuunioor2@gmail.com", cliente.getEmail());
+        assertEquals("8191501944", cliente.getTelefone());
+        assertEquals("123456", cliente.getSenha());
+        assertEquals("Marcos Antonio", cliente.getNome());
+        assertEquals("01230637445", cliente.getCPF());
         
-    } */
+    } 
     
     private static Cliente criarCliente() {
         Cliente cliente = new Cliente();

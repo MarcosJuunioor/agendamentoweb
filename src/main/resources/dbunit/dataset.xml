@@ -2,17 +2,17 @@
 <dataset>    
     <!--############## USUARIO ##############--> 
     <!-- Usuario ID 1 -->
-    <USUARIO disc_usuario="U" 
+    <USUARIO disc_usuario="c" 
              email="marcosjuunioor2@gmail.com" 
              senha="123456" 
              telefone="8191501944"/>
     <!-- Usuario ID 2 -->
-    <USUARIO disc_usuario="U" 
+    <USUARIO disc_usuario="c" 
              email="tayna@gmail.com" 
              senha="654321" 
              telefone="8197445188"/>
     <!-- Usuario ID 3 -->
-    <USUARIO disc_usuario="U" 
+    <USUARIO disc_usuario="e" 
              email="eveline@gmail.com" 
              senha="128322" 
              telefone="8188441409"/>
@@ -40,7 +40,7 @@
     <!-- Estabelecimento ID 1 (associado ao usuário Eveline) -->
     <ESTABELECIMENTO   id_usuario="3" 
                        cnpj="1234567891011" 
-                       razao_social="Eveline TI"
+                       razao_social="Eveline Esteticista"
                        id_endereco="1"/>
    
     
