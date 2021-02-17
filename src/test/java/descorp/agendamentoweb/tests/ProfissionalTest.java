@@ -35,8 +35,8 @@ public class ProfissionalTest extends GenericTest{
         assertEquals("Rafaela Silva", profissional.getNome());
         assertEquals("Esteticista", profissional.getProfissao());
         assertEquals("Limpeza de Pele", profissional.getEspecializacao());
-        assertEquals(getHoraInicial().getHours(), profissional.getHoraInicial().getHours());
-        assertEquals(getHoraFinal().getHours(), profissional.getHoraFinal().getHours()); 
+        assertEquals(criarHora(8,0,0).getHours(), profissional.getHoraInicial().getHours());
+        assertEquals(criarHora(17,0,0).getHours(), profissional.getHoraFinal().getHours()); 
     }
                 
     private static Profissional criarProfissional() {
@@ -44,28 +44,12 @@ public class ProfissionalTest extends GenericTest{
         profissional.setNome("Maria José");
         profissional.setProfissao("Médico");
         profissional.setEspecializacao("Otorrinolaringologista");
-        profissional.setHoraInicial(getHoraInicial());
-        profissional.setHoraFinal(getHoraFinal());
+        profissional.setHoraInicial(criarHora(8,0,0));
+        profissional.setHoraFinal(criarHora(17,0,0));
                 
         return profissional;
     }
     
-    private static Date getHoraInicial(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, 8);
-        calendar.set(Calendar.MINUTE, 00);
-        calendar.set(Calendar.SECOND, 00);
-        
-        return calendar.getTime();
-    }
-    
-    private static Date getHoraFinal(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR, 17);
-        calendar.set(Calendar.MINUTE, 00);
-        calendar.set(Calendar.SECOND, 00);
-        
-        return calendar.getTime();
-    }
+
    
 }

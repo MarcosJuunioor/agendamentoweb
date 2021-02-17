@@ -5,6 +5,8 @@
  */
 package descorp.agendamentoweb.tests;
 
+import java.util.Calendar;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -21,7 +23,7 @@ import org.junit.BeforeClass;
  */
 public class GenericTest {
     protected static EntityManagerFactory emf;
-    protected EntityManager em;
+    protected static EntityManager em;
     protected EntityTransaction et;
     
     @BeforeClass
@@ -58,5 +60,21 @@ public class GenericTest {
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
+    }
+    
+    protected static Date criarData(int dia, int mes, int ano){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 16);
+        calendar.set(Calendar.MONTH, 02);
+        calendar.set(Calendar.YEAR, 2021);
+        return calendar.getTime();
+    }
+    
+    protected static Date criarHora(int hora, int min, int seg){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hora);
+        calendar.set(Calendar.MINUTE, min);
+        calendar.set(Calendar.SECOND, seg);
+        return calendar.getTime();
     }
 }

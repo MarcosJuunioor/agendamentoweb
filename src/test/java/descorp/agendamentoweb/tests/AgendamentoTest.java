@@ -6,11 +6,10 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.Agendamento;
-import descorp.agendamentoweb.entities.Cliente;
 import descorp.agendamentoweb.entities.Procedimento;
 import descorp.agendamentoweb.entities.Profissional;
-import java.util.Calendar;
-import java.util.Date;
+import descorp.agendamentoweb.entities.Usuario;
+import java.text.ParseException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -20,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class AgendamentoTest extends GenericTest{
     
-   /* @Test
+    @Test
     public void persistirAgendamento(){
         Agendamento agendamento = criarAgendamento();
         em.persist(agendamento);
@@ -29,18 +28,33 @@ public class AgendamentoTest extends GenericTest{
     } 
     
     @Test
-    public void consultarAgendamento(){
+    public void consultarAgendamento() throws ParseException{
         Agendamento agendamento = em.find(Agendamento.class, 1L);
-        assertEquals("2021-02-15", agendamento.getData());
-        assertEquals("14:00:00", agendamento.getHora());
-        assertEquals(criarCliente(), agendamento.getUsuario());
-        assertEquals(criarProfissional(), agendamento.getPrifissional());
-        assertEquals(criarProcedimento(), agendamento.getProcedimento());
+        int dia = agendamento.getData().getDate();
+        int mes = agendamento.getData().getMonth();
+        int ano = (agendamento.getData().getYear() - 100)+2000;
+        assertEquals("15-2-2021", dia+"-"+(mes+1)+"-"+ano);
+        assertEquals(criarHora(9,0,0).getHours(), agendamento.getHora().getHours());
+        assertEquals(em.find(Usuario.class, 2L), agendamento.getUsuario());
+        assertEquals(em.find(Profissional.class, 1L), agendamento.getProfissional());
+        assertEquals(em.find(Procedimento.class, 1L), agendamento.getProcedimento());
     } 
     
     private static Agendamento criarAgendamento() {
         Agendamento agendamento = new Agendamento();
+        agendamento.setData(criarData(15, 02, 2021));
+        agendamento.setHora(criarHora(10,0,0));
+        
+        Usuario usuario = em.find(Usuario.class, 2L);
+        agendamento.setUsuario(usuario);
+        
+        Procedimento procedimento = em.find(Procedimento.class, 1L);
+        agendamento.setProcedimento(procedimento);
+        
+        Profissional profissional = em.find(Profissional.class, 1L);
+        agendamento.setProfissional(profissional);
+        
         return agendamento;
-    } */
+    } 
 
 }

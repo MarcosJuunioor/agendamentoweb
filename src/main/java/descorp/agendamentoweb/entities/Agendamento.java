@@ -35,8 +35,9 @@ public class Agendamento implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "data", nullable = false)
     private Date data;
+    @Temporal(TemporalType.TIME)
     @Column(name = "hora", nullable = false, length = 45)
-    private String hora;
+    private Date hora;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "procedimento_id", referencedColumnName = "id")
     private Procedimento procedimento;
@@ -63,11 +64,11 @@ public class Agendamento implements Serializable {
         this.data = data;
     }
 
-    public String getHora() {
+    public Date getHora() {
         return hora;
     }
 
-    public void setHora(String hora) {
+    public void setHora(Date hora) {
         this.hora = hora;
     }
     
@@ -87,12 +88,12 @@ public class Agendamento implements Serializable {
         this.usuario = usuario;
     }
 
-    public Profissional getPrifissional() {
+    public Profissional getProfissional() {
         return profissional;
     }
 
-    public void setPrifissional(Profissional prifissional) {
-        this.profissional = prifissional;
+    public void setProfissional(Profissional profissional) {
+        this.profissional = profissional;
     }
 
     @Override

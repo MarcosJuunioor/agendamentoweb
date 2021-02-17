@@ -82,7 +82,7 @@
     <!--############## AGENDAMENTO ##############--> 
     <!-- AGENDAMENTO ID 1 -->
     <AGENDAMENTO       data="2021-02-15" 
-                       hora="09:00"
+                       hora="09:00:00"
                        procedimento_id="1" 
                        profissional_id="1"
                        usuario_id="2"/>
