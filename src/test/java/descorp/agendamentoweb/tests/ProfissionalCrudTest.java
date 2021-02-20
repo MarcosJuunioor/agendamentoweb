@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  *
  * @author marco
  */
-public class ProfissionalTest extends GenericTest{
+public class ProfissionalCrudTest extends GenericTest{
      @Test
     public void persistirProfissional(){
         Profissional profissional = criarProfissional();

@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  *
  * @author marco
  */
-public class ProcedimentoTest extends GenericTest {
+public class ProcedimentoCrudTest extends GenericTest {
 
     @Test
     public void persistirProcedimento(){

@@ -31,8 +31,7 @@ public class Endereco implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @OneToMany(mappedBy = "Endereco", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "Endereco", fetch = FetchType.LAZY, orphanRemoval = false)
     private List<Estabelecimento> estabelecimentos;
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;

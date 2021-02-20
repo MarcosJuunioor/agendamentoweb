@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  *
  * @author alexandra
  */
-public class SalaTest extends GenericTest {
+public class SalaCrudTest extends GenericTest {
 
     @Test
     public void persistirSala(){

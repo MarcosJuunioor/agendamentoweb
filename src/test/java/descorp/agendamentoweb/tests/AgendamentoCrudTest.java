@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  *
  * @author marco
  */
-public class AgendamentoTest extends GenericTest{
+public class AgendamentoCrudTest extends GenericTest{
     
     @Test
     public void persistirAgendamento(){

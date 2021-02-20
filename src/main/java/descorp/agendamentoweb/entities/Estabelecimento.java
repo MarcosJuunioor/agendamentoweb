@@ -6,6 +6,7 @@
 package descorp.agendamentoweb.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -29,7 +30,8 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="id_usuario", referencedColumnName = "id")
 public class Estabelecimento extends Usuario implements Serializable {
     
-    @OneToOne(mappedBy = "estabelecimento", optional = false, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "estabelecimento", cascade = CascadeType.ALL, 
+            optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
     private Sala sala;
     
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

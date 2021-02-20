@@ -16,6 +16,11 @@
              email="eveline@gmail.com" 
              senha="128322" 
              telefone="8188441409"/>
+    <!-- Usuario ID 4 -->
+    <USUARIO disc_usuario="c" 
+             email="joserod@gmail.com" 
+             senha="jose1234" 
+             telefone="8191445677"/>
     
     <!--############## CLIENTE ##############--> 
     <!-- Cliente ID 1 -->
@@ -26,6 +31,10 @@
     <CLIENTE    ID_USUARIO="2" 
                 CPF="94144359900" 
                 nome="Tayná Alexandra"/>
+    <!-- Cliente ID 3 -->
+    <CLIENTE    ID_USUARIO="4" 
+                CPF="09972624436" 
+                nome="José Rodrigues"/>
     
     <!--############## ENDEREÇO ##############--> 
     <!-- Endereço ID 1 -->

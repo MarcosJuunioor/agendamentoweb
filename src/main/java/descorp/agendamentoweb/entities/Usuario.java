@@ -50,8 +50,7 @@ public abstract class Usuario implements Serializable {
     @Column(name = "senha", nullable = false, length = 20)
     protected String senha;
     
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, orphanRemoval = true)
     protected List<Agendamento> agendamentos;
 
     public Long getId() {

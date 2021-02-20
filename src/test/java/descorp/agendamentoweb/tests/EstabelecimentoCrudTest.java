@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  *
  * @author alexandra
  */
-public class EstabelecimentoTest extends GenericTest{
+public class EstabelecimentoCrudTest extends GenericTest{
 
     @Test
     public void persistirEstabelecimento(){

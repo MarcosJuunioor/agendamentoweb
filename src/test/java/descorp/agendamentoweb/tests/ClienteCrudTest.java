@@ -6,6 +6,7 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.Cliente;
+import javax.persistence.TypedQuery;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -13,7 +14,7 @@ import static org.junit.Assert.*;
  *
  * @author marco
  */
-public class ClienteTest extends GenericTest{
+public class ClienteCrudTest extends GenericTest{
    
     @Test
     public void persistirCliente(){
@@ -34,6 +35,29 @@ public class ClienteTest extends GenericTest{
         assertEquals("01230637445", cliente.getCPF());
         
     } 
+    
+    @Test
+    public void atualizarCliente() {
+        TypedQuery<Cliente> query = em.createNamedQuery("Cliente.PorCpf", Cliente.class);
+        query.setParameter("CPF", "09972624436");
+        Cliente cliente = query.getSingleResult();
+        assertNotNull(cliente);
+        cliente.setNome("José Rodrigues da Silva");
+        em.flush();
+        cliente = query.getSingleResult();
+        assertEquals(cliente.getNome(), "José Rodrigues da Silva");
+    }
+    
+    @Test
+    public void removerCliente(){
+        TypedQuery<Cliente> query = em.createNamedQuery("Cliente.PorCpf", Cliente.class);
+        query.setParameter("CPF", "94144359900");
+        Cliente cliente = query.getSingleResult();
+        assertNotNull(cliente);
+        em.remove(cliente);
+        em.flush();
+        assertEquals(0, query.getResultList().size());
+    }
     
     private static Cliente criarCliente() {
         Cliente cliente = new Cliente();

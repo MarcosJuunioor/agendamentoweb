@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -28,6 +30,15 @@ import javax.persistence.Table;
 @Table(name="cliente") 
 @DiscriminatorValue(value = "c")
 @PrimaryKeyJoinColumn(name="id_usuario", referencedColumnName = "id")
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Cliente.PorCpf",
+                    query = "SELECT c FROM Cliente c "
+                            + "WHERE c.CPF = :CPF"
+            )
+        }
+)
 public class Cliente extends Usuario implements Serializable {
 
     @Column(name = "nome", nullable = false, length = 60)

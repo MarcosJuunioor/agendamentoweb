@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  *
  * @author alexandra
  */
-public class EnderecoTest extends GenericTest {
+public class EnderecoCrudTest extends GenericTest {
     @Test
     public void persistirEndereco() {
         Endereco endereco = criarEndereco();

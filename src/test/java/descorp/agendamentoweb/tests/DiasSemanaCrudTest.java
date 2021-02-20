@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  *
  * @author marco
  */
-public class DiasSemanaTest extends GenericTest{
+public class DiasSemanaCrudTest extends GenericTest{
     @Test
     public void persistirDiasSemana(){
         DiasSemana diasSemana = criarDiasSemana();
