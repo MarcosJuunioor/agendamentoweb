@@ -11,5 +11,7 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class AgendamentoJpqlTest extends GenericTest{
-
+//Consulta de Todos os agendamentos
+//Consulta de agendamento de uma data específica
+//Consulta de usuários que possuem agendamento
 }

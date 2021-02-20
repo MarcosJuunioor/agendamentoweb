@@ -10,5 +10,7 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class ProcedimentoJpqlTest extends GenericTest{
-    
+//Consulta de todos os procedimentos de uma determinada natureza
+//Consulta dos procedimentos que possuem duração superior a X horas
+//Consulta da quantidade de procedimentos existentes
 }

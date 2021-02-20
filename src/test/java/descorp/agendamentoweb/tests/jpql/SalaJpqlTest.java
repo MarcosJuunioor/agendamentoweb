@@ -10,5 +10,6 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class SalaJpqlTest extends GenericTest{
-    
+//Consulta do estabelecimento associado a ela
+//Consulta das salas cadastradas  
 }

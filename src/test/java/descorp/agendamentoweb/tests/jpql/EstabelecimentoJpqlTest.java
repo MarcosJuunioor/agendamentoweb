@@ -11,5 +11,7 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class EstabelecimentoJpqlTest extends GenericTest{
-    
+//Consulta de todos os estabelecimentos
+//Consulta de estabelecimento por CNPJ
+//Consulta da quantidade de estabelecimentos cadastrados
 }

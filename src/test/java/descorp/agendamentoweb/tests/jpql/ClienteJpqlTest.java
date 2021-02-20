@@ -10,6 +10,8 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class ClienteJpqlTest extends GenericTest{
-    
- 
+//Consulta de todos os clientes
+//Consulta de cliente por CPF
+//Consulta da quantidade de clientes cadastrados
+//Consulta da quantidade de agendamentos por cliente  
 }

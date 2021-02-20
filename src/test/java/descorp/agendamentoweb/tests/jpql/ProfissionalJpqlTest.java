@@ -10,5 +10,8 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class ProfissionalJpqlTest extends GenericTest{
-    
+//Consulta de todos os profissionais
+//Consulta de profissionais por profissão
+//Consulta de profissionais por especialização
+//Consulta de profissionais pelo horário em que trabalha
 }

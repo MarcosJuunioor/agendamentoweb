@@ -11,5 +11,6 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class DiasSemanaJpqlTest extends GenericTest{
-
+//Consulta de todos os dias da semamana
+//Consulta dos profissionais que trabalham em um determinado dia da semana
 }

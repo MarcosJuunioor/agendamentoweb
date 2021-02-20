@@ -10,5 +10,5 @@ import descorp.agendamentoweb.tests.GenericTest;
  * @author marco
  */
 public class EnderecoJpqlTest extends GenericTest{
-
+//Consulta de um endereço pelo CEP
 }
