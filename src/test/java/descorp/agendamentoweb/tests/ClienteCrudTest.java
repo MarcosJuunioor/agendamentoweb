@@ -6,6 +6,7 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.Cliente;
+import descorp.agendamentoweb.entities.Usuario;
 import javax.persistence.TypedQuery;
 import org.junit.Test;
 import static org.junit.Assert.*;
