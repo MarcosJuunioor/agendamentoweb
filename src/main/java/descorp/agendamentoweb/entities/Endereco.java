@@ -17,6 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
@@ -24,6 +26,15 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="endereco") 
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Endereco.PorCep",
+                    query = "SELECT en FROM Endereco en "
+                            + "WHERE en.cep = :cep"
+            )
+        }
+)
 public class Endereco implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,8 +42,9 @@ public class Endereco implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @OneToMany(mappedBy = "Endereco", fetch = FetchType.LAZY, orphanRemoval = false)
+    @OneToMany(mappedBy = "Endereco", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Estabelecimento> estabelecimentos;
+
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;
     @Column(name = "rua", nullable = false, length = 45)

@@ -6,6 +6,8 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.Estabelecimento;
+import descorp.agendamentoweb.entities.Endereco;
+import javax.persistence.TypedQuery;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -32,6 +34,29 @@ public class EstabelecimentoCrudTest extends GenericTest{
         assertEquals("Eveline Esteticista", estabelecimento.getRazaoSocial());
         assertEquals("1234567891011", estabelecimento.getCNPJ());
     }
+
+    @Test
+    public void atualizarEstabelecimento() {
+        TypedQuery<Estabelecimento> query = em.createNamedQuery("Estabelecimento.PorCnpj", Estabelecimento.class);
+        query.setParameter("CNPJ", "1234567891011");
+        Estabelecimento estabelecimento = query.getSingleResult();
+        assertNotNull(estabelecimento);
+        estabelecimento.setRazaoSocial("Recanto da Beleza 2");
+        em.flush();
+        estabelecimento = query.getSingleResult();
+        assertEquals(estabelecimento.getRazaoSocial(), "Recanto da Beleza 2");
+    }
+
+    @Test
+    public void removerEstabelecimento(){
+        TypedQuery<Estabelecimento> query = em.createNamedQuery("Estabelecimento.PorCnpj", Estabelecimento.class);
+        query.setParameter("CNPJ", "1234567891011");
+        Estabelecimento estabelecimento = query.getSingleResult();
+        assertNotNull(estabelecimento);
+        em.remove(estabelecimento);
+        em.flush();
+        assertEquals(0, query.getResultList().size());
+    }
     
     private static Estabelecimento criarEstabelecimento() {
         Estabelecimento estabelecimento = new Estabelecimento();
@@ -40,6 +65,9 @@ public class EstabelecimentoCrudTest extends GenericTest{
         estabelecimento.setSenha("5487");
         estabelecimento.setRazaoSocial("Recanto da Beleza");
         estabelecimento.setCNPJ("00156458000199");
+
+        Endereco endereco = em.find(Endereco.class, 3L);
+        estabelecimento.setEndereco(endereco);
         
         return estabelecimento;
     }

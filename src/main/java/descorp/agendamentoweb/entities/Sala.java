@@ -16,6 +16,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
@@ -23,13 +25,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="sala") 
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Sala.PorNumSala",
+                    query = "SELECT s FROM Sala s "
+                            + "WHERE s.numSala = :numSala"
+            )
+        }
+)
 public class Sala implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
     private Estabelecimento estabelecimento;
     @Column(name = "num_sala", nullable = false)

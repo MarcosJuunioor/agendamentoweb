@@ -21,6 +21,16 @@
              email="joserod@gmail.com" 
              senha="jose1234" 
              telefone="8191445677"/>
+    <!-- Usuario ID 5 -->
+    <USUARIO disc_usuario="e" 
+             email="estetica-cia@gmail.com" 
+             senha="estetica1234" 
+             telefone="8131312556"/>
+    <!-- Usuario ID 6 -->
+    <USUARIO disc_usuario="e" 
+             email="maria-micro@gmail.com" 
+             senha="micro1234" 
+             telefone="81996352556"/>
     
     <!--############## CLIENTE ##############--> 
     <!-- Cliente ID 1 -->
@@ -44,6 +54,20 @@
                 estado="Pernambuco"
                 numero="240"
                 rua="Lima Campos"/>
+    <!-- Endereço ID 2 -->
+    <ENDERECO   bairro="Barro" 
+                cep="24250490" 
+                cidade="Recife"
+                estado="Pernambuco"
+                numero="20"
+                rua="Dom Pedro I"/>
+    <!-- Endereço ID 3 -->
+    <ENDERECO   bairro="Boa Vista" 
+                cep="24254789" 
+                cidade="Recife"
+                estado="Pernambuco"
+                numero="1005"
+                rua="Imperatiz"/>
     
     <!--############## ESTABELECIMENTO ##############--> 
     <!-- Estabelecimento ID 1 (associado ao usuário Eveline) -->
@@ -51,12 +75,25 @@
                        cnpj="1234567891011" 
                        razao_social="Eveline Esteticista"
                        id_endereco="1"/>
+    <!-- Estabelecimento ID 2 -->
+    <ESTABELECIMENTO   id_usuario="5" 
+                       cnpj="1234567584797" 
+                       razao_social="Estetica e CIA"
+                       id_endereco="2"/>
+    <!-- Estabelecimento ID 3 -->
+    <ESTABELECIMENTO   id_usuario="6" 
+                       cnpj="6584567584797" 
+                       razao_social="Maria Micropigmentadora"
+                       id_endereco="2"/>
    
     
     <!--############## SALA ##############--> 
     <!-- Sala ID 1 -->
     <SALA       num_sala="300" 
-                id_estabelecimento="1" />
+                id_estabelecimento="3" />
+    <!-- Sala ID 2 -->
+    <SALA       num_sala="200" 
+                id_estabelecimento="5" />
     
     <!--############## PROCEDIMENTO ##############--> 
     <!-- Procedimento ID 1 -->

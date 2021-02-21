@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
@@ -28,13 +30,22 @@ import javax.persistence.Table;
 @Table(name="estabelecimento") 
 @DiscriminatorValue(value = "e")
 @PrimaryKeyJoinColumn(name="id_usuario", referencedColumnName = "id")
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Estabelecimento.PorCnpj",
+                    query = "SELECT e FROM Estabelecimento e "
+                            + "WHERE e.CNPJ = :CNPJ"
+            )
+        }
+)
 public class Estabelecimento extends Usuario implements Serializable {
     
-    @OneToOne(mappedBy = "estabelecimento", cascade = CascadeType.ALL, 
+    @OneToOne(mappedBy = "estabelecimento", 
             optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
     private Sala sala;
     
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private Endereco endereco;
     

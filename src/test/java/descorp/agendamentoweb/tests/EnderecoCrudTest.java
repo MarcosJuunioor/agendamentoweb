@@ -7,6 +7,7 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.Endereco;
+import javax.persistence.TypedQuery;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -34,6 +35,29 @@ public class EnderecoCrudTest extends GenericTest {
         assertEquals("Jordão", endereco.getBairro());
         assertEquals("Recife", endereco.getCidade());
         assertEquals("Pernambuco", endereco.getEstado());
+    }
+
+    @Test
+    public void atualizarEndereco() {
+        TypedQuery<Endereco> query = em.createNamedQuery("Endereco.PorCep", Endereco.class);
+        query.setParameter("cep", "51250490");
+        Endereco endereco = query.getSingleResult();
+        assertNotNull(endereco);
+        endereco.setRua("Rua da Luz");
+        em.flush();
+        endereco = query.getSingleResult();
+        assertEquals(endereco.getRua(), "Rua da Luz");
+    }
+
+    @Test
+    public void removerEndereco(){
+        TypedQuery<Endereco> query = em.createNamedQuery("Endereco.PorCep", Endereco.class);
+        query.setParameter("cep", "51250490");
+        Endereco endereco = query.getSingleResult();
+        assertNotNull(endereco);
+        em.remove(endereco);
+        em.flush();
+        assertEquals(0, query.getResultList().size());
     }
 
     private static Endereco criarEndereco() {
