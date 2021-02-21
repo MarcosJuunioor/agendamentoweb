@@ -65,9 +65,9 @@ public class GenericTest {
     
     protected static Date criarData(int dia, int mes, int ano){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, 16);
-        calendar.set(Calendar.MONTH, 02);
-        calendar.set(Calendar.YEAR, 2021);
+        calendar.set(Calendar.DAY_OF_MONTH, dia);
+        calendar.set(Calendar.MONTH, mes);
+        calendar.set(Calendar.YEAR, ano);
         return calendar.getTime();
     }
     

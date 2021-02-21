@@ -6,7 +6,6 @@
 package descorp.agendamentoweb.entities;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,12 +22,23 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 /**
  *
  * @author Tayná
  */
 @Entity
 @Table(name="procedimento")
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Procedimento.PorNome",
+                    query = "SELECT p FROM Procedimento p "
+                            + "WHERE p.nome = :nome"
+            )
+        }
+)
 public class Procedimento implements Serializable {
 
     private static final long serialVersionUID = 1L;

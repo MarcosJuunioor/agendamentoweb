@@ -63,6 +63,10 @@
     <PROCEDIMENTO       duracao_procedimento="1:30:00" 
                         natureza_procedimento="Estético" 
                         nome_procedimento="Limpeza de sobrancelha"/>
+    <!-- Procedimento ID 2 -->
+    <PROCEDIMENTO       duracao_procedimento="2:00:00" 
+                        natureza_procedimento="Dentário" 
+                        nome_procedimento="Branqueamento de dentes"/>
     
     <!--############## PROFISSIONAL ##############--> 
     <!-- Profissional ID 1 -->
@@ -92,6 +96,18 @@
     <!-- AGENDAMENTO ID 1 -->
     <AGENDAMENTO       data="2021-02-15" 
                        hora="09:00:00"
+                       procedimento_id="1" 
+                       profissional_id="1"
+                       usuario_id="2"/>
+     <!-- AGENDAMENTO ID 2 -->
+    <AGENDAMENTO       data="2021-04-19" 
+                       hora="08:00:00"
+                       procedimento_id="1" 
+                       profissional_id="1"
+                       usuario_id="2"/>
+    <!-- AGENDAMENTO ID 3 -->
+    <AGENDAMENTO       data="2021-03-09" 
+                       hora="13:00:00"
                        procedimento_id="1" 
                        profissional_id="1"
                        usuario_id="2"/>
