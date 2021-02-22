@@ -6,7 +6,6 @@
 package descorp.agendamentoweb.entities;
 
 import java.io.Serializable;
-import java.sql.Time;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,6 +22,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
@@ -30,6 +31,15 @@ import java.util.Date;
  */
 @Entity
 @Table(name="profissional")
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Profissional.PorNome",
+                    query = "SELECT p FROM Profissional p "
+                            + "WHERE p.nome = :nome"
+            )
+        }
+)
 public class Profissional implements Serializable {
 
     private static final long serialVersionUID = 1L;

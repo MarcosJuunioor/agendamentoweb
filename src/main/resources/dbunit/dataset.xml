@@ -112,6 +112,18 @@
                         hora_inicial="08:00:00" 
                         nome_profissional="Rafaela Silva"
                         profissao="Esteticista"/>
+    <!-- Profissional ID 2 -->
+    <PROFISSIONAL       especializacao="Branqueamento dentário" 
+                        hora_final="17:00:00"
+                        hora_inicial="08:00:00" 
+                        nome_profissional="Maria Eduarda"
+                        profissao="Dentista"/>
+    <!-- Profissional ID 3 -->
+    <PROFISSIONAL       especializacao="Maquiagem" 
+                        hora_final="13:00:00"
+                        hora_inicial="08:00:00" 
+                        nome_profissional="Júlia Maria da Silva"
+                        profissao="Maquiadora"/>
     
     <!--############## DIAS DA SEMANA ##############--> 
     <!-- DIAS DA SEMANA ID 1 -->

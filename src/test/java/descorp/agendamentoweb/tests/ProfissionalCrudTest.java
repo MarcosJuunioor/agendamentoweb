@@ -8,6 +8,7 @@ package descorp.agendamentoweb.tests;
 import descorp.agendamentoweb.entities.Profissional;
 import java.util.Calendar;
 import java.util.Date;
+import javax.persistence.TypedQuery;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,7 +39,30 @@ public class ProfissionalCrudTest extends GenericTest{
         assertEquals(criarHora(8,0,0).getHours(), profissional.getHoraInicial().getHours());
         assertEquals(criarHora(17,0,0).getHours(), profissional.getHoraFinal().getHours()); 
     }
-                
+      
+    @Test
+    public void atualizarProfissional(){
+        TypedQuery<Profissional> query = em.createNamedQuery("Profissional.PorNome", Profissional.class);
+        query.setParameter("nome", "Maria Eduarda");
+        Profissional profissional = query.getSingleResult();
+        assertNotNull(profissional);
+        profissional.setNome("Maria Eduarda da Silva");
+        em.flush();
+        query.setParameter("nome", "Maria Eduarda da Silva");
+        profissional = query.getSingleResult();
+        assertEquals("Maria Eduarda da Silva", profissional.getNome());
+    }
+    
+    @Test
+    public void removerProfissional(){
+        TypedQuery<Profissional> query = em.createNamedQuery("Profissional.PorNome", Profissional.class);
+        query.setParameter("nome", "Júlia Maria da Silva");
+        Profissional profissional = query.getSingleResult();
+        assertNotNull(profissional);
+        em.remove(profissional);
+        em.flush();
+        assertEquals(0, query.getResultList().size());
+    }
     private static Profissional criarProfissional() {
         Profissional profissional = new Profissional();
         profissional.setNome("Maria José");

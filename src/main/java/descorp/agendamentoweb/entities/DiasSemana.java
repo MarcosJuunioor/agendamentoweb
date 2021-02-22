@@ -13,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -21,13 +23,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="dias_semana")
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "DiasSemana.PorNome",
+                    query = "SELECT d FROM DiasSemana d "
+                            + "WHERE d.nome = :nome"
+            )
+        }
+)
 public class DiasSemana implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nome_dia", nullable = false, length = 10)
+    @Column(name = "nome_dia", nullable = false, length = 20)
     private String nome;
     
     @ManyToMany(mappedBy = "diasSemana")

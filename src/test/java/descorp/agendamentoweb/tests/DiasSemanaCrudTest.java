@@ -6,6 +6,7 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.DiasSemana;
+import javax.persistence.TypedQuery;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,10 +33,34 @@ public class DiasSemanaCrudTest extends GenericTest{
         assertEquals("segunda", diasSemana.getNome());      
        
     }
-                
+          
+    @Test
+    public void atualizarDiasSemana(){
+        TypedQuery<DiasSemana> query = em.createNamedQuery("DiasSemana.PorNome", DiasSemana.class);
+        query.setParameter("nome", "segunda");
+        DiasSemana dia = query.getSingleResult();
+        assertNotNull(dia);
+        dia.setNome("segunda-feira");
+        em.flush();
+        query.setParameter("nome", "segunda-feira");
+        dia = query.getSingleResult();
+        assertEquals("segunda-feira", dia.getNome());
+    }
+    
+    @Test
+    public void removerProcedimento(){
+        TypedQuery<DiasSemana> query = em.createNamedQuery("DiasSemana.PorNome", DiasSemana.class);
+        query.setParameter("nome", "quarta");
+        DiasSemana dia = query.getSingleResult();
+        assertNotNull(dia);
+        em.remove(dia);
+        em.flush();
+        assertEquals(0, query.getResultList().size());
+    }
+    
     private static DiasSemana criarDiasSemana() {
         DiasSemana diasSemana = new DiasSemana();
-        diasSemana.setNome("segunda");
+        diasSemana.setNome("terça-feira");
         return diasSemana;
     }
 
