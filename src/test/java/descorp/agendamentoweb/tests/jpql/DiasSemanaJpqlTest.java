@@ -8,7 +8,7 @@ import descorp.agendamentoweb.tests.GenericTest;
 
 /**
  *
- * @author marco
+ * @author evellinne
  */
 public class DiasSemanaJpqlTest extends GenericTest{
 //Consulta de todos os dias da semamana
