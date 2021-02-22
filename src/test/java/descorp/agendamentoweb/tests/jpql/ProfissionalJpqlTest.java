@@ -11,7 +11,6 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.util.Calendar;
 
 /**
  *
