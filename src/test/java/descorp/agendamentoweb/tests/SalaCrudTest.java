@@ -45,7 +45,7 @@ public class SalaCrudTest extends GenericTest {
     }
 
     @Test
-    public void removerCliente(){
+    public void removerSala(){
         TypedQuery<Sala> query = em.createNamedQuery("Sala.PorNumSala", Sala.class);
         query.setParameter("numSala", 400);
         Sala sala = query.getSingleResult();
