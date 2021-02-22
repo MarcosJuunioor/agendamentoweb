@@ -104,6 +104,10 @@
     <PROCEDIMENTO       duracao_procedimento="2:00:00" 
                         natureza_procedimento="Dentário" 
                         nome_procedimento="Branqueamento de dentes"/>
+    <!-- Procedimento ID 3 -->
+    <PROCEDIMENTO       duracao_procedimento="1:00:00" 
+                        natureza_procedimento="Estético" 
+                        nome_procedimento="Limpeza de pele"/>
     
     <!--############## PROFISSIONAL ##############--> 
     <!-- Profissional ID 1 -->
@@ -160,6 +164,12 @@
                        procedimento_id="1" 
                        profissional_id="1"
                        usuario_id="2"/>
+    <!-- AGENDAMENTO ID 4 -->
+    <AGENDAMENTO       data="2021-03-10" 
+                       hora="13:00:00"
+                       procedimento_id="2" 
+                       profissional_id="2"
+                       usuario_id="1"/>
      
     <!--############## CLIENTE_HAS_PROCEDIMENTO ##############--> 
     <!-- CLIENTE_HAS_PROCEDIMENTO ID 1 -->
