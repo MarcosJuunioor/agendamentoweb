@@ -5,10 +5,25 @@
  */
 package descorp.agendamentoweb.tests.jpql;
 import descorp.agendamentoweb.tests.GenericTest;
+import descorp.agendamentoweb.entities.Endereco;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import org.junit.Test;
+import static org.junit.Assert.*;
 /**
  *
- * @author marco
+ * @author tayná
  */
 public class EnderecoJpqlTest extends GenericTest{
-//Consulta de um endereço pelo CEP
+    //Consulta de um endereço pelo CEP
+    @Test
+    public void enderecoPorCep() {
+        TypedQuery<Endereco> query = em.createQuery(
+                "SELECT en FROM Endereco en WHERE en.cep LIKE :cep",
+                Endereco.class);
+        query.setParameter("cep", "24250490");
+        Endereco endereco = query.getSingleResult();
+        assertNotNull(endereco);
+    }
+    
 }
