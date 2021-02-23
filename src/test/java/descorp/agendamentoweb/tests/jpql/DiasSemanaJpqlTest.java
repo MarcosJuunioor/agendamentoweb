@@ -29,15 +29,18 @@ public class DiasSemanaJpqlTest extends GenericTest{
     }
 //Consulta dos profissionais que trabalham em um determinado dia da semana
 
-/**    @Test
+    @Test
     public void profissionaisDiasSemana(){
         TypedQuery<Profissional> query = em.createQuery(
                 "SELECT p FROM Profissional p "
-                + "JOIN fetch p.diasSemana d "
-                + "WHERE d.nome = :nome_dia",
+                + "JOIN DiasSemana d "
+                + "WHERE p MEMBER OF d.profissionais "
+                + "AND d.nome = :nome_dia",
                 Profissional.class);
+        query.setParameter("nome_dia", "sexta");
+        
         List<Profissional> profissionais = query.getResultList();
         assertNotNull(profissionais);
         assertEquals("Rafaela Silva", profissionais.get(0).getNome());
-    }*/
+    }
 }
