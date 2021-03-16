@@ -6,7 +6,6 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.Cliente;
-import descorp.agendamentoweb.entities.Usuario;
 import javax.persistence.TypedQuery;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -33,26 +32,26 @@ public class ClienteCrudTest extends GenericTest{
         assertEquals("8191501944", cliente.getTelefone());
         assertEquals("123456", cliente.getSenha());
         assertEquals("Marcos Antonio", cliente.getNome());
-        assertEquals("01230637445", cliente.getCPF());
+        assertEquals("468.381.220-73", cliente.getCPF());
         
     } 
     
     @Test
     public void atualizarCliente() {
         TypedQuery<Cliente> query = em.createNamedQuery("Cliente.PorCpf", Cliente.class);
-        query.setParameter("CPF", "09972624436");
+        query.setParameter("CPF", "400.102.560-40");
         Cliente cliente = query.getSingleResult();
         assertNotNull(cliente);
-        cliente.setNome("José Rodrigues da Silva");
+        cliente.setNome("Jose Rodrigues Da Silva");
         em.flush();
         cliente = query.getSingleResult();
-        assertEquals(cliente.getNome(), "José Rodrigues da Silva");
+        assertEquals(cliente.getNome(), "Jose Rodrigues Da Silva");
     }
     
     @Test
     public void removerCliente(){
         TypedQuery<Cliente> query = em.createNamedQuery("Cliente.PorCpf", Cliente.class);
-        query.setParameter("CPF", "94144359900");
+        query.setParameter("CPF", "067.787.510-02");
         Cliente cliente = query.getSingleResult();
         assertNotNull(cliente);
         em.remove(cliente);
@@ -60,13 +59,13 @@ public class ClienteCrudTest extends GenericTest{
         assertEquals(0, query.getResultList().size());
     }
     
-    private static Cliente criarCliente() {
+    public static Cliente criarCliente() {
         Cliente cliente = new Cliente();
         cliente.setEmail("jose@gmail.com");
         cliente.setSenha("1234");
         cliente.setTelefone("81988771456");
         cliente.setNome("Jose");
-        cliente.setCPF("12345678910");
+        cliente.setCPF("014.797.760-68");
         return cliente;
     }
     

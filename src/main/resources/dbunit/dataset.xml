@@ -35,15 +35,15 @@
     <!--############## CLIENTE ##############--> 
     <!-- Cliente ID 1 -->
     <CLIENTE    ID_USUARIO="1" 
-                CPF="01230637445" 
+                CPF="468.381.220-73" 
                 nome="Marcos Antonio"/>
     <!-- Cliente ID 2 -->
     <CLIENTE    ID_USUARIO="2" 
-                CPF="94144359900" 
+                CPF="067.787.510-02" 
                 nome="Tayná Alexandra"/>
     <!-- Cliente ID 3 -->
     <CLIENTE    ID_USUARIO="4" 
-                CPF="09972624436" 
+                CPF="400.102.560-40" 
                 nome="José Rodrigues"/>
     
     <!--############## ENDEREÇO ##############--> 

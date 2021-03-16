@@ -47,14 +47,14 @@ public class AgendamentoCrudTest extends GenericTest{
         query.setParameter("data", criarData(19,Calendar.APRIL,2021));
         Agendamento agendamento = query.getSingleResult();
         assertNotNull(agendamento);
-        Date dataNova = criarData(28,Calendar.FEBRUARY,2021);
+        Date dataNova = criarData(28,Calendar.FEBRUARY,2022);
         agendamento.setData(dataNova);
         em.flush();
         
         query.setParameter("data", dataNova);
         agendamento = query.getSingleResult();
         String dataFormatada = formatarData(agendamento.getData());
-        assertEquals("28-2-2021", dataFormatada);
+        assertEquals("28-2-2022", dataFormatada);
     }
     
     @Test
@@ -69,7 +69,7 @@ public class AgendamentoCrudTest extends GenericTest{
     
     private static Agendamento criarAgendamento() {
         Agendamento agendamento = new Agendamento();
-        agendamento.setData(criarData(15, Calendar.FEBRUARY, 2021));
+        agendamento.setData(criarData(15, Calendar.FEBRUARY, 2022));
         agendamento.setHora(criarHora(10,0,0));
         
         Usuario usuario = em.find(Usuario.class, 2L);

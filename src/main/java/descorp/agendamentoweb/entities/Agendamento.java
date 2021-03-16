@@ -21,6 +21,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -45,6 +48,8 @@ public class Agendamento implements Serializable {
     private Long id;
     @Temporal(TemporalType.DATE)
     @Column(name = "data", nullable = false)
+    @Future 
+    @NotNull
     private Date data;
     @Temporal(TemporalType.TIME)
     @Column(name = "hora", nullable = false, length = 45)

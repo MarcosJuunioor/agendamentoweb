@@ -23,7 +23,7 @@ public class ClienteJpqlTest extends GenericTest{
     @Test
     public void clientePorCPF(){
         TypedQuery<Cliente> query = em.createQuery("select c from Cliente c where c.CPF = :cpf", Cliente.class);
-        query.setParameter("cpf", "01230637445");
+        query.setParameter("cpf", "468.381.220-73");
         Cliente cliente = query.getSingleResult();
         assertNotNull(cliente);
     }

@@ -21,6 +21,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -40,9 +43,12 @@ import javax.persistence.Table;
         }
 )
 public class Cliente extends Usuario implements Serializable {
-
+    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas
+    @Pattern(regexp = "^(\\b[A-Z]\\w*\\s*)+$", message="{descorp.agendamentoweb.entities.Cliente.nome}")
+    @Size(max = 60)
     @Column(name = "nome", nullable = false, length = 60)
     private String nome;
+    @CPF
     @Column(name = "cpf", nullable = false, length = 15)
     private String CPF;
     
