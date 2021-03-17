@@ -35,7 +35,7 @@ public class AgendamentoValidationTest extends GenericTest {
         try {
             agendamento = new Agendamento();
             agendamento.setData(criarData(15, Calendar.FEBRUARY, 2021));//data inválida
-            agendamento.setHora(criarHora(10, 0, 0)); 
+            agendamento.setHora(null); //Hora inválida
 
             Usuario usuario = em.find(Usuario.class, 2L);
             agendamento.setUsuario(usuario);
@@ -49,35 +49,35 @@ public class AgendamentoValidationTest extends GenericTest {
             em.flush();
         } catch (ConstraintViolationException ex) {
             Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
-
             constraintViolations.forEach(violation -> {
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),
                         CoreMatchers.anyOf(
-                                startsWith("class descorp.agendamentoweb.entities.Agendamento.data: deve ser uma data futura")
+                                startsWith("class descorp.agendamentoweb.entities.Agendamento.data: deve ser uma data futura"),
+                                startsWith("class descorp.agendamentoweb.entities.Agendamento.hora: não deve ser nulo")
                         )
                 ); 
             });
 
-            assertEquals(1, constraintViolations.size());
+            assertEquals(2, constraintViolations.size());
             assertNull(agendamento.getId());
             throw ex;
         }
     }
-    /*
+    
     @Test(expected = ConstraintViolationException.class)
-    public void atualizarVendedorInvalido() {
-        TypedQuery<Vendedor> query = em.createQuery("SELECT v FROM Vendedor v WHERE v.cpf like :cpf", Vendedor.class);
-        query.setParameter("cpf", "484.854.847-03");
-        Vendedor vendedor = query.getSingleResult();
-        vendedor.setSenha("teste123456");
+    public void atualizarAgendamentoInvalido() {
+        TypedQuery<Agendamento> query = em.createQuery("select a from Agendamento a where a.data = :data", Agendamento.class);
+        query.setParameter("data", criarData(10, Calendar.MARCH, 2021));
+        Agendamento agendamento = query.getSingleResult();
+        agendamento.setData(criarData(10, Calendar.JANUARY, 2021)); // Data inválida
 
         try {
             em.flush();
         } catch (ConstraintViolationException ex) {    
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("A senha deve possuir pelo menos um caractere de: pontuação, maiúscula, minúscula e número.", violation.getMessage());
+            assertEquals("class descorp.agendamentoweb.entities.Agendamento.data: deve ser uma data futura", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }
-    }*/
+    } */
 }

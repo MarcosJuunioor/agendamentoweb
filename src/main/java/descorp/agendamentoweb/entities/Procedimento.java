@@ -24,6 +24,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 /**
  *
  * @author Tayná
@@ -46,11 +47,14 @@ public class Procedimento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "natureza_procedimento", nullable = false, length = 45)
+    @NotNull
     private String natureza;
     @Column(name = "nome_procedimento", nullable = false, length = 45)
+    @NotNull
     private String nome;
     @Temporal(TemporalType.TIME)
     @Column(name = "duracao_procedimento", nullable = false)
+    @NotNull
     private Date duracao;
     
     @OneToMany(mappedBy = "procedimento", fetch = FetchType.LAZY,

@@ -53,6 +53,7 @@ public class Agendamento implements Serializable {
     private Date data;
     @Temporal(TemporalType.TIME)
     @Column(name = "hora", nullable = false, length = 45)
+    @NotNull
     private Date hora;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "procedimento_id", referencedColumnName = "id")
