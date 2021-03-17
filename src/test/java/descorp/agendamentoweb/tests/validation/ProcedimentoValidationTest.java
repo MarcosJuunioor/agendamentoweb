@@ -22,7 +22,6 @@ import static org.junit.Assert.assertThat;
  * @author marco
  */
 public class ProcedimentoValidationTest extends GenericTest {
-/*
     @Test(expected = ConstraintViolationException.class)
     public void persistirProcedimentoInvalido() {
         Procedimento procedimento = null;
@@ -37,12 +36,8 @@ public class ProcedimentoValidationTest extends GenericTest {
         } catch (ConstraintViolationException ex) {
             Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
             constraintViolations.forEach(violation -> {
-                assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),
-                        CoreMatchers.anyOf(
-                                startsWith("class descorp.agendamentoweb.entities.Agendamento.natureza: não deve ser nulo"),
-                                startsWith("class descorp.agendamentoweb.entities.Agendamento.nome: não deve ser nulo"),
-                                startsWith("class descorp.agendamentoweb.entities.Agendamento.duracao: não deve ser nulo")
-                        )
+                assertEquals(violation.getMessage(),
+                "não deve ser nulo"
                 ); 
             });
 
@@ -61,9 +56,9 @@ public class ProcedimentoValidationTest extends GenericTest {
             em.flush();
         } catch (ConstraintViolationException ex) {
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("class descorp.agendamentoweb.entities.Agendamento.natureza: não deve ser nulo", violation.getMessage());
+            assertEquals("não deve ser nulo", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }
-    } */
+    } 
 }

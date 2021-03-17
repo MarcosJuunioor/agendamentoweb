@@ -47,7 +47,7 @@ public class GenericTest {
     @After
     public void tearDown() {
         commitTransaction();
-        em.close();      
+        
     }
 
     protected void beginTransaction() {
@@ -59,7 +59,13 @@ public class GenericTest {
         try {
             et.commit();
         } catch (Exception ex) {
-            fail(ex.getMessage());
+            if (et.isActive()) {
+                et.rollback();
+            }
+        } finally {
+            em.close();
+            em = null;
+            et = null;
         }
     }
     

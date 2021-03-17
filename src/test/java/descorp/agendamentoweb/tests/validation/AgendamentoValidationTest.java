@@ -27,7 +27,6 @@ import static org.junit.Assert.assertThat;
  * @author marco
  */
 public class AgendamentoValidationTest extends GenericTest {
-/*
     @Test(expected = ConstraintViolationException.class)
     public void persistirAgendamentoInvalido() {
         Agendamento agendamento = null;
@@ -75,9 +74,9 @@ public class AgendamentoValidationTest extends GenericTest {
             em.flush();
         } catch (ConstraintViolationException ex) {    
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("class descorp.agendamentoweb.entities.Agendamento.data: deve ser uma data futura", violation.getMessage());
+            assertEquals("deve ser uma data futura", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }
-    } */
+    } 
 }

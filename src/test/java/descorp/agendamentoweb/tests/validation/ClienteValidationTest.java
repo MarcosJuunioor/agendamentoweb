@@ -18,8 +18,8 @@ import static org.junit.Assert.assertThat;
  * @author marco
  */
 public class ClienteValidationTest extends GenericTest {
-/*
-    @Test(expected = ConstraintViolationException.class)
+
+    @Test(expected = ConstraintViolationException.class) 
     public void persistirClienteInvalido() {
         Cliente cliente = null;
 
@@ -64,6 +64,6 @@ public class ClienteValidationTest extends GenericTest {
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }
-    } */
+    } 
 
 }
