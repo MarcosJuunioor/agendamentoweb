@@ -126,7 +126,7 @@
     <PROFISSIONAL       especializacao="Maquiagem" 
                         hora_final="13:00:00"
                         hora_inicial="08:00:00" 
-                        nome_profissional="Júlia Maria da Silva"
+                        nome_profissional="Julia Maria Silva"
                         profissao="Maquiadora"/>
     
     <!--############## DIAS DA SEMANA ##############--> 
@@ -141,7 +141,7 @@
     <!-- DIAS DA SEMANA ID 5 -->
     <DIAS_SEMANA   nome_dia="Sexta"/>
     <!-- DIAS DA SEMANA ID 6 -->
-    <DIAS_SEMANA   nome_dia="sSábado"/>
+    <DIAS_SEMANA   nome_dia="Sábado"/>
     <!-- DIAS DA SEMANA ID 7 -->
     <DIAS_SEMANA   nome_dia="Domingo"/>
     

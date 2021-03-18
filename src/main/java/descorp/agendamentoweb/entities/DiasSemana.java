@@ -38,8 +38,8 @@ public class DiasSemana implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //Apenas palavras que começam com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não, sendo a maior palavra com 7 letras e a menor com 5.
-    @Pattern(regexp = "^([A-Za-zçá]{4,6})+$", message="{descorp.agendamentoweb.entities.DiasSemana.nome}")
-    @Size(max = 7)
+    @Pattern(regexp = "^([A-Za-zçá])+$", message="{descorp.agendamentoweb.entities.DiasSemana.nome}")
+    @Size(max = 10)
     @Column(name = "nome_dia", nullable = false, length = 20)
     private String nome;
     

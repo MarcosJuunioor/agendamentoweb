@@ -20,6 +20,7 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -50,21 +51,25 @@ public class Profissional implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "nome_profissional", nullable = false, length = 45)
+    @Pattern(regexp = "^(\\b[A-Z]\\w*\\s*)+$", message="{descorp.agendamentoweb.entities.Profissional.nome}")
+    @Size(max = 60)
+    @Column(name = "nome_profissional", nullable = false, length = 60)
     private String nome;
-    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas
+    //Apenas palavras com ou sem acentuação, não sendo permitido caracteres especiais
     @Pattern(regexp = "^([A-Za-záéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ])+$", message="{descorp.agendamentoweb.entities.Profissional.profissao}")
     @Size(max = 60)
-    @Column(name = "profissao", nullable = false, length = 45)
+    @Column(name = "profissao", nullable = false, length = 60)
     private String profissao;
-    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas
+    //Apenas palavras com ou sem acentuação, não sendo permitido caracteres especiais
     @Pattern(regexp = "^([A-Za-záéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ])+$", message="{descorp.agendamentoweb.entities.Profissional.especializacao}")
     @Size(max = 60)
-    @Column(name = "especializacao", nullable = false, length = 45)
+    @Column(name = "especializacao", nullable = false, length = 60)
     private String especializacao;
+    @NotNull
     @Temporal(TemporalType.TIME)
     @Column(name = "hora_inicial", nullable = false)
     private Date horaInicial;
+    @NotNull
     @Temporal(TemporalType.TIME)
     @Column(name = "hora_final", nullable = false)
     private Date horaFinal;

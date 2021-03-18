@@ -1,12 +1,16 @@
 
 package descorp.agendamentoweb.tests.validation;
 
-import descorp.agendamentoweb.entities.Profissional;
+import descorp.agendamentoweb.entities.DiasSemana;
 import descorp.agendamentoweb.tests.GenericTest;
-import java.util.List;
-import javax.persistence.TypedQuery;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import org.hamcrest.CoreMatchers;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 
@@ -16,20 +20,44 @@ import org.junit.Test;
  */
 public class DiasSemanaValidationTest extends GenericTest {
     
-    //Consulta dos profissionais que trabalham em um determinado dia da semana
-    @Test
-    public void profissionaisDiasSemana(){
-        TypedQuery<Profissional> query = em.createQuery(
-                "SELECT p FROM Profissional p "
-                + "JOIN DiasSemana d "
-                + "WHERE p MEMBER OF d.profissionais "
-                + "AND d.nome = :nome_dia",
-                Profissional.class);
-        query.setParameter("nome_dia", "Sexta");
+     @Test(expected = ConstraintViolationException.class) 
+    public void persistirDiasSemanaInvalido() {
+        DiasSemana diasSemana = null;
         
-        List<Profissional> profissionais = query.getResultList();
-        assertNotNull(profissionais);
-        assertEquals("Rafaela Silva", profissionais.get(0).getNome());
+        try {
+            diasSemana = new DiasSemana();
+            diasSemana.setNome("Quarta123");            
+            em.persist(diasSemana);
+            em.flush();
+        } catch (ConstraintViolationException ex) {
+            Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+            System.out.println("TESTEEEEEEEEEEEEEEEEE"+constraintViolations);
+            constraintViolations.forEach(violation -> {               
+                assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),                    
+                        CoreMatchers.anyOf(
+                            startsWith("class descorp.agendamentoweb.entities.DiasSemana.nome: Cada palavra deve iniciar com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não.")
+                        )
+                );
+            });
+            assertEquals(1, constraintViolations.size());
+            assertNull(diasSemana.getId());
+            throw ex;
+        }
     }
+
+    @Test(expected = ConstraintViolationException.class)
+    public void atualizarDiasSemanaInvalido() {
+        DiasSemana diasSemana= em.find(DiasSemana.class, 1L);
+        diasSemana.setNome("Segunda2");//Nome inválido
+
+        try {
+            em.flush();
+        }catch (ConstraintViolationException ex) {
+            ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
+            assertEquals("Cada palavra deve iniciar com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não.", violation.getMessage());
+            assertEquals(1, ex.getConstraintViolations().size());
+            throw ex;
+        }
+    } 
     
 }

@@ -46,17 +46,17 @@ public class ProfissionalCrudTest extends GenericTest{
         query.setParameter("nome", "Maria Eduarda");
         Profissional profissional = query.getSingleResult();
         assertNotNull(profissional);
-        profissional.setNome("Maria Eduarda da Silva");
+        profissional.setNome("Maria Eduarda Silva");
         em.flush();
-        query.setParameter("nome", "Maria Eduarda da Silva");
+        query.setParameter("nome", "Maria Eduarda Silva");
         profissional = query.getSingleResult();
-        assertEquals("Maria Eduarda da Silva", profissional.getNome());
+        assertEquals("Maria Eduarda Silva", profissional.getNome());
     }
     
     @Test
     public void removerProfissional(){
         TypedQuery<Profissional> query = em.createNamedQuery("Profissional.PorNome", Profissional.class);
-        query.setParameter("nome", "Júlia Maria da Silva");
+        query.setParameter("nome", "Julia Maria Silva");
         Profissional profissional = query.getSingleResult();
         assertNotNull(profissional);
         em.remove(profissional);
@@ -65,7 +65,7 @@ public class ProfissionalCrudTest extends GenericTest{
     }
     private static Profissional criarProfissional() {
         Profissional profissional = new Profissional();
-        profissional.setNome("Maria José");
+        profissional.setNome("Maria Jose");
         profissional.setProfissao("Médico");
         profissional.setEspecializacao("Otorrinolaringologista");
         profissional.setHoraInicial(criarHora(8,0,0));
