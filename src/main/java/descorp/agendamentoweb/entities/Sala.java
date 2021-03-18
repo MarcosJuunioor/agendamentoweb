@@ -6,7 +6,6 @@
 package descorp.agendamentoweb.entities;
 
 import java.io.Serializable;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +17,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -43,6 +45,9 @@ public class Sala implements Serializable {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
     private Estabelecimento estabelecimento;
+    @NotNull
+    @Min(1)
+    @Max(99999)
     @Column(name = "num_sala", nullable = false)
     private Integer numSala;
     

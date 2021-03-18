@@ -32,13 +32,13 @@ public class EstabelecimentoCrudTest extends GenericTest{
         assertEquals("8188441409", estabelecimento.getTelefone());
         assertEquals("128322", estabelecimento.getSenha());
         assertEquals("Eveline Esteticista", estabelecimento.getRazaoSocial());
-        assertEquals("1234567891011", estabelecimento.getCNPJ());
+        assertEquals("12.345.678/9101-11", estabelecimento.getCNPJ());
     }
 
     @Test
     public void atualizarEstabelecimento() {
         TypedQuery<Estabelecimento> query = em.createNamedQuery("Estabelecimento.PorCnpj", Estabelecimento.class);
-        query.setParameter("CNPJ", "1234567891011");
+        query.setParameter("CNPJ", "12.345.678/9101-11");
         Estabelecimento estabelecimento = query.getSingleResult();
         assertNotNull(estabelecimento);
         estabelecimento.setRazaoSocial("Recanto da Beleza 2");
@@ -50,7 +50,7 @@ public class EstabelecimentoCrudTest extends GenericTest{
     @Test
     public void removerEstabelecimento(){
         TypedQuery<Estabelecimento> query = em.createNamedQuery("Estabelecimento.PorCnpj", Estabelecimento.class);
-        query.setParameter("CNPJ", "1234567891011");
+        query.setParameter("CNPJ", "12.345.678/9101-11");
         Estabelecimento estabelecimento = query.getSingleResult();
         assertNotNull(estabelecimento);
         em.remove(estabelecimento);
@@ -64,7 +64,7 @@ public class EstabelecimentoCrudTest extends GenericTest{
         estabelecimento.setTelefone("81988771548");
         estabelecimento.setSenha("5487");
         estabelecimento.setRazaoSocial("Recanto da Beleza");
-        estabelecimento.setCNPJ("00156458000199");
+        estabelecimento.setCNPJ("00.156.458/0001-99");
 
         Endereco endereco = em.find(Endereco.class, 3L);
         estabelecimento.setEndereco(endereco);

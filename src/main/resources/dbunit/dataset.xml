@@ -49,40 +49,40 @@
     <!--############## ENDEREÇO ##############--> 
     <!-- Endereço ID 1 -->
     <ENDERECO   bairro="Jordão" 
-                cep="51250490" 
+                cep="51.250-490" 
                 cidade="Recife"
-                estado="Pernambuco"
+                estado="PE"
                 numero="240"
                 rua="Lima Campos"/>
     <!-- Endereço ID 2 -->
     <ENDERECO   bairro="Barro" 
-                cep="24250490" 
+                cep="24.250-490" 
                 cidade="Recife"
-                estado="Pernambuco"
+                estado="PE"
                 numero="20"
                 rua="Dom Pedro I"/>
     <!-- Endereço ID 3 -->
     <ENDERECO   bairro="Boa Vista" 
-                cep="24254789" 
+                cep="24.254-789" 
                 cidade="Recife"
-                estado="Pernambuco"
+                estado="PE"
                 numero="1005"
                 rua="Imperatiz"/>
     
     <!--############## ESTABELECIMENTO ##############--> 
     <!-- Estabelecimento ID 1 (associado ao usuário Eveline) -->
     <ESTABELECIMENTO   id_usuario="3" 
-                       cnpj="1234567891011" 
+                       cnpj="12.345.678/9101-11" 
                        razao_social="Eveline Esteticista"
                        id_endereco="1"/>
     <!-- Estabelecimento ID 2 -->
     <ESTABELECIMENTO   id_usuario="5" 
-                       cnpj="1234567584797" 
+                       cnpj="12.345.675/8479-07" 
                        razao_social="Estetica e CIA"
                        id_endereco="2"/>
     <!-- Estabelecimento ID 3 -->
     <ESTABELECIMENTO   id_usuario="6" 
-                       cnpj="6584567584797" 
+                       cnpj="65.845.675/8479-77" 
                        razao_social="Maria Micropigmentadora"
                        id_endereco="2"/>
    

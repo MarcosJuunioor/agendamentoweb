@@ -29,18 +29,18 @@ public class EnderecoCrudTest extends GenericTest {
     @Test
     public void consultarEndereco() {
         Endereco endereco = em.find(Endereco.class, 1L);
-        assertEquals("51250490", endereco.getCep());
+        assertEquals("51.250-490", endereco.getCep());
         assertEquals("Lima Campos", endereco.getRua());
         assertEquals(240, (int)endereco.getNumero());
         assertEquals("Jordão", endereco.getBairro());
         assertEquals("Recife", endereco.getCidade());
-        assertEquals("Pernambuco", endereco.getEstado());
+        assertEquals("PE", endereco.getEstado());
     }
-
+    
     @Test
     public void atualizarEndereco() {
         TypedQuery<Endereco> query = em.createNamedQuery("Endereco.PorCep", Endereco.class);
-        query.setParameter("cep", "51250490");
+        query.setParameter("cep", "24.250-490");
         Endereco endereco = query.getSingleResult();
         assertNotNull(endereco);
         endereco.setRua("Rua da Luz");
@@ -52,7 +52,7 @@ public class EnderecoCrudTest extends GenericTest {
     @Test
     public void removerEndereco(){
         TypedQuery<Endereco> query = em.createNamedQuery("Endereco.PorCep", Endereco.class);
-        query.setParameter("cep", "51250490");
+        query.setParameter("cep", "51.250-490");
         Endereco endereco = query.getSingleResult();
         assertNotNull(endereco);
         em.remove(endereco);
@@ -62,7 +62,7 @@ public class EnderecoCrudTest extends GenericTest {
 
     private static Endereco criarEndereco() {
         Endereco endereco = new Endereco();
-        endereco.setCep("11111111");
+        endereco.setCep("11.111-111");
         endereco.setRua("Rua 1");
         endereco.setNumero(41);
         endereco.setBairro("Boa Vista");

@@ -8,7 +8,6 @@ package descorp.agendamentoweb.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +18,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -44,18 +49,37 @@ public class Endereco implements Serializable {
     
     @OneToMany(mappedBy = "Endereco", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Estabelecimento> estabelecimentos;
-
-    @Column(name = "cep", nullable = false, length = 9)
+    
+    @NotNull
+    @Pattern(regexp = "[0-90]{2}.[0-9]{3}-[0-9]{3}", message = "{descorp.agendamentoweb.entities.Endereco.cep}")
+    @Column(name = "cep", nullable = false, length = 10)
     private String cep;
-    @Column(name = "rua", nullable = false, length = 45)
+    
+    @NotBlank
+    @Size(max = 150)
+    @Column(name = "rua", nullable = false, length = 150)
     private String rua;
+    
+    @NotNull
+    @Min(1)
+    @Max(99999)
     @Column(name = "numero", nullable = false)
     private Integer numero;
-    @Column(name = "bairro", nullable = false, length = 20)
+    
+    @NotBlank
+    @Size(max = 150)
+    @Column(name = "bairro", nullable = false, length = 150)
     private String bairro;
-    @Column(name = "cidade", nullable = false, length = 30)
+    
+    @NotBlank
+    @Size(max = 50)
+    @Column(name = "cidade", nullable = false, length = 150)
     private String cidade;
-    @Column(name = "estado", nullable = false, length = 20)
+    
+    @NotBlank
+    @ValidaEstado
+    @Size(min = 2, max = 2)
+    @Column(name = "estado", nullable = false)
     private String estado;
     
     public Long getId() {
