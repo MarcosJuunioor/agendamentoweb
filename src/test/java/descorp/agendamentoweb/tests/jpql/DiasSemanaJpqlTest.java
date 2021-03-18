@@ -37,7 +37,7 @@ public class DiasSemanaJpqlTest extends GenericTest{
                 + "WHERE p MEMBER OF d.profissionais "
                 + "AND d.nome = :nome_dia",
                 Profissional.class);
-        query.setParameter("nome_dia", "sexta");
+        query.setParameter("nome_dia", "Sexta");
         
         List<Profissional> profissionais = query.getResultList();
         assertNotNull(profissionais);

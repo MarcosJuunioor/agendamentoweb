@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package descorp.agendamentoweb.entities;
 
 import java.io.Serializable;
@@ -16,10 +12,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author TaynÃ¡
+ * @author Evellinne;
  */
 @Entity
 @Table(name="dias_semana")
@@ -38,6 +37,9 @@ public class DiasSemana implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não, sendo a maior palavra com 7 letras e a menor com 5.
+    @Pattern(regexp = "^([A-Za-zçá]{4,6})+$", message="{descorp.agendamentoweb.entities.DiasSemana.nome}")
+    @Size(max = 7)
     @Column(name = "nome_dia", nullable = false, length = 20)
     private String nome;
     

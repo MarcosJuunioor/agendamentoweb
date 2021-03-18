@@ -131,19 +131,19 @@
     
     <!--############## DIAS DA SEMANA ##############--> 
     <!-- DIAS DA SEMANA ID 1 -->
-    <DIAS_SEMANA   nome_dia="segunda"/>
+    <DIAS_SEMANA   nome_dia="Segunda"/>
     <!-- DIAS DA SEMANA ID 2 -->
-    <DIAS_SEMANA   nome_dia="terça"/>
+    <DIAS_SEMANA   nome_dia="Terça"/>
     <!-- DIAS DA SEMANA ID 3 -->
-    <DIAS_SEMANA   nome_dia="quarta"/>
+    <DIAS_SEMANA   nome_dia="Quarta"/>
     <!-- DIAS DA SEMANA ID 4 -->
-    <DIAS_SEMANA   nome_dia="quinta"/>
+    <DIAS_SEMANA   nome_dia="Quinta"/>
     <!-- DIAS DA SEMANA ID 5 -->
-    <DIAS_SEMANA   nome_dia="sexta"/>
+    <DIAS_SEMANA   nome_dia="Sexta"/>
     <!-- DIAS DA SEMANA ID 6 -->
-    <DIAS_SEMANA   nome_dia="sábado"/>
+    <DIAS_SEMANA   nome_dia="sSábado"/>
     <!-- DIAS DA SEMANA ID 7 -->
-    <DIAS_SEMANA   nome_dia="domingo"/>
+    <DIAS_SEMANA   nome_dia="Domingo"/>
     
     <!--############## AGENDAMENTO ##############--> 
     <!-- AGENDAMENTO ID 1 -->
