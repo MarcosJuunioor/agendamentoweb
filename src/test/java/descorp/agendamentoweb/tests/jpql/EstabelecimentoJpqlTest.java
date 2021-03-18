@@ -7,8 +7,6 @@ package descorp.agendamentoweb.tests.jpql;
 
 import descorp.agendamentoweb.tests.GenericTest;
 import descorp.agendamentoweb.entities.Estabelecimento;
-import java.text.SimpleDateFormat;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -24,7 +22,7 @@ public class EstabelecimentoJpqlTest extends GenericTest{
         TypedQuery<Estabelecimento> query = em.createQuery(
                 "SELECT e FROM Estabelecimento e WHERE e.CNPJ LIKE :CNPJ",
                 Estabelecimento.class);
-        query.setParameter("CNPJ", "1234567584797");
+        query.setParameter("CNPJ", "12.345.675/8479-07");
         Estabelecimento estabelecimento = query.getSingleResult();
 
         assertNotNull(estabelecimento);

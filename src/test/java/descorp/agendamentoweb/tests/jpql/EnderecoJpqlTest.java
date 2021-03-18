@@ -21,7 +21,7 @@ public class EnderecoJpqlTest extends GenericTest{
         TypedQuery<Endereco> query = em.createQuery(
                 "SELECT en FROM Endereco en WHERE en.cep LIKE :cep",
                 Endereco.class);
-        query.setParameter("cep", "24250490");
+        query.setParameter("cep", "24.250-490");
         Endereco endereco = query.getSingleResult();
         assertNotNull(endereco);
     }

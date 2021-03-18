@@ -21,6 +21,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /**
  *
@@ -45,13 +48,17 @@ public class Estabelecimento extends Usuario implements Serializable {
             optional = false, fetch = FetchType.LAZY, orphanRemoval = true)
     private Sala sala;
     
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
     private Endereco endereco;
     
+    @NotBlank
     @Column(name = "razao_social", nullable = false, length = 50)
     private String razaoSocial;
-    @Column(name = "cnpj", nullable = false, length = 30)
+    @NotNull
+    @Pattern(regexp = "[0-9]{2}.[0-9]{3}.[0-9]{3}/[0-9]{4}-[0-9]{2}", message="{descorp.agendamentoweb.entities.Estabelecimento.CNPJ}")
+    @Column(name = "cnpj", nullable = false, length = 18)
     private String CNPJ;
 
     public Sala getSala() {
@@ -74,6 +81,11 @@ public class Estabelecimento extends Usuario implements Serializable {
      */
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
+    }
+    
+    public Endereco criarEndereco() {
+        this.setEndereco(new Endereco());
+        return getEndereco();
     }
 
 

@@ -19,6 +19,9 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 /*
  * @Entity informa que a classe é uma entidade JPA.
@@ -43,10 +46,14 @@ public abstract class Usuario implements Serializable {
      * Por padrão, se o nome do atributo é o nome do campo na tabela, nada
      * precisa ser feito em termos de mapeamento.
      */
+    @NotNull
+    @Email
     @Column(name = "email", nullable = false, length = 50)
     protected String email;
+    @NotNull
     @Column(name = "telefone", nullable = false, length = 20)
     protected String telefone;
+    @NotNull
     @Column(name = "senha", nullable = false, length = 20)
     protected String senha;
     
