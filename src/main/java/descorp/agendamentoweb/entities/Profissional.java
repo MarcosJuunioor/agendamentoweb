@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package descorp.agendamentoweb.entities;
 
 import java.io.Serializable;
@@ -24,10 +20,13 @@ import javax.persistence.TemporalType;
 import java.util.Date;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
- *
+ * 
  * @author TaynÃ¡
+ * @author Evellinne;
  */
 @Entity
 @Table(name="profissional")
@@ -37,6 +36,11 @@ import javax.persistence.NamedQuery;
                     name = "Profissional.PorNome",
                     query = "SELECT p FROM Profissional p "
                             + "WHERE p.nome = :nome"
+            ),
+            @NamedQuery(
+                    name = "Profissional.PorId",
+                    query = "SELECT p FROM Profissional p "
+                            + "WHERE p.id = :id"
             )
         }
 )
@@ -48,8 +52,14 @@ public class Profissional implements Serializable {
     private Long id;
     @Column(name = "nome_profissional", nullable = false, length = 45)
     private String nome;
+    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas
+    @Pattern(regexp = "^([A-Za-záéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ])+$", message="{descorp.agendamentoweb.entities.Profissional.profissao}")
+    @Size(max = 60)
     @Column(name = "profissao", nullable = false, length = 45)
     private String profissao;
+    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas
+    @Pattern(regexp = "^([A-Za-záéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ])+$", message="{descorp.agendamentoweb.entities.Profissional.especializacao}")
+    @Size(max = 60)
     @Column(name = "especializacao", nullable = false, length = 45)
     private String especializacao;
     @Temporal(TemporalType.TIME)

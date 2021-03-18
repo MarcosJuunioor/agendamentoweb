@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author marco
+ * @author Evellinne
  */
 public class DiasSemanaCrudTest extends GenericTest{
     @Test
@@ -30,27 +30,27 @@ public class DiasSemanaCrudTest extends GenericTest{
     @Test
     public void consultarDiasSemana(){
         DiasSemana diasSemana = em.find(DiasSemana.class, 1L);
-        assertEquals("segunda", diasSemana.getNome());      
+        assertEquals("Segunda", diasSemana.getNome());      
        
     }
           
     @Test
     public void atualizarDiasSemana(){
         TypedQuery<DiasSemana> query = em.createNamedQuery("DiasSemana.PorNome", DiasSemana.class);
-        query.setParameter("nome", "segunda");
+        query.setParameter("nome", "Segunda");
         DiasSemana dia = query.getSingleResult();
         assertNotNull(dia);
-        dia.setNome("segunda-feira");
+        dia.setNome("Segunda");
         em.flush();
-        query.setParameter("nome", "segunda-feira");
+        query.setParameter("nome", "Segunda");
         dia = query.getSingleResult();
-        assertEquals("segunda-feira", dia.getNome());
+        assertEquals("Segunda", dia.getNome());
     }
     
     @Test
     public void removerProcedimento(){
         TypedQuery<DiasSemana> query = em.createNamedQuery("DiasSemana.PorNome", DiasSemana.class);
-        query.setParameter("nome", "quarta");
+        query.setParameter("nome", "Quarta");
         DiasSemana dia = query.getSingleResult();
         assertNotNull(dia);
         em.remove(dia);
@@ -60,7 +60,7 @@ public class DiasSemanaCrudTest extends GenericTest{
     
     private static DiasSemana criarDiasSemana() {
         DiasSemana diasSemana = new DiasSemana();
-        diasSemana.setNome("terça-feira");
+        diasSemana.setNome("Terça");
         return diasSemana;
     }
 
