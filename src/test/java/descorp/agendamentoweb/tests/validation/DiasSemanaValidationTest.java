@@ -31,13 +31,13 @@ public class DiasSemanaValidationTest extends GenericTest {
             em.flush();
         } catch (ConstraintViolationException ex) {
             Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
-            System.out.println("TESTEEEEEEEEEEEEEEEEE"+constraintViolations);
+
             constraintViolations.forEach(violation -> {               
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),                    
                         CoreMatchers.anyOf(
                             startsWith("class descorp.agendamentoweb.entities.DiasSemana.nome: Cada palavra deve iniciar com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não.")
                         )
-                );
+                ); 
             });
             assertEquals(1, constraintViolations.size());
             assertNull(diasSemana.getId());
