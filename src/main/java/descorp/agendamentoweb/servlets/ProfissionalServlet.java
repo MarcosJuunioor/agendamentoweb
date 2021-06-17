@@ -8,6 +8,7 @@ package descorp.agendamentoweb.servlets;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author marco
  */
-public class AgendamentoServlet extends HttpServlet {
+@WebServlet(name = "ProfissionalServlet", urlPatterns = {"/profissionais"})
+public class ProfissionalServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -27,16 +29,21 @@ public class AgendamentoServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    // path = agendamentos/calendario
-    protected void getCalendario(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //código para gerar calendário e retornar a página
-    }
-
-    // path = agendamentos/horarios
-    protected void getHorarios(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //código para gerar horários e retornar a página
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ProfissionalServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ProfissionalServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,14 +58,7 @@ public class AgendamentoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Extrai o nome do método a ser executado da URI de requisição
-        String endPoint = request.getRequestURI().split("/")[3];
-
-        if (endPoint.equals("calendario")) {
-            getCalendario(request, response);
-        } else if (endPoint.equals("horarios")) {
-            getHorarios(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -72,8 +72,7 @@ public class AgendamentoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Extrai o nome do método a ser executado da URI de requisição
-        String endPoint = request.getRequestURI().split("/")[3];
+        processRequest(request, response);
     }
 
     /**

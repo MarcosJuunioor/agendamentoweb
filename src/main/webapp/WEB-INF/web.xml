@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
-	 version="4.0">
+<web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+    <servlet>
+        <servlet-name>AgendamentoServlet</servlet-name>
+        <servlet-class>descorp.agendamentoweb.servlets.AgendamentoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProcedimentoServlet</servlet-name>
+        <servlet-class>descorp.agendamentoweb.servlets.ProcedimentoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfissionalServlet</servlet-name>
+        <servlet-class>descorp.agendamentoweb.servlets.ProfissionalServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AgendamentoServlet</servlet-name>
+        <url-pattern>/agendamentos/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProcedimentoServlet</servlet-name>
+        <url-pattern>/procedimentos</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfissionalServlet</servlet-name>
+        <url-pattern>/profissionais</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
