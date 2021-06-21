@@ -31,6 +31,7 @@ public class AgendamentoServlet extends HttpServlet {
     protected void getCalendario(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //código para gerar calendário e retornar a página
+        request.getRequestDispatcher("/calendario.xhtml").forward(request, response);
     }
 
     // path = agendamentos/horarios
