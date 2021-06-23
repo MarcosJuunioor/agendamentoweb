@@ -5,6 +5,8 @@
  */
 package descorp.agendamentoweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
@@ -40,6 +42,9 @@ import javax.validation.constraints.NotNull;
             )
         }
 )
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Agendamento implements Serializable {
 
     private static final long serialVersionUID = 1L;

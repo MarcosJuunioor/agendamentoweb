@@ -5,6 +5,8 @@
  */
 package descorp.agendamentoweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,6 +44,9 @@ import javax.validation.constraints.Pattern;
             )
         }
 )
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Estabelecimento extends Usuario implements Serializable {
     
     @OneToOne(mappedBy = "estabelecimento", 

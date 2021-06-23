@@ -5,8 +5,13 @@
  */
 package descorp.agendamentoweb.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import descorp.agendamentoweb.entities.Profissional;
+import descorp.agendamentoweb.models.ProfissionalModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +23,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AgendamentoServlet extends HttpServlet {
 
+    private final ProfissionalModel profissionalModel;
+
+    public AgendamentoServlet() {
+        this.profissionalModel = new ProfissionalModel();
+    }
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -27,17 +38,44 @@ public class AgendamentoServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    // path = agendamentos/calendario
+    // path = agendamentos/calendario (GET)
     protected void getCalendario(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        Long idProfissional = 1L;
+        request.getSession().setAttribute("idProfissional", idProfissional);
         //código para gerar calendário e retornar a página
         request.getRequestDispatcher("/calendario.xhtml").forward(request, response);
     }
 
-    // path = agendamentos/horarios
+    // path = agendamentos/horarios (GET)
     protected void getHorarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //código para gerar horários e retornar a página
+    }
+
+    // path = agendamentos/datas-indisponiveis (GET)
+    protected void getDatasIndisponiveis(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ArrayList<Date> datasIndisponiveis = new ArrayList<Date>();
+        String json = new ObjectMapper().writeValueAsString(datasIndisponiveis);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
+    }
+
+    // path = agendamentos/dias-profissional(GET)
+    protected void getDiasDaSemanaDoProfissional(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Long idProfissional = (Long) request.getSession().getAttribute("idProfissional");
+        
+        Profissional profissional = this.profissionalModel.consultarProfissional(idProfissional);
+        String json = new ObjectMapper().writeValueAsString(profissional.getDiasSemana());
+        
+        
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -59,6 +97,10 @@ public class AgendamentoServlet extends HttpServlet {
             getCalendario(request, response);
         } else if (endPoint.equals("horarios")) {
             getHorarios(request, response);
+        } else if (endPoint.equals("datas-indisponiveis")) {
+            getDatasIndisponiveis(request, response);
+        } else if (endPoint.equals("dias-profissional")) {
+            getDiasDaSemanaDoProfissional(request, response);
         }
     }
 

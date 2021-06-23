@@ -5,10 +5,19 @@
  */
 package descorp.agendamentoweb.models;
 
+import descorp.agendamentoweb.entities.Profissional;
+
 /**
  *
  * @author marco
  */
-public class ProfissionalModel {
-    
+public class ProfissionalModel extends GenericModel{
+    public ProfissionalModel(){
+        super();
+    }
+
+    public Profissional consultarProfissional(Long id) {
+        return em.find(Profissional.class, id);
+    }
+
 }

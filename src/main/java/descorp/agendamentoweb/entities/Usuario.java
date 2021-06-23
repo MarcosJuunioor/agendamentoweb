@@ -4,6 +4,8 @@ package descorp.agendamentoweb.entities;
  *
  * @author marco
  */
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -33,6 +35,9 @@ import javax.validation.constraints.Pattern;
 @Inheritance(strategy = InheritanceType.JOINED) 
 @DiscriminatorColumn(name = "DISC_USUARIO", 
         discriminatorType = DiscriminatorType.STRING, length = 1)
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public abstract class Usuario implements Serializable {
     /*
      * @Id informa que o atributo representa a chave primária.

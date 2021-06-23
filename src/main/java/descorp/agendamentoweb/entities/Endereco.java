@@ -5,6 +5,8 @@
  */
 package descorp.agendamentoweb.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,9 @@ import javax.validation.constraints.Size;
             )
         }
 )
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "id")
 public class Endereco implements Serializable {
 
     private static final long serialVersionUID = 1L;
