@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,7 +49,7 @@ public class DiasSemana implements Serializable {
     @Column(name = "nome_dia", nullable = false, length = 20)
     private String nome;
     
-    @ManyToMany(mappedBy = "diasSemana")
+    @ManyToMany(mappedBy = "diasSemana", fetch = FetchType.LAZY)
     private List<Profissional> profissionais;
     
     public Long getId() {

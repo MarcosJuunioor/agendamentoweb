@@ -6,6 +6,7 @@
 package descorp.agendamentoweb.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import descorp.agendamentoweb.entities.DiasSemana;
 import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.models.ProfissionalModel;
 import java.io.IOException;
@@ -70,7 +71,12 @@ public class AgendamentoServlet extends HttpServlet {
         Long idProfissional = (Long) request.getSession().getAttribute("idProfissional");
         
         Profissional profissional = this.profissionalModel.consultarProfissional(idProfissional);
-        String json = new ObjectMapper().writeValueAsString(profissional.getDiasSemana());
+        ArrayList<String> diasDaSemanaProfissional = new ArrayList<String>() ;
+        
+        for(DiasSemana dia: profissional.getDiasSemana()){
+            diasDaSemanaProfissional.add(dia.getNome());
+        }
+        String json = new ObjectMapper().writeValueAsString(diasDaSemanaProfissional);
         
         
         response.setContentType("application/json");
