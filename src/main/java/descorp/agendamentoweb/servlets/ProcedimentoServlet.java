@@ -56,7 +56,8 @@ public class ProcedimentoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        request.getRequestDispatcher("/procedimentos.xhtml").forward(request, response);
     }
 
     /**
