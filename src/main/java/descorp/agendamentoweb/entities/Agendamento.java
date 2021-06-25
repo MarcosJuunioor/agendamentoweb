@@ -32,19 +32,25 @@ import javax.validation.constraints.NotNull;
  * @author Tayná
  */
 @Entity
-@Table(name="agendamento")
+@Table(name = "agendamento")
 @NamedQueries(
         {
             @NamedQuery(
                     name = "Agendamento.PorData",
                     query = "SELECT a FROM Agendamento a "
-                            + "WHERE a.data = :data"
+                    + "WHERE a.data = :data"
+            ),
+            @NamedQuery(
+                    name = "Agendamento.Indisponiveis",
+                    query = "SELECT a FROM Agendamento a "
+                    + "WHERE a.data >= CURRENT_DATE "
+                    + "ORDER BY a.data"
             )
         }
 )
 @JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Agendamento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +59,7 @@ public class Agendamento implements Serializable {
     private Long id;
     @Temporal(TemporalType.DATE)
     @Column(name = "data", nullable = false)
-    @Future 
+    @Future
     @NotNull
     private Date data;
     @Temporal(TemporalType.TIME)
@@ -77,7 +83,7 @@ public class Agendamento implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public Date getData() {
         return data;
     }
@@ -93,7 +99,7 @@ public class Agendamento implements Serializable {
     public void setHora(Date hora) {
         this.hora = hora;
     }
-    
+
     public Procedimento getProcedimento() {
         return procedimento;
     }
@@ -142,5 +148,5 @@ public class Agendamento implements Serializable {
     public String toString() {
         return "descorp.agendamento.web.entities.Agendamento[ id=" + id + " ]";
     }
-    
+
 }

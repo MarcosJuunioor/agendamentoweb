@@ -6,16 +6,6 @@
     
 //Configuração do prime faces para o calendário em português
 PrimeFaces.locales['pt'] = {closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia'};
-//Pega as datas indisponíveis para agendamento
-const xhttpDatasIndisponiveis = new XMLHttpRequest();
-xhttpDatasIndisponiveis.onload = function () {
-    datasIndisponiveis = JSON.parse(this.responseText);
-    console.log(datasIndisponiveis);
-};
-xhttpDatasIndisponiveis.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/datas-indisponiveis");
-xhttpDatasIndisponiveis.send();
-
-
 //Data atual
 today = Date();
     
@@ -29,6 +19,21 @@ diasSemana = [
     {nome: "Sábado", num:6},
 ];
 disabledDays = [];
+disabledDates = [];
+
+//Pega as datas indisponíveis para agendamento
+const xhttpDatasIndisponiveis = new XMLHttpRequest();
+xhttpDatasIndisponiveis.onload = function () {
+    datasIndisponiveis = JSON.parse(this.responseText);
+    datasIndisponiveis.forEach(function(dataIndisponivel){
+        disabledDates.push(dataIndisponivel);
+        
+    }
+    );
+};
+xhttpDatasIndisponiveis.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/datas-indisponiveis", false);
+xhttpDatasIndisponiveis.send();
+
 
 //Pega os dias da semana em que o profissional trabalha
 const xhttpDiasProfissional = new XMLHttpRequest();
@@ -50,7 +55,7 @@ xhttpDiasProfissional.onload = function () {
         }
     });
 };
-xhttpDiasProfissional.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/dias-profissional", true);
+xhttpDiasProfissional.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/dias-profissional", false);
 xhttpDiasProfissional.send();
     
     
@@ -60,9 +65,32 @@ function disableAllTheseDays(date) {
     var disable = true;
     disabledDays.forEach(function (disableDay) {
         if (disableDay === day) {
-        disable = false;
+            disable = false;
         }
     });
+    disabledDates.forEach(function (disableDate) {
+        if (disableDate === formatDate(date)) {
+            disable = false;
+        }
+    });
+    
     return [disable, ''];
     
+}
+
+    
+
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }

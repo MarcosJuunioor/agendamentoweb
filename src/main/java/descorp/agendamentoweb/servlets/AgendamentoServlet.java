@@ -6,13 +6,16 @@
 package descorp.agendamentoweb.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.DiasSemana;
 import descorp.agendamentoweb.entities.Profissional;
+import descorp.agendamentoweb.models.AgendamentoModel;
 import descorp.agendamentoweb.models.ProfissionalModel;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +28,11 @@ import javax.servlet.http.HttpServletResponse;
 public class AgendamentoServlet extends HttpServlet {
 
     private final ProfissionalModel profissionalModel;
+    private final AgendamentoModel agendamentoModel;
 
     public AgendamentoServlet() {
         this.profissionalModel = new ProfissionalModel();
+        this.agendamentoModel = new AgendamentoModel();
     }
 
     /**
@@ -58,7 +63,27 @@ public class AgendamentoServlet extends HttpServlet {
     // path = agendamentos/datas-indisponiveis (GET)
     protected void getDatasIndisponiveis(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Date> datasIndisponiveis = new ArrayList<Date>();
+        List<Agendamento> agendamentos = this.agendamentoModel.consultarDatasIndisponiveis();
+        ArrayList<String> datasIndisponiveis = new ArrayList<String>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        int i = 0;
+        int contador = 1;
+        for (Agendamento a : agendamentos) {
+            i++;
+            if (i > 1) {
+                String dataAtual = df.format(a.getData());
+                String dataAnterior = df.format(agendamentos.get(i - 1).getData());
+                if (dataAtual.equals(dataAnterior)) {
+                    contador++;
+                } else {
+                    contador = 1;
+                }
+            }
+            if (contador == 6) {
+                datasIndisponiveis.add(df.format(a.getData()));
+            }
+        }
+
         String json = new ObjectMapper().writeValueAsString(datasIndisponiveis);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -69,16 +94,15 @@ public class AgendamentoServlet extends HttpServlet {
     protected void getDiasDaSemanaDoProfissional(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Long idProfissional = (Long) request.getSession().getAttribute("idProfissional");
-        
+
         Profissional profissional = this.profissionalModel.consultarProfissional(idProfissional);
-        ArrayList<String> diasDaSemanaProfissional = new ArrayList<String>() ;
-        
-        for(DiasSemana dia: profissional.getDiasSemana()){
+        ArrayList<String> diasDaSemanaProfissional = new ArrayList<String>();
+
+        for (DiasSemana dia : profissional.getDiasSemana()) {
             diasDaSemanaProfissional.add(dia.getNome());
         }
         String json = new ObjectMapper().writeValueAsString(diasDaSemanaProfissional);
-        
-        
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(json);
@@ -123,6 +147,15 @@ public class AgendamentoServlet extends HttpServlet {
             throws ServletException, IOException {
         //Extrai o nome do método a ser executado da URI de requisição
         String endPoint = request.getRequestURI().split("/")[3];
+        
+        String json = new ObjectMapper().writeValueAsString(request.getParameter("calendario:c1_input"));
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
+        if (endPoint.equals("horarios")) {
+            //redirect para horários disponíveis
+        }
     }
 
     /**

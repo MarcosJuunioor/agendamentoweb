@@ -79,6 +79,6 @@ public class ClienteJpqlTest extends GenericTest{
         queryCliente.setParameter("data", data);
         Cliente cliente = queryCliente.getSingleResult();
         assertNotNull(cliente);
-        assertEquals("Tayná Alexandra",cliente.getNome());
+        assertEquals("Marcos Antonio",cliente.getNome());
     }
 }

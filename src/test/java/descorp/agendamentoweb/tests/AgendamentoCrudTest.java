@@ -44,7 +44,7 @@ public class AgendamentoCrudTest extends GenericTest{
     @Test
     public void atualizarAgendamento() {
         TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorData", Agendamento.class);
-        query.setParameter("data", criarData(19,Calendar.APRIL,2021));
+        query.setParameter("data", criarData(16,Calendar.JULY,2021));
         Agendamento agendamento = query.getSingleResult();
         assertNotNull(agendamento);
         Date dataNova = criarData(28,Calendar.FEBRUARY,2022);
