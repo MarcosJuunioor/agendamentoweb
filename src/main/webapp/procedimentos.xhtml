@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10">
+                <f:facet name="header">
+                    Lista de Procedimentos
+                </f:facet>
+                <p:column style="width:2rem">
+                    <p:rowToggler/>
+                </p:column>
+                <p:column headerText="Natureza">
+                    <h:outputText value="#{procedimento.natureza}" />
+                </p:column>
+                <p:column headerText="Duracao">
+                    <h:outputText value="#{procedimento.duracao}" />
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{procedimento.nome}" />
+                </p:column>
+                <p:rowExpansion>
+                    <p:orderList value="#{procedimento.profissionais}" var="profissional" controlsLocation="none" itemLabel="#{profissional.nome}" itemValue="#{profissional.nome}" />
+                </p:rowExpansion>
+            </p:dataTable>
+            
+        </h:form>
+    </h:body>
+</html>

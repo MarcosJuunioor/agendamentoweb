@@ -1,14 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package descorp.agendamentoweb.models;
 
+import descorp.agendamentoweb.entities.Procedimento;
+import static descorp.agendamentoweb.models.GenericModel.em;
+import java.util.List;
+import javax.ejb.Stateless;
 /**
  *
  * @author marco
  */
-public class ProcedimentoModel {
+@Stateless
+public class ProcedimentoModel extends GenericModel{
     
+    public Procedimento consultarProcediemnto(Long id) {
+        return em.find(Procedimento.class, id);
+    }
+    
+    public List<Procedimento> todosProcedimentos() {
+        return em.createNamedQuery(Procedimento.PROCEDIMENTO_TODOS).getResultList();
+    }
 }
