@@ -5,10 +5,10 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        
+
     </h:head>
     <h:body>
-        <h:form>
+        <h:form id="procedimentos"> 
             <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10">
                 <f:facet name="header">
                     Lista de Procedimentos
@@ -26,10 +26,14 @@
                     <h:outputText value="#{procedimento.nome}" />
                 </p:column>
                 <p:rowExpansion>
-                    <p:orderList value="#{procedimento.profissionais}" var="profissional" controlsLocation="none" itemLabel="#{profissional.nome}" itemValue="#{profissional.nome}" />
+                    <p:orderList value="#{procedimento.profissionais}" var="profissional" controlsLocation="none" itemLabel="#{profissional.nome}" itemValue="#{profissional.id}">
+                        <p:ajax event="select" oncomplete="window.location.href = 'http://localhost:8080/agendamentoweb/agendamentos/calendario';" />
+                        
+                    </p:orderList>
+
                 </p:rowExpansion>
             </p:dataTable>
-            
+
         </h:form>
     </h:body>
 </html>

@@ -147,7 +147,7 @@ public class AgendamentoServlet extends HttpServlet {
             throws ServletException, IOException {
         //Extrai o nome do método a ser executado da URI de requisição
         String endPoint = request.getRequestURI().split("/")[3];
-        
+
         String json = new ObjectMapper().writeValueAsString(request.getParameter("calendario:c1_input"));
 
         response.setContentType("application/json");
@@ -155,6 +155,8 @@ public class AgendamentoServlet extends HttpServlet {
         response.getWriter().write(json);
         if (endPoint.equals("horarios")) {
             //redirect para horários disponíveis
+        } else if (endPoint.equals("calendario")) { 
+            getCalendario(request, response);
         }
     }
 

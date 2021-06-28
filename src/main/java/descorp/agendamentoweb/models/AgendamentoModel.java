@@ -25,4 +25,6 @@ public class AgendamentoModel extends GenericModel {
         List<Agendamento> agendamentos = query.getResultList();
         return agendamentos;
     }
+    
+    
 }
