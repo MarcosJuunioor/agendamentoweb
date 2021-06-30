@@ -58,6 +58,7 @@ public class AgendamentoServlet extends HttpServlet {
     protected void getHorarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //código para gerar horários e retornar a página
+        request.getRequestDispatcher("/horarios.xhtml").forward(request, response);
     }
 
     // path = agendamentos/datas-indisponiveis (GET)
@@ -147,14 +148,11 @@ public class AgendamentoServlet extends HttpServlet {
             throws ServletException, IOException {
         //Extrai o nome do método a ser executado da URI de requisição
         String endPoint = request.getRequestURI().split("/")[3];
-        
-        String json = new ObjectMapper().writeValueAsString(request.getParameter("calendario:c1_input"));
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(json);
         if (endPoint.equals("horarios")) {
-            //redirect para horários disponíveis
+            getHorarios(request, response);
+        } else if (endPoint.equals("calendario")) { 
+            getCalendario(request, response);
         }
     }
 

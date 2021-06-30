@@ -6,8 +6,6 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <h:outputScript library="js" name="calendario.js" />
-        <h:outputStylesheet library="css" name="calendario.css"/>
         <h:outputStylesheet library="css" name="geral.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -35,20 +33,7 @@
             </h:form>
         </div>
         <div class="container content">
-            <div class="row">
-                <div class="col">
-                </div>
-                <div class="col-6">
-                    <h:form id="calendario">
-                        <p:calendar id="c1" pattern="dd/MM/yyyy"   mindate="today"
-                                    widgetVar="calendarWidget" beforeShowDay="disableAllTheseDays" locale="pt" mode="inline" >
-                            <p:ajax event="dateSelect" oncomplete="enviarData()" />
-                        </p:calendar>
-                    </h:form>
-                </div>
-                <div class="col">
-                </div>
-            </div>
+            
         </div>
 
     </h:body>

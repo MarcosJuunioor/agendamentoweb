@@ -21,6 +21,7 @@ diasSemana = [
 disabledDays = [];
 disabledDates = [];
 
+
 //Pega as datas indisponíveis para agendamento
 const xhttpDatasIndisponiveis = new XMLHttpRequest();
 xhttpDatasIndisponiveis.onload = function () {
@@ -94,3 +95,9 @@ function formatDate(date) {
 
     return [year, month, day].join('-');
 }
+
+function enviarData(){
+    var data = document.getElementById("calendario:c1_input").value;
+    window.location.href = 'http://localhost:8080/agendamentoweb/agendamentos/horarios?data='+data;
+}
+

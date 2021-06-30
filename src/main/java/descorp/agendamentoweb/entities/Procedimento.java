@@ -36,9 +36,13 @@ import javax.validation.constraints.NotNull;
 @NamedQueries(
         {
             @NamedQuery(
-                    name = "Procedimento.PorNome",
+                    name = Procedimento.PROCEDIMENTO_POR_NOME,
                     query = "SELECT p FROM Procedimento p "
                             + "WHERE p.nome = :nome"
+            ),
+            @NamedQuery(
+                    name = Procedimento.PROCEDIMENTO_TODOS,
+                    query = "SELECT p FROM Procedimento p"
             )
         }
 )
@@ -46,7 +50,10 @@ import javax.validation.constraints.NotNull;
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
 public class Procedimento implements Serializable {
-
+    
+    public static final String PROCEDIMENTO_POR_NOME = "Procedimento.PorNome";
+    public static final String PROCEDIMENTO_TODOS = "Procedimento.TodosProcedimentos";
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
