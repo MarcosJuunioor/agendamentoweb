@@ -5,8 +5,14 @@
  */
 package descorp.agendamentoweb.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import descorp.agendamentoweb.entities.Procedimento;
+import descorp.agendamentoweb.entities.Profissional;
+import descorp.agendamentoweb.models.ProcedimentoModel;
+import descorp.agendamentoweb.models.ProfissionalModel;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +23,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author marco
  */
 public class ProcedimentoServlet extends HttpServlet {
+    private final ProcedimentoModel procedimentoModel;
+    
+    public ProcedimentoServlet(){
+        this.procedimentoModel = new ProcedimentoModel();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,7 +67,9 @@ public class ProcedimentoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
+ 
+        request.setAttribute("procedimentos", this.procedimentoModel.todosProcedimentos());
+  
         request.getRequestDispatcher("/procedimentos.xhtml").forward(request, response);
     }
 
