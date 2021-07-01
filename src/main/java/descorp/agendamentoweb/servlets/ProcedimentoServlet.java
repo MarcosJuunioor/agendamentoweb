@@ -37,7 +37,7 @@ public class ProcedimentoServlet extends HttpServlet {
     }
     //path = procedimentos/listar-procedimentos
     protected void getListaProcedimentos(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");  
+        SimpleDateFormat fmt = new SimpleDateFormat("hh:mm:ss");  
         String json = "[";
         
         for(Procedimento proc: this.procedimentoModel.todosProcedimentos()){
