@@ -27,7 +27,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProcedimentoServlet</servlet-name>
-        <url-pattern>/procedimentos</url-pattern>
+        <url-pattern>/procedimentos/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProfissionalServlet</servlet-name>
