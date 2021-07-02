@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version="1.0" encoding="windows-1252"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -8,30 +8,54 @@
         <h:outputScript library="js" name="procedimento.js" />
     </h:head>
     <h:body>
-        <h:form>
-            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10">
+        <h:form id="form">
+             <p:growl id="msgs" showDetail="true"/>
+            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" editable="true">
                 <f:facet name="header">
                     Lista de Procedimentos
                 </f:facet>
-                <p:column style="width:2rem">
-                    <p:rowToggler/>
-                </p:column>
+                <p:ajax event="rowEdit" listener="#{procedimentoController.editarProcedimento}" update=":form:msgs"/>
+                
                 <p:column headerText="Natureza">
-                    <h:outputText value="#{procedimento.natureza}" />
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{procedimento.natureza}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{procedimento.natureza}" style="width:100%" label="Natureza"/>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
-                <p:column headerText="Duracao">
-                    <h:outputText value="#{procedimento.duracao}" />
-                </p:column>
+                <!--<p:column headerText="Duracao">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                             <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" /> 
+                            <h:outputText value="#{procedimento.duracao}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu value="#{procedimento.duracao}" style="width:100%">
+                                <f:selectItems value="#{procedimentoController.duracoes}" var="duracao" itemLabel="#{procedimentoController.getDuracaoFMT(duracao)}" itemValue="#{duracao}"/>
+                                <f:facet name="footer">
+                                    <p:divider styleClass="p-mt-0" />
+                                    <h:outputText value="Hora:Minuto" style="font-weight:bold;"/>
+                                </f:facet>
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>-->
                 <p:column headerText="Nome">
-                    <h:outputText value="#{procedimento.nome}" />
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{procedimento.nome}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{procedimento.nome}" style="width:100%" label="Nome"/>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
-                <p:rowExpansion>
-                    <div class="list">
-                    <p:repeat value="#{procedimento.profissionais}" var="profissional">
-                        <p:button value="#{profissional.nome}" styleClass="ui-button-secondary ui-button-flat" onclick="agendar(#{procedimento.id},  #{profissional.id})"/>
-                    </p:repeat>
-                    </div>
-                </p:rowExpansion>
+                <p:column style="width:6rem">
+                    <p:rowEditor editTitle="Editar procedimento" cancelTitle="Cancelar" saveTitle="Salvar"/>
+                </p:column>
             </p:dataTable>            
             
         </h:form>

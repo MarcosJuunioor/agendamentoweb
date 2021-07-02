@@ -26,14 +26,22 @@ public class ProcedimentoServlet extends HttpServlet {
     public ProcedimentoServlet(){
         this.procedimentoModel = new ProcedimentoModel();
     }
-    
-    // path = procedimentos/procedimento (GET)
+        // path = procedimentos (GET)
     protected void getProcedimento(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         Long idUsuario = 2L;
         request.getSession().setAttribute("idUsuario", idUsuario);
         request.getRequestDispatcher("/procedimentos.xhtml").forward(request, response);
+    }
+    
+    // path = procedimentos/procedimento (GET)
+    protected void MaracarProcedimento(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        Long idUsuario = 2L;
+        request.getSession().setAttribute("idUsuario", idUsuario);
+        request.getRequestDispatcher("/marcar-procedimento.xhtml").forward(request, response);
     }
     //path = procedimentos/listar-procedimentos
     protected void getListaProcedimentos(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -61,16 +69,19 @@ public class ProcedimentoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        String endPoint = request.getRequestURI().split("/")[3];
-        System.out.println(endPoint);
-        switch (endPoint) {
-            case "procedimento":
-                this.getProcedimento(request, response);
-                break;
-            case "listar-procedimentos":
-                this.getListaProcedimentos(request, response);
-                break;
+        String endPoint;
+        try{
+           endPoint = request.getRequestURI().split("/")[3];
+            switch (endPoint) {
+                case "procedimento":
+                    this.MaracarProcedimento(request, response);
+                    break;
+                case "listar-procedimentos":
+                    this.getListaProcedimentos(request, response);
+                    break;
+            } 
+        } catch (Exception ex){
+            this.getProcedimento(request, response);
         }
     }
 
