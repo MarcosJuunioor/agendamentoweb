@@ -5,10 +5,7 @@ import javax.faces.bean.ViewScoped;
 import javax.ejb.EJB;
 import descorp.agendamentoweb.entities.Procedimento;
 import descorp.agendamentoweb.models.ProcedimentoModel;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import javax.ejb.Stateless;
 
 /**
  * @author Beatriz Lima
@@ -42,8 +39,8 @@ public class ProcedimentoController {
     public void setProcedimento(Procedimento procedimento) {
         this.procedimento = procedimento;
     }
+
+
     
-    
-    
-    
-}
+
+    }

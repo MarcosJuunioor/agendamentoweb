@@ -42,9 +42,10 @@ public class AgendamentoServlet extends HttpServlet {
     // path = agendamentos/calendario (GET)
     protected void getCalendario(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Long idProfissional = 1L;
+        Long idProcedimento = Long.valueOf(request.getParameter("procedimento"));
+        Long idProfissional = Long.valueOf(request.getParameter("profissional"));;
         request.getSession().setAttribute("idProfissional", idProfissional);
+        request.getSession().setAttribute("idProcedimento", idProcedimento);
         //código para gerar calendário e retornar a página
         request.getRequestDispatcher("/calendario.xhtml").forward(request, response);
     }

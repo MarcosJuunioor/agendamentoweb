@@ -5,7 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        
+        <h:outputScript library="js" name="procedimento.js" />
     </h:head>
     <h:body>
         <h:form>
@@ -26,9 +26,13 @@
                     <h:outputText value="#{procedimento.nome}" />
                 </p:column>
                 <p:rowExpansion>
-                    <p:orderList value="#{procedimento.profissionais}" var="profissional" controlsLocation="none" itemLabel="#{profissional.nome}" itemValue="#{profissional.nome}" />
+                    <div class="list">
+                    <p:repeat value="#{procedimento.profissionais}" var="profissional">
+                        <p:button value="#{profissional.nome}" styleClass="ui-button-secondary ui-button-flat" onclick="agendar(#{procedimento.id},  #{profissional.id})"/>
+                    </p:repeat>
+                    </div>
                 </p:rowExpansion>
-            </p:dataTable>
+            </p:dataTable>            
             
         </h:form>
     </h:body>
