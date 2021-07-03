@@ -44,6 +44,10 @@ import javax.validation.constraints.Size;
                     name = "Profissional.PorId",
                     query = "SELECT p FROM Profissional p "
                             + "WHERE p.id = :id"
+            ),
+            @NamedQuery(
+                    name = Profissional.PROFISSIONAL_TODOS,
+                    query = "SELECT p FROM Profissional p"
             )
         }
 )
@@ -51,6 +55,8 @@ import javax.validation.constraints.Size;
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
 public class Profissional implements Serializable {
+    
+    public static final String PROFISSIONAL_TODOS = "Profissional.TodosProfissionais";
 
     private static final long serialVersionUID = 1L;
     @Id
