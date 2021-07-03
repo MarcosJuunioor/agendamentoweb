@@ -28,7 +28,7 @@
             </h:form>
         </div>
         <h:form id="procedimentos"> 
-            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10">
+            <p:dataTable var="procedimento" value="#{request.getAttribute('procedimentos')}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10">
                 <p:column style="width:2rem">
                     <p:rowToggler/>
                 </p:column>
@@ -42,7 +42,7 @@
                     <h:outputText value="#{procedimento.nome}" />
                 </p:column>
                 <p:rowExpansion>
-                    <p:orderList value="#{procedimento.profissionais}" var="profissional" controlsLocation="none" itemLabel="#{profissional.nome}" itemValue="#{profissional.id}">
+                    <p:orderList value="#{procedimento.profissionais}" var="profissional" itemLabel="#{profissional.nome}" itemValue="#{profissional.id}">
                         <p:ajax event="select" oncomplete="window.location.href = 'http://localhost:8080/agendamentoweb/agendamentos/calendario';" />
 
                     </p:orderList>

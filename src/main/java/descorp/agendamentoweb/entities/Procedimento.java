@@ -73,7 +73,7 @@ public class Procedimento implements Serializable {
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Agendamento> agendamentos;
     
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "procedimento_profissional", joinColumns = {
         @JoinColumn(name = "procedimento_id")},
             inverseJoinColumns = {
