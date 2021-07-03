@@ -138,7 +138,7 @@ public class Procedimento implements Serializable {
     public void setAgendamentos(List<Agendamento> agendamentos) {
         this.agendamentos = agendamentos;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

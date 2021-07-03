@@ -1,54 +1,64 @@
-<?xml version='1.0' encoding='ISO-8859-1' ?>
+<?xml version="1.0" encoding="windows-1252"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <h:outputStylesheet library="css" name="geral.css"/>
+        <h:outputScript library="js" name="procedimento.js" />
     </h:head>
     <h:body>
-        <div class="card">
-            <h:form>
-                <p:growl id="messages"/>
-                <p:menubar>
-                    <p:menuitem><span id="aplication-title">AgendamentoWeb</span></p:menuitem>
-                    <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
-                    <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
-                        <p:menuitem value="Lista" icon="pi pi-fw pi-list"/>
-                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus"/>
-                    </p:submenu>
+        <h:form id="form">
+            
 
-                    <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
-                        <p:menuitem value="Configurações"/>
-                        <p:menuitem value="Sair" />    
-                    </p:submenu>
-
-                </p:menubar>
-            </h:form>
-        </div>
-        <h:form id="procedimentos"> 
-            <p:dataTable var="procedimento" value="#{request.getAttribute('procedimentos')}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10">
-                <p:column style="width:2rem">
-                    <p:rowToggler/>
-                </p:column>
+            <p:growl id="msgs" showDetail="true"/>
+            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" editable="true">
+                <f:facet name="header">
+                    Lista de Procedimentos
+                </f:facet>
+                <p:ajax event="rowEdit" listener="#{procedimentoController.editarProcedimento}" update=":form:msgs"/>
+                
                 <p:column headerText="Natureza">
-                    <h:outputText value="#{procedimento.natureza}" />
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{procedimento.natureza}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{procedimento.natureza}" style="width:100%" label="Natureza"/>
+                        </f:facet>
+                    </p:cellEditor>
                 </p:column>
-                <p:column headerText="Duracao">
-                    <h:outputText value="#{procedimento.duracao}" />
-                </p:column>
-                <p:column headerText="Nome">
-                    <h:outputText value="#{procedimento.nome}" />
-                </p:column>
-                <p:rowExpansion>
-                    <p:orderList value="#{procedimento.profissionais}" var="profissional" itemLabel="#{profissional.nome}" itemValue="#{profissional.id}">
-                        <p:ajax event="select" oncomplete="window.location.href = 'http://localhost:8080/agendamentoweb/agendamentos/calendario';" />
-
-                    </p:orderList>
-
-                </p:rowExpansion>
-            </p:dataTable>
+         <!-- <p:column headerText="Duracao">
+                <p:cellEditor>
+                    <f:facet name="output">
+                         <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" /> 
+                        <h:outputText value="#{procedimento.duracao}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <h:selectOneMenu value="#{procedimento.duracao}" style="width:100%">
+                            <f:selectItems value="#{procedimentoController.duracoes}" var="duracao" itemLabel="#{procedimentoController.getDuracaoFMT(duracao)}" itemValue="#{duracao}"/>
+                            <f:facet name="footer">
+                                <p:divider styleClass="p-mt-0" />
+                                <h:outputText value="Hora:Minuto" style="font-weight:bold;"/>
+                            </f:facet>
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+        </p:column> -->
+            <p:column headerText="Nome">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{procedimento.nome}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{procedimento.nome}" style="width:100%" label="Nome"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="width:6rem" exportable="false">
+                <p:rowEditor editTitle="Editar procedimento" cancelTitle="Cancelar" saveTitle="Salvar"/>
+            </p:column>
+        </p:dataTable>          
 
         </h:form>
     </h:body>

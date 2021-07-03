@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputScript library="js" name="procedimento.js" />
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <p:growl id="msgs" showDetail="true"/>
+            <p:dataTable var="profissional" value="#{profissionalController.listaProfissional}" paginator="true" emptyMessage="Sem profissional na base" rows="10" editable="true">
+                <f:facet name="header">
+                    Profissionais
+                </f:facet>
+                 <p:ajax event="rowEdit" listener="#{profissionalController.editarProfissional}" update=":form:msgs"/>
+                 <p:column headerText="Nome">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{profissional.nome}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{profissional.nome}" style="width:100%" label="Nome"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Profissão">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{profissional.profissao}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{profissional.profissao}" style="width:100%" label="Profissão"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Especialização">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{profissional.especializacao}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{profissional.especializacao}" style="width:100%" label="Especialização"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column style="width:6rem" exportable="false">
+                    <p:rowEditor editTitle="Editar profissional" cancelTitle="Cancelar" saveTitle="Salvar"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
