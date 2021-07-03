@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.RowEditEvent;
 
 /**
- * @author Beatriz Lima
+ * @author Beatriz Silva
  */
 @ManagedBean
 @ViewScoped

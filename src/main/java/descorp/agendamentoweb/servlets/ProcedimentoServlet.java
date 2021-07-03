@@ -26,7 +26,7 @@ public class ProcedimentoServlet extends HttpServlet {
     public ProcedimentoServlet(){
         this.procedimentoModel = new ProcedimentoModel();
     }
-        // path = procedimentos (GET)
+    // path = /procedimentos (GET)
     protected void getProcedimento(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

@@ -9,7 +9,9 @@
     </h:head>
     <h:body>
         <h:form id="form">
-             <p:growl id="msgs" showDetail="true"/>
+            
+
+            <p:growl id="msgs" showDetail="true"/>
             <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" editable="true">
                 <f:facet name="header">
                     Lista de Procedimentos
@@ -26,38 +28,38 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                <!--<p:column headerText="Duracao">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                             <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" /> 
-                            <h:outputText value="#{procedimento.duracao}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <h:selectOneMenu value="#{procedimento.duracao}" style="width:100%">
-                                <f:selectItems value="#{procedimentoController.duracoes}" var="duracao" itemLabel="#{procedimentoController.getDuracaoFMT(duracao)}" itemValue="#{duracao}"/>
-                                <f:facet name="footer">
-                                    <p:divider styleClass="p-mt-0" />
-                                    <h:outputText value="Hora:Minuto" style="font-weight:bold;"/>
-                                </f:facet>
-                            </h:selectOneMenu>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>-->
-                <p:column headerText="Nome">
-                    <p:cellEditor>
-                        <f:facet name="output">
-                            <h:outputText value="#{procedimento.nome}" />
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{procedimento.nome}" style="width:100%" label="Nome"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column style="width:6rem">
-                    <p:rowEditor editTitle="Editar procedimento" cancelTitle="Cancelar" saveTitle="Salvar"/>
-                </p:column>
-            </p:dataTable>            
-            
+         <!-- <p:column headerText="Duracao">
+                <p:cellEditor>
+                    <f:facet name="output">
+                         <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" /> 
+                        <h:outputText value="#{procedimento.duracao}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <h:selectOneMenu value="#{procedimento.duracao}" style="width:100%">
+                            <f:selectItems value="#{procedimentoController.duracoes}" var="duracao" itemLabel="#{procedimentoController.getDuracaoFMT(duracao)}" itemValue="#{duracao}"/>
+                            <f:facet name="footer">
+                                <p:divider styleClass="p-mt-0" />
+                                <h:outputText value="Hora:Minuto" style="font-weight:bold;"/>
+                            </f:facet>
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+        </p:column> -->
+            <p:column headerText="Nome">
+                <p:cellEditor>
+                    <f:facet name="output">
+                        <h:outputText value="#{procedimento.nome}" />
+                    </f:facet>
+                    <f:facet name="input">
+                        <p:inputText value="#{procedimento.nome}" style="width:100%" label="Nome"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="width:6rem" exportable="false">
+                <p:rowEditor editTitle="Editar procedimento" cancelTitle="Cancelar" saveTitle="Salvar"/>
+            </p:column>
+        </p:dataTable>          
+
         </h:form>
     </h:body>
 </html>
