@@ -7,6 +7,7 @@ package descorp.agendamentoweb.models;
 
 import descorp.agendamentoweb.entities.Agendamento;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.TypedQuery;
 
@@ -25,6 +26,17 @@ public class AgendamentoModel extends GenericModel {
         List<Agendamento> agendamentos = query.getResultList();
         return agendamentos;
     }
-    
-    
+
+    public List<Agendamento> consultarHorariosDisponiveis(Long idProfissional, Long idProcedimento, Date data) {
+        TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorProfissional", Agendamento.class)
+                .setParameter("idProfissional", idProfissional)
+                .setParameter("idProcedimento", idProcedimento)
+                .setParameter("dataSelecionada", data);
+
+        List<Agendamento> agendamentos = query.getResultList();
+
+        return agendamentos;
+
+    }
+
 }

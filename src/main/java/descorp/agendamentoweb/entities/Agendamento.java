@@ -45,6 +45,13 @@ import javax.validation.constraints.NotNull;
                     query = "SELECT a FROM Agendamento a "
                     + "WHERE a.data >= CURRENT_DATE "
                     + "ORDER BY a.data"
+            ),
+            @NamedQuery(
+                    name = "Agendamento.PorProfissional",
+                    query = "SELECT a FROM Agendamento a "
+                    + "WHERE a.profissional.id = :idProfissional "
+                    + "AND a.procedimento.id = :idProcedimento "
+                    + "AND a.data = :dataSelecionada "
             )
         }
 )
