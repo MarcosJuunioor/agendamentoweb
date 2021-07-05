@@ -59,16 +59,16 @@ public class AgendamentoServlet extends HttpServlet {
             request.getSession().setAttribute("idProfissional", idProfissional);
             request.getSession().setAttribute("idProcedimento", idProcedimento);
         } catch (NumberFormatException e) {
-            System.err.println("Parâmetros não localizados: " + e.getMessage());
+            System.err.println("Parï¿½metros nï¿½o localizados: " + e.getMessage());
         }
-        //código para gerar calendário e retornar a página
+        //cï¿½digo para gerar calendï¿½rio e retornar a pï¿½gina
         request.getRequestDispatcher("/calendario.xhtml").forward(request, response);
     }
 
     // path = agendamentos/horarios (GET)
     protected void getHorarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //código para gerar horários e retornar a página
+        //cï¿½digo para gerar horï¿½rios e retornar a pï¿½gina
         request.getRequestDispatcher("/horarios.xhtml").forward(request, response);
     }
 
@@ -132,7 +132,7 @@ public class AgendamentoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Extrai o nome do método a ser executado da URI de requisição
+        //Extrai o nome do mï¿½todo a ser executado da URI de requisiï¿½ï¿½o
         String endPoint = request.getRequestURI().split("/")[3];
 
         if (endPoint.equals("calendario")) {
@@ -157,7 +157,7 @@ public class AgendamentoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Extrai o nome do método a ser executado da URI de requisição
+        //Extrai o nome do mï¿½todo a ser executado da URI de requisiï¿½ï¿½o
         String endPoint = request.getRequestURI().split("/")[3];
 
         if (endPoint.equals("horarios")) {
@@ -177,4 +177,14 @@ public class AgendamentoServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public String convertedata(Date vdata) throws ParseException {
+
+        Date hoje = vdata;
+        System.out.println("A data de hoje ï¿½: " + hoje);
+        String formato = "dd/MM/yyyy";
+        SimpleDateFormat formatter = new SimpleDateFormat(formato);
+        System.out.println("A data formatada ï¿½: " + formatter.format(hoje));
+
+        return formatter.format(hoje);
+    }
 }
