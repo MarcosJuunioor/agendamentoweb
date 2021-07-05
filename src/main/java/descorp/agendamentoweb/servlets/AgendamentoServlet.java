@@ -13,9 +13,13 @@ import descorp.agendamentoweb.models.AgendamentoModel;
 import descorp.agendamentoweb.models.ProfissionalModel;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,10 +51,16 @@ public class AgendamentoServlet extends HttpServlet {
     // path = agendamentos/calendario (GET)
     protected void getCalendario(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Long idProcedimento = Long.valueOf(request.getParameter("procedimento"));
-        Long idProfissional = Long.valueOf(request.getParameter("profissional"));;
-        request.getSession().setAttribute("idProfissional", idProfissional);
-        request.getSession().setAttribute("idProcedimento", idProcedimento);
+
+        try {
+            Long idProcedimento = Long.valueOf(request.getParameter("procedimento"));
+            Long idProfissional = Long.valueOf(request.getParameter("profissional"));
+
+            request.getSession().setAttribute("idProfissional", idProfissional);
+            request.getSession().setAttribute("idProcedimento", idProcedimento);
+        } catch (NumberFormatException e) {
+            System.err.println("Parâmetros não localizados: " + e.getMessage());
+        }
         //código para gerar calendário e retornar a página
         request.getRequestDispatcher("/calendario.xhtml").forward(request, response);
     }
@@ -152,7 +162,7 @@ public class AgendamentoServlet extends HttpServlet {
 
         if (endPoint.equals("horarios")) {
             getHorarios(request, response);
-        } else if (endPoint.equals("calendario")) { 
+        } else if (endPoint.equals("calendario")) {
             getCalendario(request, response);
         }
     }

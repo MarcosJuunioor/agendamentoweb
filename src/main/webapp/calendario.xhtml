@@ -42,7 +42,7 @@
                     <h:form id="calendario">
                         <p:calendar id="c1" pattern="dd/MM/yyyy"   mindate="today"
                                     widgetVar="calendarWidget" beforeShowDay="disableAllTheseDays" locale="pt" mode="inline" >
-                            <p:ajax event="dateSelect" oncomplete="enviarData()" />
+                            <p:ajax event="dateSelect" oncomplete="listarHorarios()" />
                         </p:calendar>
                     </h:form>
                 </div>

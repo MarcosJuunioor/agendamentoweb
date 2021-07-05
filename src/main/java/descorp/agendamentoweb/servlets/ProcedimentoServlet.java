@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ProcedimentoServlet extends HttpServlet {
 
+    
+
     private final ProcedimentoModel procedimentoModel;
     
     public ProcedimentoServlet(){
