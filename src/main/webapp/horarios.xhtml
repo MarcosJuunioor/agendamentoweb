@@ -33,7 +33,20 @@
             </h:form>
         </div>
         <div class="container content">
+            <h:form id="form">
+                <p:dataTable id="horarios" var="horario" 
+                             value="#{agendamentoController.getHorariosIndisponiveis(request.getParameter('dataSelecionada'), request.getParameter('profissional'), request.getParameter('procedimento'))}" 
+                             selectionMode="single" rowKey="#{horario}">
+                    <f:facet name="header">
+                        Horários Disponíveis
+                    </f:facet>
 
+                    <p:column headerText="Horários">
+                        <h:outputText value="#{horario}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </h:form>
         </div>
     </h:body>
 </html>

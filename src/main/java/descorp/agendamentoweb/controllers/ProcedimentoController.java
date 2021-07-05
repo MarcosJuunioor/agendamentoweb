@@ -73,12 +73,9 @@ public class ProcedimentoController implements Serializable{
         this.duracoes = duracoes;
     }
 
-    public String getDuracaoFMT(Date duracao){
-        SimpleDateFormat fmt = new SimpleDateFormat("hh:mm");  
+    public String getDuracaoFMT(Date duracao) {
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
         String duracaoSTR = fmt.format(duracao);
-        if(duracaoSTR.startsWith("12:")){
-            duracaoSTR = "00:"+duracaoSTR.split(":")[1];
-        }
         return duracaoSTR;
     }
     

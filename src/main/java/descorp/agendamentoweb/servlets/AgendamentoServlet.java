@@ -69,32 +69,6 @@ public class AgendamentoServlet extends HttpServlet {
     protected void getHorarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //código para gerar horários e retornar a página
-
-        try {
-
-            Long idProcedimento = Long.valueOf(request.getParameter("procedimento"));
-            Long idProfissional = Long.valueOf(request.getParameter("profissional"));
-            String dataSelecionada = request.getParameter("dataSelecionada");
-
-            request.getSession().setAttribute("idProfissional", idProfissional);
-            request.getSession().setAttribute("idProcedimento", idProcedimento);
-            request.getSession().setAttribute("dataSelecionada", dataSelecionada);
-
-            String startDateString = dataSelecionada;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-            String saida = sdf2.format(sdf.parse(startDateString));
-
-            Date dataSaida = sdf2.parse(saida);
-
-            List<Agendamento> horariosProfProc = this.agendamentoModel.consultarHorariosDisponiveis(idProfissional, idProcedimento, dataSaida);
-
-        } catch (NumberFormatException e) {
-            System.err.println("Parâmetros não localizados: " + e.getMessage());
-        } catch (ParseException ex) {
-            Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
         request.getRequestDispatcher("/horarios.xhtml").forward(request, response);
     }
 

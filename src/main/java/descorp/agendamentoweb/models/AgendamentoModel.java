@@ -27,7 +27,7 @@ public class AgendamentoModel extends GenericModel {
         return agendamentos;
     }
 
-    public List<Agendamento> consultarHorariosDisponiveis(Long idProfissional, Long idProcedimento, Date data) {
+    public List<Agendamento> consultarHorariosIndisponiveis(Long idProfissional, Long idProcedimento, Date data) {
         TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorProfissional", Agendamento.class)
                 .setParameter("idProfissional", idProfissional)
                 .setParameter("idProcedimento", idProcedimento)
