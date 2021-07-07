@@ -21,7 +21,7 @@
                     <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
                     <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
                         <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
-                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="procedimentos/procedimento" />
+                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
                     </p:submenu>
 
                     <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
@@ -35,19 +35,33 @@
         <div class="container content">
             <h:form id="form">
                 <p:dataTable id="horarios" var="horario" 
-                             value="#{agendamentoController.getHorariosIndisponiveis(request.getParameter('dataSelecionada'), request.getParameter('profissional'), request.getParameter('procedimento'))}" 
-                             selectionMode="single" rowKey="#{horario}">
-                    <f:facet name="header">
-                        Horários Disponíveis
-                    </f:facet>
-
-                    <p:column headerText="Horários">
-                        <h:outputText value="#{horario}" />
-                    </p:column>
-
+                             value="#{agendamentoController.getHorariosIndisponiveis(request.getParameter('dataSelecionada'), request.getParameter('profissional'), request.getParameter('procedimento'))}"
+                             rowKey="#{horario}">                 
+                    <p:column headerText="Horários disponíveis">
+                        <h:outputText value="#{horario.hora.hours}:#{horario.hora.minutes}0" />                       
+                    </p:column>                                    
+                    <p:column width="90">      
+                        <p:commandButton value="Agendar" action="#{agendamentoController.criarAgendamento(horario)}" update="@form">  
+                            <p:confirm message="Confirmar o agendamento para o horário: #{horario.hora.hours}:00"/>
+                        </p:commandButton>
+                    </p:column>                    
                 </p:dataTable>
+                <p:dialog id="dialogConfirmaAgendamento" 
+                          visible="false" 
+                          resizable="false" 
+                          closable="false" 
+                          closeOnEscape="false" 
+                          draggable="false" 
+                          modal="true" 
+                          widgetVar="widDialogConfirmaAgendamento">
+                    <p:panelGrid columns="2"/>
+                </p:dialog>
+                <p:confirmDialog global="true">
+                    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"/>
+                    <p:commandButton value="Não" styleClass="ui-confirmdialog-no"/>
+                </p:confirmDialog>
             </h:form>
-        </div>
+        </div>       
     </h:body>
 </html>
 

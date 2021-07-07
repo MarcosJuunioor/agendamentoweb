@@ -17,7 +17,7 @@
                     <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
                     <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
                         <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
-                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="procedimentos/procedimento" />
+                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
                     </p:submenu>
 
                     <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
@@ -47,13 +47,12 @@
                 </p:column>
                 <p:rowExpansion>
                     <div class="list">
-                    <p:repeat value="#{procedimento.profissionais}" var="profissional">
-                        <p:button value="#{profissional.nome}" styleClass="ui-button-secondary ui-button-flat" onclick="agendar(#{procedimento.id},  #{profissional.id})"/>
-                    </p:repeat>
+                        <p:repeat value="#{procedimento.profissionais}" var="profissional">
+                            <p:button value="#{profissional.nome}" styleClass="ui-button-secondary ui-button-flat" onclick="agendar(#{procedimento.id}, #{profissional.id})"/>
+                        </p:repeat>
                     </div>
                 </p:rowExpansion>
-            </p:dataTable>            
-            
+            </p:dataTable>                        
         </h:form>
     </h:body>
 </html>

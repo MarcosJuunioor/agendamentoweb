@@ -28,28 +28,37 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class AgendamentoController implements Serializable {
 
+    List<Agendamento> agendamentosDia;
+
     @EJB
     private final AgendamentoModel bean;
-    private final ArrayList<String> horariosDisponiveis;
+    private final ArrayList<String> horariosEstabelecimento;
+    private final ArrayList<Agendamento> horariosDisponiveis;
     private List<Agendamento> agendamentos;
 
     public AgendamentoController() {
         this.bean = new AgendamentoModel();
-        this.horariosDisponiveis = new ArrayList<String>();
+        this.horariosEstabelecimento = new ArrayList<String>();
+        this.horariosDisponiveis = new ArrayList<Agendamento>();
+
     }
 
-    public List<String> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc) {
+    public List<Agendamento> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc) {
+
+        AgendamentoModel agendamentoModel = new AgendamentoModel();
+
         if (this.horariosDisponiveis == null || this.horariosDisponiveis.isEmpty()) {
+
             Long idProcedimento = Long.valueOf(idProc);
             Long idProfissional = Long.valueOf(idProf);
 
-            //Horários nos quais o estabelecimento faz agendamentos
-            this.horariosDisponiveis.add("08:00");
-            this.horariosDisponiveis.add("10:00");
-            this.horariosDisponiveis.add("12:00");
-            this.horariosDisponiveis.add("14:00");
-            this.horariosDisponiveis.add("16:00");
-            this.horariosDisponiveis.add("18:00");
+            //Horários nos quais o estabelecimento faz agendamentos            
+            this.horariosEstabelecimento.add("08:00");
+            this.horariosEstabelecimento.add("10:00");
+            this.horariosEstabelecimento.add("12:00");
+            this.horariosEstabelecimento.add("14:00");
+            this.horariosEstabelecimento.add("16:00");
+            this.horariosEstabelecimento.add("18:00");
 
             try {
                 String startDateString = dataSelecionada;
@@ -59,12 +68,24 @@ public class AgendamentoController implements Serializable {
 
                 Date dataSaida = sdf2.parse(saida);
 
-                List<Agendamento> agendamentos = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
+                //Recupera os agendamentos para o dia selecionado
+                agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
 
-                for (Agendamento a : agendamentos) {
-                    String hora = getDuracaoFMT(a.getHora());
-                    if (this.horariosDisponiveis.contains(hora)) {
-                        this.horariosDisponiveis.remove(hora);
+                //Cria a lista de objetos que serão exibidos na tela
+                for (int a = 0; a < horariosEstabelecimento.size(); a++) {
+                    this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional));
+                }
+
+                //Remove da lista de horários disponíveis os horário que já estão ocupados
+                if (agendamentosDia.size() > 0) {
+
+                    for (Agendamento a : agendamentosDia) {
+                        String hora = getDuracaoFMT(a.getHora());
+                        for (int i = 0; i < horariosDisponiveis.size(); i++) {
+                            if (horariosDisponiveis.get(i).getHora().getHours() == (Integer.parseInt(hora.substring(0, 2)))) {
+                                horariosDisponiveis.remove(i);
+                            }
+                        }
                     }
                 }
 
@@ -102,4 +123,9 @@ public class AgendamentoController implements Serializable {
         String saida = sdf2.format(sdf.parse(data));
         return sdf2.parse(saida);
     }
+
+    public void criarAgendamento(Agendamento agendamento) {
+        bean.persistirAgendamento(agendamento);
+    }
+
 }
