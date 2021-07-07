@@ -31,11 +31,11 @@ public class AgendamentoController implements Serializable {
     @EJB
     private final AgendamentoModel bean;
     private final ArrayList<String> horariosDisponiveis;
+    private List<Agendamento> agendamentos;
 
     public AgendamentoController() {
         this.bean = new AgendamentoModel();
         this.horariosDisponiveis = new ArrayList<String>();
-
     }
 
     public List<String> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc) {
@@ -78,9 +78,28 @@ public class AgendamentoController implements Serializable {
         return this.horariosDisponiveis;
     }
 
+    public List<Agendamento> getAgendamentosUsuario(Long idUsuario, String data) {
+        try {
+            Date dataObj = this.getDateByString(data);
+            this.agendamentos = this.bean.getAgendamentosUsuario(idUsuario, dataObj);
+        } catch (NumberFormatException e) {
+            System.err.println("Parâmetros não localizados: " + e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return this.agendamentos;
+    }
+
     public String getDuracaoFMT(Date duracao) {
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
         String duracaoSTR = fmt.format(duracao);
         return duracaoSTR;
+    }
+
+    public Date getDateByString(String data) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+        String saida = sdf2.format(sdf.parse(data));
+        return sdf2.parse(saida);
     }
 }

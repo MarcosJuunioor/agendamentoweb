@@ -97,37 +97,71 @@
     
     <!--############## PROCEDIMENTO ##############--> 
     <!-- Procedimento ID 1 -->
-    <PROCEDIMENTO       duracao_procedimento="1:30:00" 
-                        natureza_procedimento="Estético" 
-                        nome_procedimento="Limpeza de sobrancelha"/>
+    <PROCEDIMENTO       duracao_procedimento="1:00:00" 
+                          natureza_procedimento="Estético" 
+                          nome_procedimento="Limpeza de pele"/>
     <!-- Procedimento ID 2 -->
     <PROCEDIMENTO       duracao_procedimento="2:00:00" 
                         natureza_procedimento="Dentário" 
                         nome_procedimento="Branqueamento de dentes"/>
     <!-- Procedimento ID 3 -->
-    <PROCEDIMENTO       duracao_procedimento="1:00:00" 
+    <PROCEDIMENTO       duracao_procedimento="1:30:00" 
+                            natureza_procedimento="Estético" 
+                            nome_procedimento="Limpeza de sobrancelha"/>
+  
+    <!-- Procedimento ID 4 -->
+    <PROCEDIMENTO       duracao_procedimento="1:20:00" 
                         natureza_procedimento="Estético" 
-                        nome_procedimento="Limpeza de pele"/>
+                        nome_procedimento="Peeling"/>
+    <!-- Procedimento ID 5 -->
+    <PROCEDIMENTO       duracao_procedimento="00:40:00" 
+                        natureza_procedimento="Estético" 
+                        nome_procedimento="Depilação"/>
+    <!-- Procedimento ID 6 -->
+    <PROCEDIMENTO       duracao_procedimento="00:50:00" 
+                        natureza_procedimento="Estético" 
+                        nome_procedimento="Termoterapia"/>
     
     <!--############## PROFISSIONAL ##############--> 
     <!-- Profissional ID 1 -->
     <PROFISSIONAL       especializacao="Limpeza de Pele" 
-                        hora_final="17:00:00"
+                        hora_final="18:00:00"
                         hora_inicial="08:00:00" 
                         nome_profissional="Rafaela Silva"
                         profissao="Esteticista"/>
     <!-- Profissional ID 2 -->
     <PROFISSIONAL       especializacao="Branqueamento dentário" 
-                        hora_final="17:00:00"
+                        hora_final="18:00:00"
                         hora_inicial="08:00:00" 
                         nome_profissional="Maria Eduarda"
                         profissao="Dentista"/>
     <!-- Profissional ID 3 -->
-    <PROFISSIONAL       especializacao="Maquiagem" 
-                        hora_final="13:00:00"
+    <PROFISSIONAL       especializacao="Designer de Sobrancelhas" 
+                        hora_final="18:00:00"
                         hora_inicial="08:00:00" 
                         nome_profissional="Julia Maria Silva"
-                        profissao="Maquiadora"/>
+                        profissao="Designer de Sobrancelhas"/>
+    <!-- Profissional ID 4 -->
+    <PROFISSIONAL       especializacao="Peeling" 
+                        hora_final="18:00:00"
+                        hora_inicial="08:00:00" 
+                        nome_profissional="Beatriz Lima"
+                        profissao="Esteticista"/>
+
+    <!-- Profissional ID 5 -->
+    <PROFISSIONAL       especializacao="Depilação" 
+                        hora_final="18:00:00"
+                        hora_inicial="08:00:00" 
+                        nome_profissional="Vitória Fonseca"
+                        profissao="Esteticista"/>
+    
+    <!-- Profissional ID 6 -->
+    <PROFISSIONAL       especializacao="Termoterapia" 
+                        hora_final="18:00:00"
+                        hora_inicial="08:00:00" 
+                        nome_profissional="Vitória Fonseca"
+                        profissao="Termoterapeuta"/> 
+    
     
     <!--############## DIAS DA SEMANA ##############--> 
     <!-- DIAS DA SEMANA ID 1 -->
@@ -152,7 +186,7 @@
                        procedimento_id="1" 
                        profissional_id="1"
                        usuario_id="2"/>
-     <!-- AGENDAMENTO ID 2 -->
+    <!-- AGENDAMENTO ID 2 -->
     <AGENDAMENTO       data="2021-04-19" 
                        hora="08:00:00"
                        procedimento_id="1" 
@@ -191,8 +225,8 @@
     <!-- AGENDAMENTO ID 8 -->
     <AGENDAMENTO       data="2021-08-13" 
                        hora="08:00:00"
-                       procedimento_id="2" 
-                       profissional_id="2"
+                       procedimento_id="1" 
+                       profissional_id="1"
                        usuario_id="1"/>
     <!-- AGENDAMENTO ID 9 -->
     <AGENDAMENTO       data="2021-08-13" 
@@ -203,28 +237,28 @@
     <!-- AGENDAMENTO ID 10 -->
     <AGENDAMENTO       data="2021-08-13" 
                        hora="12:00:00"
-                       procedimento_id="2" 
-                       profissional_id="2"
+                       procedimento_id="3" 
+                       profissional_id="3"
                        usuario_id="1"/>
     <!-- AGENDAMENTO ID 11 -->
     <AGENDAMENTO       data="2021-08-13" 
                        hora="14:00:00"
-                       procedimento_id="2" 
-                       profissional_id="2"
+                       procedimento_id="4" 
+                       profissional_id="4"
                        usuario_id="1"/>
     <!-- AGENDAMENTO ID 12 -->
     <AGENDAMENTO       data="2021-08-13" 
                        hora="16:00:00"
-                       procedimento_id="2" 
-                       profissional_id="2"
+                       procedimento_id="5" 
+                       profissional_id="5"
                        usuario_id="1"/>
     <!-- AGENDAMENTO ID 13 -->
     <AGENDAMENTO       data="2021-08-13" 
                        hora="18:00:00"
-                       procedimento_id="2" 
-                       profissional_id="2"
+                       procedimento_id="6" 
+                       profissional_id="6"
                        usuario_id="1"/>
-        <!-- AGENDAMENTO ID 13 -->
+    <!-- AGENDAMENTO ID 13 -->
     <AGENDAMENTO       data="2021-08-16" 
                        hora="10:00:00"
                        procedimento_id="2" 

@@ -20,10 +20,10 @@ public class ProfissionalJpqlTest extends GenericTest{
     @Test
         public void profissionalPorProfissao(){
             TypedQuery<Profissional> query = em.createQuery("select p from Profissional p WHERE p.profissao= :profissao", Profissional.class);
-            query.setParameter("profissao", "Esteticista");
+            query.setParameter("profissao", "Dentista");
             Profissional profissionais = query.getSingleResult();
             assertNotNull(profissionais);
-            assertEquals("Esteticista", profissionais.getProfissao());
+            assertEquals("Dentista", profissionais.getProfissao());
         }   
     
 //Consulta de profissionais por especialização

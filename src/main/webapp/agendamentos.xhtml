@@ -4,17 +4,13 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
     <h:head>
-        <title>Home</title>
-        <h:outputScript library="js" name="index.js" />
-        <h:outputStylesheet library="css" name="index.css"/>
+        <title>Agendamentos</title>
         <h:outputStylesheet library="css" name="geral.css"/>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
     </h:head>
     <h:body>
-        <div class="card">
+               <div class="card">
             <h:form>
                 <p:growl id="messages"/>
                 <p:menubar>
@@ -34,20 +30,28 @@
             </h:form>
         </div>
         <div class="container content">
-            <div class="row">
-                <div class="col">
-                </div>
-                <div class="col-6">
-                    <h:form id="calendario">
-                        <p:calendar id="c1" pattern="dd/MM/yyyy"   mindate="today"
-                                    widgetVar="calendarWidget" beforeShowDay="disableAllTheseDays" locale="pt" mode="inline" >
-                            <p:ajax event="dateSelect" oncomplete="listarAgendamentos()" />
-                        </p:calendar>
-                    </h:form>
-                </div>
-                <div class="col">
-                </div>
-            </div>
+            <h:form id="form">
+                <p:dataTable id="agendamentos" var="agendamento" 
+                             value="#{agendamentoController.getAgendamentosUsuario(request.getSession().getAttribute('idUsuario'),request.getParameter('data'))}" 
+                             selectionMode="single" rowKey="#{agendamento.id}">
+                    <f:facet name="header">
+                        Agendamentos
+                    </f:facet>
+                    <p:column headerText="Procedimento">
+                        <h:outputText value="#{agendamento.procedimento.nome}" />
+                    </p:column>
+                    <p:column headerText="Duração do Procedimento">
+                        <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.procedimento.duracao)}" />
+                    </p:column>
+                    <p:column headerText="Profissional">
+                        <h:outputText value="#{agendamento.profissional.nome}" />
+                    </p:column>
+                    <p:column headerText="Hora">
+                        <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.hora)}" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
         </div>
     </h:body>
 </html>

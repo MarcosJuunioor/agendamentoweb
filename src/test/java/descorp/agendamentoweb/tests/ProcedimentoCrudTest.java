@@ -30,9 +30,9 @@ public class ProcedimentoCrudTest extends GenericTest {
     public void consultarProcedimento(){
         Procedimento procedimento = em.find(Procedimento.class, 1L);
         assertEquals("Estético", procedimento.getNatureza());
-        assertEquals("Limpeza de sobrancelha", procedimento.getNome());
+        assertEquals("Limpeza de pele", procedimento.getNome());
         String horaFormatada = formatarHora(procedimento.getDuracao());
-        assertEquals("1:40:0", horaFormatada);
+        assertEquals("1:0:0", horaFormatada);
     } 
     
     @Test

@@ -39,4 +39,20 @@ public class AgendamentoModel extends GenericModel {
 
     }
 
+    public List<Date> getDatasAgendamentos(Long idUsuario) {
+        TypedQuery<Date> query = em.createNamedQuery("Agendamento.PorIdUsuario", Date.class)
+                .setParameter("idUsuario", idUsuario);
+
+        return query.getResultList();
+
+    }
+
+    public List<Agendamento> getAgendamentosUsuario(Long idUsuario, Date data) {
+        TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorIdUsuarioEData", Agendamento.class)
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("data", data);
+
+        return query.getResultList();
+
+    }
 }
