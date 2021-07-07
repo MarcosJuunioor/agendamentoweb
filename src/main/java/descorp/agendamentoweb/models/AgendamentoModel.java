@@ -75,13 +75,12 @@ public class AgendamentoModel extends GenericModel {
 
     }
 
-    public void persistirAgendamento(Agendamento a) {
-     
-            EntityTransaction tx = em.getTransaction();
-            tx.begin();
+    public void persistirAgendamento(Agendamento a) {     
+            EntityTransaction et = em.getTransaction();
+            et.begin();
             em.persist(a);
             em.flush();
-            tx.commit();                
+            et.commit();                
     }
 
     public Date criarData(int dia, int mes, int ano) {

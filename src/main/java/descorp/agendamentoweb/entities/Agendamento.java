@@ -52,6 +52,7 @@ import javax.validation.constraints.NotNull;
                     + "WHERE a.profissional.id = :idProfissional "
                     + "AND a.procedimento.id = :idProcedimento "
                     + "AND a.data = :dataSelecionada "
+                    + "ORDER BY a.hora"
             )
         }
 )

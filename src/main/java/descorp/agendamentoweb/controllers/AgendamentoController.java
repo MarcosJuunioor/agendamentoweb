@@ -66,14 +66,21 @@ public class AgendamentoController implements Serializable {
 
                 Date dataSaida = sdf2.parse(saida);
 
+                //Cria a lista de objetos que serão exibidos na tela
+                for (int a = 0; a < horariosEstabelecimento.size(); a++) {
+                    this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional));
+                }
+
+                //Recupera os agendamentos para o dia selecionado
                 agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
 
+                //Remove da lista de horários disponíveis os horário que já estão ocupados
                 if (agendamentosDia.size() > 0) {
-                    for (int i = 0; i < horariosEstabelecimento.size(); i++) {
-                        for (int x = 0; x < agendamentosDia.size(); x++) {
-                            String hora = getDuracaoFMT(agendamentosDia.get(x).getHora());
-                            if (!this.horariosEstabelecimento.get(i).equals(hora)) {
-                                this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(i).substring(0, 2)), 0, 0), idProcedimento, idProfissional));
+                    for (Agendamento a : agendamentosDia) {
+                        String hora = getDuracaoFMT(a.getHora());
+                        for (int i = 0; i < horariosDisponiveis.size(); i++) {
+                            if (horariosDisponiveis.get(i).getHora().getHours() == (Integer.parseInt(hora.substring(0, 2)))) {
+                                horariosDisponiveis.remove(i);
                             }
                         }
                     }
