@@ -1,14 +1,54 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='ISO-8859-1' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Home</title>
+        <h:outputScript library="js" name="index.js" />
+        <h:outputStylesheet library="css" name="index.css"/>
+        <h:outputStylesheet library="css" name="geral.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
     </h:head>
     <h:body>
-        Hello from Facelets
+        <div class="card">
+            <h:form>
+                <p:growl id="messages"/>
+                <p:menubar>
+                    <p:menuitem url="/agendamentoweb"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
+                    <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
+                        <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
+                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
+                    </p:submenu>
+
+                    <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
+                        <p:menuitem value="Configurações"/>
+                        <p:menuitem value="Sair" />    
+                    </p:submenu>
+
+                </p:menubar>
+            </h:form>
+        </div>
+        <div class="container content">
+            <div class="row">
+                <div class="col">
+                </div>
+                <div class="col-6">
+                    <h:form id="calendario">
+                        <p:calendar id="c1" pattern="dd/MM/yyyy"   mindate="today"
+                                    widgetVar="calendarWidget" beforeShowDay="disableAllTheseDays" locale="pt" mode="inline" >
+                            <p:ajax event="dateSelect" oncomplete="listarAgendamentos()" />
+                        </p:calendar>
+                    </h:form>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 

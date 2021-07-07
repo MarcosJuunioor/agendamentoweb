@@ -59,16 +59,14 @@ public class AgendamentoServlet extends HttpServlet {
             request.getSession().setAttribute("idProfissional", idProfissional);
             request.getSession().setAttribute("idProcedimento", idProcedimento);
         } catch (NumberFormatException e) {
-            System.err.println("Par�metros n�o localizados: " + e.getMessage());
+            System.err.println("Parametros nao localizados: " + e.getMessage());
         }
-        //c�digo para gerar calend�rio e retornar a p�gina
         request.getRequestDispatcher("/calendario.xhtml").forward(request, response);
     }
 
     // path = agendamentos/horarios (GET)
     protected void getHorarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //c�digo para gerar hor�rios e retornar a p�gina
         request.getRequestDispatcher("/horarios.xhtml").forward(request, response);
     }
 
@@ -120,6 +118,32 @@ public class AgendamentoServlet extends HttpServlet {
         response.getWriter().write(json);
     }
 
+    // path = agendamentos/datas-agendadas(GET)
+    protected void datasAgendadas(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        Long idUsuario = 1L;
+        request.getSession().setAttribute("idUsuario", idUsuario);
+        
+        List<Date> datasAgendamentos = this.agendamentoModel.getDatasAgendamentos(idUsuario);
+
+        ArrayList<String> datasAgendadas = new ArrayList<String>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (Date d : datasAgendamentos) {
+            datasAgendadas.add(df.format(d));
+        }
+        String json = new ObjectMapper().writeValueAsString(datasAgendadas);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
+    }
+
+    // path = agendamentos/agendamentos-usuario(GET)
+    protected void agendamentosUsuario(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/agendamentos.xhtml").forward(request, response);
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -143,6 +167,10 @@ public class AgendamentoServlet extends HttpServlet {
             getDatasIndisponiveis(request, response);
         } else if (endPoint.equals("dias-profissional")) {
             getDiasDaSemanaDoProfissional(request, response);
+        } else if (endPoint.equals("datas-agendadas")) {
+            datasAgendadas(request, response);
+        } else if (endPoint.equals("agendamentos-usuario")) {
+            agendamentosUsuario(request, response);
         }
     }
 

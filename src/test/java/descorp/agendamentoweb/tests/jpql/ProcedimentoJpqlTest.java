@@ -23,7 +23,7 @@ public class ProcedimentoJpqlTest extends GenericTest{
         query.setParameter("natureza", "Estético");
         List<Procedimento> procedimentos = query.getResultList();
         assertNotNull(procedimentos);
-        assertEquals(2, procedimentos.size());
+        assertEquals(5, procedimentos.size());
     }
     
     //Consulta dos procedimentos que possuem duração superior a X horas
@@ -34,7 +34,7 @@ public class ProcedimentoJpqlTest extends GenericTest{
         query.setParameter("duracao", criarHora(1,0,0));
         List<Procedimento> procedimentos = query.getResultList();
         assertNotNull(procedimentos);
-        assertEquals(2, procedimentos.size());
+        assertEquals(3, procedimentos.size());
     }
     
     
@@ -46,6 +46,6 @@ public class ProcedimentoJpqlTest extends GenericTest{
         
         long quantidade = query.getSingleResult();
         assertNotNull(quantidade);
-        assertEquals(3, quantidade);
+        assertEquals(6, quantidade);
     }
 }

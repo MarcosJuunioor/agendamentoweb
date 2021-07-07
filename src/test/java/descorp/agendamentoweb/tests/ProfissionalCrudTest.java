@@ -37,7 +37,7 @@ public class ProfissionalCrudTest extends GenericTest{
         assertEquals("Esteticista", profissional.getProfissao());
         assertEquals("Limpeza de Pele", profissional.getEspecializacao());
         assertEquals(criarHora(8,0,0).getHours(), profissional.getHoraInicial().getHours());
-        assertEquals(criarHora(17,0,0).getHours(), profissional.getHoraFinal().getHours()); 
+        assertEquals(criarHora(18,0,0).getHours(), profissional.getHoraFinal().getHours()); 
     }
       
     @Test

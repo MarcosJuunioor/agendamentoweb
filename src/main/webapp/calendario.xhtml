@@ -19,11 +19,11 @@
             <h:form>
                 <p:growl id="messages"/>
                 <p:menubar>
-                    <p:menuitem><span id="aplication-title">AgendamentoWeb</span></p:menuitem>
-                    <p:menuitem value="Home" icon="pi pi-fw pi-home"/>
+                    <p:menuitem url="/agendamentoweb"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
                     <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
-                        <p:menuitem value="Lista" icon="pi pi-fw pi-list"/>
-                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus"/>
+                        <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
+                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
                     </p:submenu>
 
                     <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">

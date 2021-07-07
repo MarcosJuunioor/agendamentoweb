@@ -52,7 +52,18 @@ import javax.validation.constraints.NotNull;
                     + "WHERE a.profissional.id = :idProfissional "
                     + "AND a.procedimento.id = :idProcedimento "
                     + "AND a.data = :dataSelecionada "
-                    + "ORDER BY a.hora"
+            ),
+            @NamedQuery(
+                    name = "Agendamento.PorIdUsuario",
+                    query = "SELECT DISTINCT(a.data) FROM Agendamento a "
+                    + "WHERE a.usuario.id = :idUsuario "
+                    + "AND a.data >= CURRENT_DATE"
+            ),
+            @NamedQuery(
+                    name = "Agendamento.PorIdUsuarioEData",
+                    query = "SELECT a FROM Agendamento a "
+                    + "WHERE a.usuario.id = :idUsuario "
+                    + "AND a.data = :data"
             )
         }
 )

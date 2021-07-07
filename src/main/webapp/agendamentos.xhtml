@@ -4,8 +4,9 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
+
     <h:head>
-        <h:outputScript library="js" name="procedimento.js" />
+        <title>Agendamentos</title>
         <h:outputStylesheet library="css" name="geral.css"/>
     </h:head>
     <h:body>
@@ -28,31 +29,30 @@
                 </p:menubar>
             </h:form>
         </div>
-        <h:form>
-            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10">
-                <f:facet name="header">
-                    Lista de Procedimentos
-                </f:facet>
-                <p:column style="width:2rem">
-                    <p:rowToggler/>
-                </p:column>
-                <p:column headerText="Natureza">
-                    <h:outputText value="#{procedimento.natureza}" />
-                </p:column>
-                <p:column headerText="Duracao">
-                    <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" />
-                </p:column>
-                <p:column headerText="Nome">
-                    <h:outputText value="#{procedimento.nome}" />
-                </p:column>
-                <p:rowExpansion>
-                    <div class="list">
-                        <p:repeat value="#{procedimento.profissionais}" var="profissional">
-                            <p:button value="#{profissional.nome}" styleClass="ui-button-secondary ui-button-flat" onclick="agendar(#{procedimento.id}, #{profissional.id})"/>
-                        </p:repeat>
-                    </div>
-                </p:rowExpansion>
-            </p:dataTable>                        
-        </h:form>
+        <div class="container content">
+            <h:form id="form">
+                <p:dataTable id="agendamentos" var="agendamento" 
+                             value="#{agendamentoController.getAgendamentosUsuario(request.getSession().getAttribute('idUsuario'),request.getParameter('data'))}" 
+                             selectionMode="single" rowKey="#{agendamento.id}">
+                    <f:facet name="header">
+                        Agendamentos
+                    </f:facet>
+                    <p:column headerText="Procedimento">
+                        <h:outputText value="#{agendamento.procedimento.nome}" />
+                    </p:column>
+                    <p:column headerText="Duração do Procedimento">
+                        <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.procedimento.duracao)}" />
+                    </p:column>
+                    <p:column headerText="Profissional">
+                        <h:outputText value="#{agendamento.profissional.nome}" />
+                    </p:column>
+                    <p:column headerText="Hora">
+                        <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.hora)}" />
+                    </p:column>
+
+                </p:dataTable>
+            </h:form>
+        </div>
     </h:body>
 </html>
+
