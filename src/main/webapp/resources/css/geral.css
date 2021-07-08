@@ -1,0 +1,21 @@
+  
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29/06/2021, 16:36:18
+    Author     : marco
+*/
+
+
+#aplication-title{
+   font-weight: bold;
+   color: #0288d1;
+   font-size: 25px;
+}
+
+.user-menu{
+    float:right !important;
+}
