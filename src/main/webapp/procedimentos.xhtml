@@ -6,13 +6,13 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <h:outputScript library="js" name="procedimento.js" />
+        <h:outputStylesheet library="css" name="crudpages.css"/>
         <h:outputStylesheet library="css" name="geral.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </h:head>
     <h:body>
-        <h:form id="form">
         <div class="card">
             <h:form>
                 <p:growl id="messages"/>
@@ -32,9 +32,10 @@
                 </p:menubar>
             </h:form>
         </div>
-
+        <div class="container content">
+        <h:form id="form">
             <p:growl id="msgs" showDetail="true"/>
-            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" editable="true">
+            <p:dataTable var="procedimento" value="#{procedimentoController.listProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" editable="true" paginatorPosition="bottom">
                 <f:facet name="header">
                     Lista de Procedimentos
                 </f:facet>
@@ -83,5 +84,6 @@
         </p:dataTable>          
 
         </h:form>
+        </div>
     </h:body>
 </html>

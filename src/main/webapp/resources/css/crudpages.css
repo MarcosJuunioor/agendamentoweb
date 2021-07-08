@@ -1,0 +1,35 @@
+/* 
+    Created on : 08/07/2021, 17:38:16
+    Author     : Beatriz Lima
+*/
+.ui-buttonset .ui-button {
+    width: auto !important
+}
+.container {
+    max-width: 100% !important
+}
+.crud {
+    max-width: 525px;
+    left: 497px;
+    top: 15.7px;
+    z-index: 1006;
+    display: block;
+}
+.ui-outputlabel{
+    margin-top: 10px;
+}
+body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
+    top: 30%;
+}
+.ui-selection-column {
+    width: 50px;
+}
+.ui-button.rounded-button.ui-button-icon-only{
+    margin: 5px;
+}
+body .ui-datatable .ui-datatable-data > tr > td {
+    padding: 6px 0.5rem;
+}
+.ui-paginator-bottom {
+    padding: 10px !important
+}
