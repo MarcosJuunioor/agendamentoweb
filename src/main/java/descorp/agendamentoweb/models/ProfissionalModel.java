@@ -37,12 +37,15 @@ public class ProfissionalModel extends GenericModel implements Serializable{
     }
     public void deletarProfissional(Profissional profissional){
         beginTransaction();
+        if(!em.contains(profissional)){
+            profissional = em.merge(profissional);
+        }
         em.remove(profissional);
         em.flush();
         commitTransaction();
     }
     
-        public void deletarProfissionais(List<Profissional> profissionais){
+    public void deletarProfissionais(List<Profissional> profissionais){
         beginTransaction();
         int tam = profissionais.size();
         for(int i=0; i<tam; i++){

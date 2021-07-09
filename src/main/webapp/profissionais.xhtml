@@ -39,17 +39,17 @@
                 <div class="col">
                     <p:growl id="msgs" showDetail="true"/>
 
-                    <p:dataTable id="dt-funcs" var="profissional" value="#{profissionalController.listaProfissional}" paginator="true" widgetVar="dtFuncionarios" reflow="true" paginatorPosition="bottom"
+                    <p:dataTable id="dt-funcs" var="profissional" value="#{profissionalController.listaProfissional}" paginator="true" widgetVar="dt-funcs" reflow="true" paginatorPosition="bottom"
                                  emptyMessage="Sem profissional na base" rows="10" rowSelectMode="add" rowKey="#{profissional.id}" selection="#{profissionalController.profissionaisSelecionados}">
                         <f:facet name="header" >
                             Profissionais
                         </f:facet>
 
-                        <p:ajax event="rowSelect" update=":form:btnApagarFuncionarios"/>
-                        <p:ajax event="rowUnselect" update=":form:btnApagarFuncionarios"/>
-                        <p:ajax event="rowSelectCheckbox" update=":form:btnApagarFuncionarios"/>
-                        <p:ajax event="rowUnselectCheckbox" update=":form:btnApagarFuncionarios"/>
-                        <p:ajax event="toggleSelect" update=":form:btnApagarFuncionarios"/>
+                        <p:ajax event="rowSelect" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="rowUnselect" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="rowSelectCheckbox" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="rowUnselectCheckbox" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="toggleSelect" update=":form:btnApagarProfissionais"/>
 
 
                         <p:column selectionMode="multiple" exportable="false"></p:column>
@@ -73,7 +73,7 @@
                             <p:resetInput target=":form:profissional-conteudo"/>                 
                             </p:commandButton>
                             <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
-                                         oncomplete="PF('alertaApagarFuncionario').show()">
+                                         oncomplete="PF('alertaApagarProfissional').show()">
                                 <f:setPropertyActionListener value="#{profissional}" target="#{profissionalController.profissionalSelecionado}"/>
                             </p:commandButton>
                         </p:column>
@@ -91,8 +91,8 @@
                                              styleClass="ui-button-success" style="margin-right: .5rem">
                                 <p:resetInput target=":form:profissional-conteudo"/>
                             </p:commandButton>
-                            <p:commandButton id="btnApagarFuncionarios" value="#{profissionalController.mensagemBotao}"
-                                             icon="pi pi-trash" oncomplete="PF('alertaApagarFuncionariosSelecionados').show()"
+                            <p:commandButton id="btnApagarProfissionais" value="#{profissionalController.mensagemBotao}"
+                                             icon="pi pi-trash" oncomplete="PF('alertaApagarProfissionaisSelecionados').show()"
                                              styleClass="ui-button-danger" disabled="#{!profissionalController.selecionouProfissionais()}"
                                          update="@this">
                             </p:commandButton>
@@ -121,21 +121,19 @@
                             <div class="row">
                                 <div class="col-6">
                                     <p:outputLabel for="hrIncial">Hora inicial</p:outputLabel>
-                                    <p:inputMask id="hrIncial" value="#{profissionalController.hrInicial}" mask="99:99" required="true">
-                                        <p:ajax event="invalid" listener="#{profissionalController.dataInvalida}" />
-                                        <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]"/>
+                                    <p:inputMask id="hrIncial" value="#{profissionalController.hrInicial}" mask="99:99" required="true"  placeholder="00:00">
+                                        <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" />
                                     </p:inputMask>
                                     <p:tooltip for="hrIncial" value="hh:mm (h - Hora e m - Minuto)" position="right"/>
                                 </div>
                                 <div class="col-6">
                                     <p:outputLabel for="hrFinal">Hora final</p:outputLabel>
-                                    <p:inputMask id="hrFinal" value="#{profissionalController.hrFinal}" mask="99:99" required="true">
+                                    <p:inputMask id="hrFinal" value="#{profissionalController.hrFinal}" mask="99:99" required="true" placeholder="00:00">
                                         <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]"/>
                                     </p:inputMask>
                                     <p:tooltip for="hrFinal" value="hh:mm (h - Hora e m - Minuto)" position="right"/>
                                 </div>
                             </div>
-                            <p:message for="hrFinal" display="icon"/>
                         </p:outputPanel>
 
                         <f:facet name="footer">
@@ -145,20 +143,20 @@
                         </f:facet>
                     </p:dialog>
 
-                    <p:confirmDialog widgetVar="alertaApagarFuncionario" showEffect="fade" width="300"
-                                 message="Realmente deseja deletar este funcionário?" header="Confirmação" severity="warn">
-                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.apagarProfissional()}"
-                                         process="@this" oncomplete="PF('alertaApagarFuncionario').hide()" update="form:dt-funcs"/>
+                    <p:confirmDialog widgetVar="alertaApagarProfissional" showEffect="fade" width="500" styleClass="confirm"
+                                 message="Realmente deseja deletar este profissional?" header="Confirmação" severity="warn">
+                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.apagarProfissional}"
+                                         process="@this" oncomplete="PF('alertaApagarProfissional').hide()" update="form:dt-funcs"/>
                         <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                         onclick="PF('alertaApagarFuncionario').hide()"/>
+                                         onclick="PF('alertaApagarProfissional').hide()"/>
                     </p:confirmDialog>
 
-                    <p:confirmDialog widgetVar="alertaApagarFuncionariosSelecionados" showEffect="fade" width="300"
-                                 message="Realmente deseja deletar os funcionários selecionados?" header="Confirmação" severity="warn">
-                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.apagarProfissionais()}"
-                                         process="@this" oncomplete="PF('alertaApagarFuncionariosSelecionados').hide()" update="form:dt-funcs"/>
+                    <p:confirmDialog widgetVar="alertaApagarProfissionaisSelecionados" showEffect="fade" width="500" styleClass="confirm"
+                                 message="Realmente deseja deletar os profissionais selecionados?" header="Confirmação" severity="warn">
+                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.apagarProfissionais}"
+                                         process="@this" oncomplete="PF('alertaApagarProfissionaisSelecionados').hide()" update="btnApagarProfissionais"/>
                         <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                         onclick="PF('alertaApagarFuncionariosSelecionados').hide()"/>
+                                         onclick="PF('alertaApagarProfissionaisSelecionados').hide()"/>
                     </p:confirmDialog>
                 </div>
             </div>

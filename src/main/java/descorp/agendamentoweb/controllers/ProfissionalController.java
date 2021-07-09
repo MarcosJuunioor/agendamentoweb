@@ -110,7 +110,7 @@ public class ProfissionalController implements Serializable{
         this.listaProfissional.remove(this.profissionalSelecionado);
         bean.deletarProfissional(this.profissionalSelecionado);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionário Removido"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs");
+        PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     public boolean selecionouProfissionais(){
         return this.profissionaisSelecionados != null && !this.profissionaisSelecionados.isEmpty();
@@ -128,7 +128,7 @@ public class ProfissionalController implements Serializable{
         bean.deletarProfissionais(this.profissionaisSelecionados);
         this.profissionaisSelecionados = null;
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionários Removidos"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs");
+        PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     
     public List<String> getDiasSelecionados() {

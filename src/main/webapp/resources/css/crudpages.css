@@ -33,3 +33,9 @@ body .ui-datatable .ui-datatable-data > tr > td {
 .ui-paginator-bottom {
     padding: 10px !important
 }
+.confirm {
+    left: 35%;
+}
+.ui-selectlistbox-listcontainer {
+    height: 250px !important
+}
