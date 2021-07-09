@@ -25,6 +25,10 @@ public class GenericModel {
     }
     
     public void beginTransaction() {
+        if(em == null){
+            emf = Persistence.createEntityManagerFactory("agendamento_web");
+            em = emf.createEntityManager();
+        }
         et = em.getTransaction();
         et.begin();
     }

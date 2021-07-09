@@ -6,50 +6,162 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <h:outputScript library="js" name="procedimento.js" />
+
+        <h:outputStylesheet library="css" name="geral.css"/>
+        <h:outputStylesheet library="css" name="crudpages.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </h:head>
     <h:body>
+        <div class="card">
+            <h:form>
+                <p:growl id="messages"/>
+                <p:menubar>
+                    <p:menuitem url="/agendamentoweb"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
+                    <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
+                        <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
+                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
+                    </p:submenu>
+
+                    <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
+                        <p:menuitem value="Configurações"/>
+                        <p:menuitem value="Sair" />    
+                    </p:submenu>
+
+                </p:menubar>
+            </h:form>
+        </div>
+        <div class="container content">
         <h:form id="form">
-            <p:growl id="msgs" showDetail="true"/>
-            <p:dataTable var="profissional" value="#{profissionalController.listaProfissional}" paginator="true" emptyMessage="Sem profissional na base" rows="10" editable="true">
-                <f:facet name="header">
-                    Profissionais
-                </f:facet>
-                 <p:ajax event="rowEdit" listener="#{profissionalController.editarProfissional}" update=":form:msgs"/>
-                 <p:column headerText="Nome">
-                    <p:cellEditor>
-                        <f:facet name="output">
+            <div class="row">
+                <div class="col">
+                    <p:growl id="msgs" showDetail="true"/>
+
+                    <p:dataTable id="dt-funcs" var="profissional" value="#{profissionalController.listaProfissional}" paginator="true" widgetVar="dt-funcs" reflow="true" paginatorPosition="bottom"
+                                 emptyMessage="Sem profissional na base" rows="10" rowSelectMode="add" rowKey="#{profissional.id}" selection="#{profissionalController.profissionaisSelecionados}">
+                        <f:facet name="header" >
+                            Profissionais
+                        </f:facet>
+
+                        <p:ajax event="rowSelect" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="rowUnselect" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="rowSelectCheckbox" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="rowUnselectCheckbox" update=":form:btnApagarProfissionais"/>
+                        <p:ajax event="toggleSelect" update=":form:btnApagarProfissionais"/>
+
+
+                        <p:column selectionMode="multiple" exportable="false"></p:column>
+                        <p:column headerText="Nome">
                             <h:outputText value="#{profissional.nome}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{profissional.nome}" style="width:100%" label="Nome"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Profissão">
-                    <p:cellEditor>
-                        <f:facet name="output">
+                        </p:column>
+                        <p:column headerText="Profissão">
                             <h:outputText value="#{profissional.profissao}"/>
-                        </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{profissional.profissao}" style="width:100%" label="Profissão"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Especialização">
-                    <p:cellEditor>
-                        <f:facet name="output">
+                        </p:column>
+                        <p:column headerText="Especialização">
                             <h:outputText value="#{profissional.especializacao}"/>
+                        </p:column>
+                        <p:column headerText="Dias da semana">
+                            <h:outputText value="#{profissionalController.listarDiasSemana(profissional.diasSemana)}"/>
+                        </p:column>
+                        <p:column style="width:6rem" exportable="false">
+                            <p:commandButton icon="pi pi-pencil" update=":form:profissional-conteudo"
+                                         oncomplete="PF('ProfissionalDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                <f:setPropertyActionListener value="#{profissional}" target="#{profissionalController.profissionalSelecionado}"/>    
+                            <p:resetInput target=":form:profissional-conteudo"/>                 
+                            </p:commandButton>
+                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                         oncomplete="PF('alertaApagarProfissional').show()">
+                                <f:setPropertyActionListener value="#{profissional}" target="#{profissionalController.profissionalSelecionado}"/>
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    
+                    </div>
+                </div>
+            <div class="row">
+                <div class="col">
+                    <p:toolbar>
+                        <p:toolbarGroup></p:toolbarGroup>
+                        <p:toolbarGroup align="right">
+                            <p:commandButton value="Novo Profissional" icon="pi pi-plus" actionListener="#{profissionalController.novoProfissional}"
+                                             update=":form:profissional-conteudo" oncomplete="PF('ProfissionalDialog').show()"
+                                             styleClass="ui-button-success" style="margin-right: .5rem">
+                                <p:resetInput target=":form:profissional-conteudo"/>
+                            </p:commandButton>
+                            <p:commandButton id="btnApagarProfissionais" value="#{profissionalController.mensagemBotao}"
+                                             icon="pi pi-trash" oncomplete="PF('alertaApagarProfissionaisSelecionados').show()"
+                                             styleClass="ui-button-danger" disabled="#{!profissionalController.selecionouProfissionais()}"
+                                         update="@this">
+                            </p:commandButton>
+                        </p:toolbarGroup>
+                    </p:toolbar>
+
+                    <p:dialog header="Profissional" showEffect="fade" modal="true" widgetVar="ProfissionalDialog" responsive="true" styleClass="crud">
+                        <p:ajax event="close" update=":form:dt-funcs" />
+                        <p:outputPanel id="profissional-conteudo" class="ui-fluid">
+                            <p:outputLabel for="nome">Nome</p:outputLabel>
+                            <p:inputText id="nome" value="#{profissionalController.profissionalSelecionado.nome}" required="true"/>
+                            <p:outputLabel for="profissao">Profissão</p:outputLabel>
+                            <p:inputText id="profissao" value="#{profissionalController.profissionalSelecionado.profissao}" required="true"/>
+                            <p:outputLabel for="especializacao">Especialização</p:outputLabel>
+                            <p:inputText id="especializacao" value="#{profissionalController.profissionalSelecionado.especializacao}" required="true"/>
+                            <p:outputLabel>Dias da semana</p:outputLabel>
+                            <p:selectManyCheckbox value="#{profissionalController.diasSelecionados}" layout="responsive" columns="3">
+                                <f:selectItem itemLabel="Segunda" itemValue="Segunda"/>
+                                <f:selectItem itemLabel="Terça" itemValue="Terça"/>
+                                <f:selectItem itemLabel="Quarta" itemValue="Quarta"/>
+                                <f:selectItem itemLabel="Quinta" itemValue="Quinta"/>
+                                <f:selectItem itemLabel="Sexta" itemValue="Sexta"/>
+                                <f:selectItem itemLabel="Sábado" itemValue="Sábado"/>
+                                <f:selectItem itemLabel="Domingo" itemValue="Domingo"/>
+                            </p:selectManyCheckbox >
+                            <div class="row">
+                                <div class="col-6">
+                                    <p:outputLabel for="hrIncial">Hora inicial</p:outputLabel>
+                                    <p:inputMask id="hrIncial" value="#{profissionalController.hrInicial}" mask="99:99" required="true"  placeholder="00:00">
+                                        <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]" />
+                                    </p:inputMask>
+                                    <p:tooltip for="hrIncial" value="hh:mm (h - Hora e m - Minuto)" position="right"/>
+                                </div>
+                                <div class="col-6">
+                                    <p:outputLabel for="hrFinal">Hora final</p:outputLabel>
+                                    <p:inputMask id="hrFinal" value="#{profissionalController.hrFinal}" mask="99:99" required="true" placeholder="00:00">
+                                        <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]"/>
+                                    </p:inputMask>
+                                    <p:tooltip for="hrFinal" value="hh:mm (h - Hora e m - Minuto)" position="right"/>
+                                </div>
+                            </div>
+                        </p:outputPanel>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{profissionalController.editarProfissional}" onclick="PF('ProfissionalDialog').hide()" update=":form" process="profissional-conteudo @this" />
+
+                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ProfissionalDialog').hide()" class="ui-button-secondary" update=":form:dt-funcs"/>
                         </f:facet>
-                        <f:facet name="input">
-                            <p:inputText value="#{profissional.especializacao}" style="width:100%" label="Especialização"/>
-                        </f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column style="width:6rem" exportable="false">
-                    <p:rowEditor editTitle="Editar profissional" cancelTitle="Cancelar" saveTitle="Salvar"/>
-                </p:column>
-            </p:dataTable>
-        </h:form>
+                    </p:dialog>
+
+                    <p:confirmDialog widgetVar="alertaApagarProfissional" showEffect="fade" width="500" styleClass="confirm"
+                                 message="Realmente deseja deletar este profissional?" header="Confirmação" severity="warn">
+                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.apagarProfissional}"
+                                         process="@this" oncomplete="PF('alertaApagarProfissional').hide()" update="form:dt-funcs"/>
+                        <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                         onclick="PF('alertaApagarProfissional').hide()"/>
+                    </p:confirmDialog>
+
+                    <p:confirmDialog widgetVar="alertaApagarProfissionaisSelecionados" showEffect="fade" width="500" styleClass="confirm"
+                                 message="Realmente deseja deletar os profissionais selecionados?" header="Confirmação" severity="warn">
+                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.apagarProfissionais}"
+                                         process="@this" oncomplete="PF('alertaApagarProfissionaisSelecionados').hide()" update="btnApagarProfissionais"/>
+                        <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                         onclick="PF('alertaApagarProfissionaisSelecionados').hide()"/>
+                    </p:confirmDialog>
+                </div>
+            </div>
+        </h:form>       
+        </div>
     </h:body>
 </html>
 

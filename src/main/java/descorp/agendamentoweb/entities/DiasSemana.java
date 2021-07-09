@@ -28,7 +28,11 @@ import javax.validation.constraints.Size;
 @NamedQueries(
         {
             @NamedQuery(
-                    name = "DiasSemana.PorNome",
+                    name = DiasSemana.DIASEMANA_TODOS,
+                    query = "SELECT d FROM DiasSemana d "
+            ),
+            @NamedQuery(
+                    name = DiasSemana.DIASEMANA_PORNOME,
                     query = "SELECT d FROM DiasSemana d "
                             + "WHERE d.nome = :nome"
             )
@@ -38,6 +42,9 @@ import javax.validation.constraints.Size;
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "id")
 public class DiasSemana implements Serializable {
+    
+    public static final String DIASEMANA_TODOS = "DiasSemana.Todos";
+    public static final String DIASEMANA_PORNOME = "DiasSemana.PorNome";
 
     private static final long serialVersionUID = 1L;
     @Id

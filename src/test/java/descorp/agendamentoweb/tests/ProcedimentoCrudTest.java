@@ -6,6 +6,9 @@
 package descorp.agendamentoweb.tests;
 
 import descorp.agendamentoweb.entities.Procedimento;
+import descorp.agendamentoweb.entities.Profissional;
+import static descorp.agendamentoweb.tests.GenericTest.em;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.TypedQuery;
@@ -21,6 +24,10 @@ public class ProcedimentoCrudTest extends GenericTest {
     @Test
     public void persistirProcedimento(){
         Procedimento procedimento = criarProcedimento();
+        Profissional profissional = em.find(Profissional.class, 1L);
+        ArrayList<Profissional> profissionais = new ArrayList<>();
+        profissionais.add(profissional);
+        procedimento.setProfissionais(profissionais);
         em.persist(procedimento);
         em.flush();
         assertNotNull(procedimento.getId());
