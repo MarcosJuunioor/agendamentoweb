@@ -285,5 +285,20 @@
     <!-- PROCEDIMENTO_PROFISSIONAL ID 1 -->
     <PROCEDIMENTO_PROFISSIONAL       profissional_id="1" 
                                      procedimento_id="1"/> 
+        <!-- PROCEDIMENTO_PROFISSIONAL ID 2 -->
+    <PROCEDIMENTO_PROFISSIONAL       profissional_id="2" 
+                                     procedimento_id="2"/> 
+        <!-- PROCEDIMENTO_PROFISSIONAL ID 3 -->
+    <PROCEDIMENTO_PROFISSIONAL       profissional_id="3" 
+                                     procedimento_id="3"/> 
+        <!-- PROCEDIMENTO_PROFISSIONAL ID 4 -->
+    <PROCEDIMENTO_PROFISSIONAL       profissional_id="4" 
+                                     procedimento_id="4"/> 
+        <!-- PROCEDIMENTO_PROFISSIONAL ID 5 -->
+    <PROCEDIMENTO_PROFISSIONAL       profissional_id="5" 
+                                     procedimento_id="5"/> 
+        <!-- PROCEDIMENTO_PROFISSIONAL ID 6 -->
+    <PROCEDIMENTO_PROFISSIONAL       profissional_id="6" 
+                                     procedimento_id="6"/> 
     
 </dataset>
