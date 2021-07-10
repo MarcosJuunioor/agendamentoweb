@@ -38,124 +38,132 @@
                 </p:menubar>
             </h:form>
         </div>
-        
+
         <div class="container content">
-        <h:form id="form">
-            <div class="row">
-                <div class="col">
-                    <p:growl id="msgs" showDetail="true"/>
-                    
-                    <p:dataTable id="dt-procs" var="procedimento" value="#{procedimentoController.listaProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" widgetVar="dt-procs" reflow="true"
-                                 rows="10" editable="true" rowSelectMode="add" rowKey="#{procedimento.id}" selection="#{procedimentoController.procedimentosSelecionados}" paginatorPosition="bottom">
-                        <f:facet name="header">
-                            Lista de Procedimentos
-                        </f:facet>
-                        
-                        <p:ajax event="rowSelect" update=":form:btnApagarProcedimentos"/>
-                        <p:ajax event="rowUnselect" update=":form:btnApagarProcedimentos"/>
-                        <p:ajax event="rowSelectCheckbox" update=":form:btnApagarProcedimentos"/>
-                        <p:ajax event="rowUnselectCheckbox" update=":form:btnApagarProcedimentos"/>
-                        <p:ajax event="toggleSelect" update=":form:btnApagarProcedimentos"/>
-                        
-                        <p:column selectionMode="multiple" exportable="false"></p:column>
-                        <p:column headerText="Nome">
-                            <h:outputText value="#{procedimento.nome}" />
-                        </p:column>
-                        <p:column headerText="Natureza">
-                            <h:outputText value="#{procedimento.natureza}"/>
-                        </p:column>
-                        <p:column headerText="Duracao">
-                            <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" />
-                        </p:column>
-                        <p:column headerText="Qtd Profissionais">
-                            <h:outputText value="#{procedimento.profissionais.size()}" />
-                        </p:column>
-                        <p:column style="width:6rem" exportable="false">
-                            <p:commandButton icon="pi pi-pencil" update=":form:procedimento-conteudo"
-                                         oncomplete="PF('ProcedimentoDialog').show()"
-                                         styleClass="edit-button rounded-button ui-button-success" process="@this">
-                                <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>    
-                            <p:resetInput target=":form:procedimento-conteudo"/>                 
-                            </p:commandButton>
-                            <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
-                                         oncomplete="PF('alertaApagarProcedimento').show()">
-                                <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>
-                            </p:commandButton>
-                        </p:column>
-                </p:dataTable>          
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p:toolbar>
-                        <p:toolbarGroup></p:toolbarGroup>
-                        <p:toolbarGroup align="right">
-                            <p:commandButton value="Novo Procedimento" icon="pi pi-plus" actionListener="#{procedimentoController.novoProcedimento}"
-                                             update=":form:procedimento-conteudo" oncomplete="PF('ProcedimentoDialog').show()"
-                                             styleClass="ui-button-success" style="margin-right: .5rem">
-                                <p:resetInput target=":form:procedimento-conteudo"/>
-                            </p:commandButton>
-                            <p:commandButton id="btnApagarProcedimentos" value="#{procedimentoController.mensagemBotao}"
-                                             icon="pi pi-trash" oncomplete="PF('alertaApagarProcedimentosSelecionados').show()"
-                                             styleClass="ui-button-danger" disabled="#{!procedimentoController.selecionouProcedimentos()}"
-                                         update="@this">
-                            </p:commandButton>
-                        </p:toolbarGroup>
-                    </p:toolbar>
-                    
-                    <p:dialog header="Prodecimento" showEffect="fade" modal="true" widgetVar="ProcedimentoDialog" responsive="true" styleClass="crud">
-                        <p:ajax event="close" update=":form:dt-procs" />
-                        <p:outputPanel id="procedimento-conteudo" class="ui-fluid">
-                            
-                            <p:outputLabel for="nome">Nome</p:outputLabel>
-                            <p:inputText id="nome" value="#{procedimentoController.procedimentoSelecionado.nome}" required="true"/>
-                            
-                            <p:outputLabel for="natureza">Natureza</p:outputLabel>
-                            <p:inputText id="natureza" value="#{procedimentoController.procedimentoSelecionado.natureza}" required="true"/>
-                            
-                            <p:outputLabel for="duracao">Dura��o</p:outputLabel>
-                            <p:inputMask id="duracao" value="#{procedimentoController.duracao}" mask="99:99" required="true">
-                                <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]"/>
-                            </p:inputMask>
-                            <p:tooltip for="duracao" value="hh:mm (h - Hora e m - Minuto)" position="right"/>
-                            
-                            <p:outputLabel>Profissionais</p:outputLabel>
-                            <p:selectManyMenu  value="#{procedimentoController.profissionaisSelecionados}"
-                                var="p" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
-                                <f:selectItems value="#{procedimentoController.profissionais}" var="profissional" itemLabel="#{procedimentoController.nomeProcedimento(procedimento)}"
-                                                itemValue="#{profissional}"/>
-                                <p:column>
-                                    <h:outputText value="#{procedimentoController.nomeProcedimento(p)}"/>
-                                </p:column>
-                            </p:selectManyMenu>
-                            
-                        </p:outputPanel>
-                        
-                        <f:facet name="footer">
-                            <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{procedimentoController.editarProcedimento}" onclick="PF('ProcedimentoDialog').hide()" update=":form" process="procedimento-conteudo @this" />
+            <h:form id="form">
+                <div class="row">
+                    <div class="col">
+                        <p:growl id="msgs" showDetail="true"/>
 
-                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ProcedimentoDialog').hide()" class="ui-button-secondary" update=":form:dt-procs"/>
-                        </f:facet>
-                    </p:dialog>
-                    
-                    <p:confirmDialog widgetVar="alertaApagarProcedimento" showEffect="fade" width="500" styleClass="confirm"
-                                 message="Realmente deseja deletar este procedimento?" header="Confirma��o" severity="warn">
-                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimento}"
-                                         process="@this" oncomplete="PF('alertaApagarProcedimento').hide()" update="form:dt-procs"/>
-                        <p:commandButton value="N�o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                         onclick="PF('alertaApagarProcedimento').hide()"/>
-                    </p:confirmDialog>
+                        <p:dataTable id="dt-procs" var="procedimento" value="#{procedimentoController.listaProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" widgetVar="dt-procs" reflow="true"
+                                     rows="10" editable="true" rowSelectMode="add" rowKey="#{procedimento.id}" selection="#{procedimentoController.procedimentosSelecionados}" paginatorPosition="bottom">
+                            <f:facet name="header">
+                                Lista de Procedimentos
+                            </f:facet>
 
-                    <p:confirmDialog widgetVar="alertaApagarProcedimentosSelecionados" showEffect="fade" width="500" styleClass="confirm"
-                                 message="Realmente deseja deletar os procedimentos selecionados?" header="Confirma��o" severity="warn">
-                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimentos}"
-                                         process="@this" oncomplete="PF('alertaApagarProcedimentosSelecionados').hide()" update="btnApagarProcedimentos form"/>
-                        <p:commandButton value="N�o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
-                                         onclick="PF('alertaApagarProcedimentosSelecionados').hide()"/>
-                    </p:confirmDialog>
+                            <p:ajax event="rowSelect" update=":form:btnApagarProcedimentos"/>
+                            <p:ajax event="rowUnselect" update=":form:btnApagarProcedimentos"/>
+                            <p:ajax event="rowSelectCheckbox" update=":form:btnApagarProcedimentos"/>
+                            <p:ajax event="rowUnselectCheckbox" update=":form:btnApagarProcedimentos"/>
+                            <p:ajax event="toggleSelect" update=":form:btnApagarProcedimentos"/>
+
+                            <p:column selectionMode="multiple" exportable="false"></p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{procedimento.nome}" />
+                            </p:column>
+                            <p:column headerText="Natureza">
+                                <h:outputText value="#{procedimento.natureza}"/>
+                            </p:column>
+                            <p:column headerText="Duracao">
+                                <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" />
+                            </p:column>
+                            <p:column headerText="Qtd Profissionais">
+                                <h:outputText value="#{procedimento.profissionais.size()}" />
+                            </p:column>
+                            <p:column style="width:6rem" exportable="false">
+                                <p:commandButton icon="pi pi-pencil" update=":form:procedimento-conteudo"
+                                                 oncomplete="PF('ProcedimentoDialog').show()"
+                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                    <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>    
+                                    <p:resetInput target=":form:procedimento-conteudo"/>                 
+                                </p:commandButton>
+                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                                 oncomplete="PF('alertaApagarProcedimento').show()">
+                                    <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>          
+                    </div>
                 </div>
-            </div>
-        </h:form>
+                <div class="row">
+                    <div class="col">
+                        <p:toolbar>
+                            <p:toolbarGroup></p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton value="Novo Procedimento" icon="pi pi-plus" actionListener="#{procedimentoController.novoProcedimento}"
+                                                 update=":form:procedimento-conteudo" oncomplete="PF('ProcedimentoDialog').show()"
+                                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                    <p:resetInput target=":form:procedimento-conteudo"/>
+                                </p:commandButton>
+                                <p:commandButton id="btnApagarProcedimentos" value="#{procedimentoController.mensagemBotao}"
+                                                 icon="pi pi-trash" oncomplete="PF('alertaApagarProcedimentosSelecionados').show()"
+                                                 styleClass="ui-button-danger" disabled="#{!procedimentoController.selecionouProcedimentos()}"
+                                                 update="@this">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+                        <p:dialog header="Prodecimento" showEffect="fade" modal="true" widgetVar="ProcedimentoDialog" responsive="true" styleClass="crud">
+                            <p:ajax event="close" update=":form:dt-procs" />
+                            <p:outputPanel id="procedimento-conteudo" class="ui-fluid">
+
+                                <p:outputLabel for="nome">Nome</p:outputLabel>
+                                <p:inputText id="nome" value="#{procedimentoController.procedimentoSelecionado.nome}" required="true"/>
+
+                                <p:outputLabel for="natureza">Natureza</p:outputLabel>
+                                <p:inputText id="natureza" value="#{procedimentoController.procedimentoSelecionado.natureza}" required="true"/>
+
+                                <p:outputLabel for="duracao">Dura��o</p:outputLabel>
+                                <p:inputMask id="duracao" value="#{procedimentoController.duracao}" mask="99:99" required="true">
+                                    <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]"/>
+                                </p:inputMask>
+                                <p:tooltip for="duracao" value="hh:mm (h - Hora e m - Minuto)" position="right"/>
+
+                                <p:outputLabel>Profissionais</p:outputLabel>
+                                <p:selectManyMenu  value="#{procedimentoController.profissionaisSelecionados}"
+                                                   var="p" filterMatchMode="contains" showCheckbox="true" styleClass="manymenu-advanced">
+                                    <f:selectItems value="#{procedimentoController.profissionais}" var="profissional" itemLabel="#{procedimentoController.nomeProcedimento(procedimento)}"
+                                                   itemValue="#{profissional}"/>
+                                    <p:column>
+                                        <h:outputText value="#{procedimentoController.nomeProcedimento(p)}"/>
+                                    </p:column>
+                                </p:selectManyMenu>
+
+                            </p:outputPanel>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Salvar" 
+                                                 icon="pi pi-check" 
+                                                 actionListener="#{procedimentoController.editarProcedimento}" 
+                                                 onclick="PF('ProcedimentoDialog').hide()" 
+                                                 update=":form" 
+                                                 process="procedimento-conteudo @this" />
+                                <p:commandButton value="Cancelar" 
+                                                 icon="pi pi-times" 
+                                                 onclick="PF('ProcedimentoDialog').hide()" 
+                                                 class="ui-button-secondary" 
+                                                 update=":form:dt-procs"/>
+                            </f:facet>
+                        </p:dialog>
+
+                        <p:confirmDialog widgetVar="alertaApagarProcedimento" showEffect="fade" width="500" styleClass="confirm"
+                                         message="Realmente deseja deletar este procedimento?" header="Confirma��o" severity="warn">
+                            <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimento}"
+                                             process="@this" oncomplete="PF('alertaApagarProcedimento').hide()" update="form:dt-procs"/>
+                            <p:commandButton value="N�o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('alertaApagarProcedimento').hide()"/>
+                        </p:confirmDialog>
+
+                        <p:confirmDialog widgetVar="alertaApagarProcedimentosSelecionados" showEffect="fade" width="500" styleClass="confirm"
+                                         message="Realmente deseja deletar os procedimentos selecionados?" header="Confirma��o" severity="warn">
+                            <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimentos}"
+                                             process="@this" oncomplete="PF('alertaApagarProcedimentosSelecionados').hide()" update="btnApagarProcedimentos form"/>
+                            <p:commandButton value="N�o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('alertaApagarProcedimentosSelecionados').hide()"/>
+                        </p:confirmDialog>
+                    </div>
+                </div>
+            </h:form>
         </div>
     </h:body>
 </html>
