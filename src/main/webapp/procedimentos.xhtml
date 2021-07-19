@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="windows-1252"?>
+<?xml version="1.0" encoding='ISO-8859-1'?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -29,7 +29,8 @@
                         <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
                         <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
                     </p:submenu>
-
+                    <p:menuitem value="Profissionais" icon="pi pi-fw pi-briefcase" url="/agendamentoweb/procedimentos" />
+                    <p:menuitem value="Procedimentos" icon="pi pi-fw pi-folder" url="/agendamentoweb/profissionais" />
                     <p:submenu class="user-menu" label="Usu�rio" icon="pi pi-user">
                         <p:menuitem value="Configura��es"/>
                         <p:menuitem value="Sair" />    
@@ -132,17 +133,9 @@
                             </p:outputPanel>
 
                             <f:facet name="footer">
-                                <p:commandButton value="Salvar" 
-                                                 icon="pi pi-check" 
-                                                 actionListener="#{procedimentoController.editarProcedimento}" 
-                                                 onclick="PF('ProcedimentoDialog').hide()" 
-                                                 update=":form" 
-                                                 process="procedimento-conteudo @this" />
-                                <p:commandButton value="Cancelar" 
-                                                 icon="pi pi-times" 
-                                                 onclick="PF('ProcedimentoDialog').hide()" 
-                                                 class="ui-button-secondary" 
-                                                 update=":form:dt-procs"/>
+                                <p:commandButton value="Salvar" icon="pi pi-check" actionListener="#{procedimentoController.editarProcedimento}" onclick="PF('ProcedimentoDialog').hide()" update=":form" process="procedimento-conteudo @this" />
+
+                                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ProcedimentoDialog').hide()" class="ui-button-secondary" update=":form:dt-procs"/>
                             </f:facet>
                         </p:dialog>
 

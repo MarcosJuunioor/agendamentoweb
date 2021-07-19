@@ -28,9 +28,10 @@
                         <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
                         <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
                     </p:submenu>
-
-                    <p:submenu class="user-menu" label="Usuï¿½rio" icon="pi pi-user">
-                        <p:menuitem value="Configuraï¿½ï¿½es"/>
+                    <p:menuitem value="Profissionais" icon="pi pi-fw pi-briefcase" url="/agendamentoweb/procedimentos" />
+                    <p:menuitem value="Procedimentos" icon="pi pi-fw pi-folder" url="/agendamentoweb/profissionais" />
+                    <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
+                        <p:menuitem value="Configurações"/>
                         <p:menuitem value="Sair" />    
                     </p:submenu>
 
@@ -38,32 +39,32 @@
             </h:form>
         </div>
         <div class="container content">
-        <h:form>
-            <p:dataTable var="procedimento" value="#{procedimentoController.listaProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" paginatorPosition="bottom">
-                <f:facet name="header">
-                    Lista de Procedimentos
-                </f:facet>
-                <p:column style="width:2rem">
-                    <p:rowToggler/>
-                </p:column>
-                <p:column headerText="Natureza">
-                    <h:outputText value="#{procedimento.natureza}" />
-                </p:column>
-                <p:column headerText="Duracao">
-                    <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" />
-                </p:column>
-                <p:column headerText="Nome">
-                    <h:outputText value="#{procedimento.nome}" />
-                </p:column>
-                <p:rowExpansion>
-                    <div class="list">
-                        <p:repeat value="#{procedimento.profissionais}" var="profissional">
-                            <p:button value="#{profissional.nome}" styleClass="ui-button-secondary ui-button-flat" onclick="agendar(#{procedimento.id}, #{profissional.id})"/>
-                        </p:repeat>
-                    </div>
-                </p:rowExpansion>
-            </p:dataTable>                        
-        </h:form>
+            <h:form>
+                <p:dataTable var="procedimento" value="#{procedimentoController.listaProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" paginatorPosition="bottom">
+                    <f:facet name="header">
+                        Lista de Procedimentos
+                    </f:facet>
+                    <p:column style="width:2rem">
+                        <p:rowToggler/>
+                    </p:column>
+                    <p:column headerText="Natureza">
+                        <h:outputText value="#{procedimento.natureza}" />
+                    </p:column>
+                    <p:column headerText="Duracao">
+                        <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" />
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{procedimento.nome}" />
+                    </p:column>
+                    <p:rowExpansion>
+                        <div class="list">
+                            <p:repeat value="#{procedimento.profissionais}" var="profissional">
+                                <p:button value="#{profissional.nome}" styleClass="ui-button-secondary ui-button-flat" onclick="agendar(#{procedimento.id}, #{profissional.id})"/>
+                            </p:repeat>
+                        </div>
+                    </p:rowExpansion>
+                </p:dataTable>                        
+            </h:form>
         </div>
     </h:body>
 </html>
