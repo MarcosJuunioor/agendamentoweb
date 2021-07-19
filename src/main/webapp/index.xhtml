@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Home</title>
         <h:outputScript library="js" name="index.js" />
@@ -14,26 +15,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
     </h:head>
     <h:body>
-        <div class="card">
-            <h:form>
-                <p:growl id="messages"/>
-                <p:menubar>
-                    <p:menuitem url="/agendamentoweb"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
-                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
-                    <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
-                        <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
-                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
-                    </p:submenu>
-                    <p:menuitem value="Profissionais" icon="pi pi-fw pi-briefcase" url="/agendamentoweb/procedimentos" />
-                    <p:menuitem value="Procedimentos" icon="pi pi-fw pi-folder" url="/agendamentoweb/profissionais" />
-                    <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
-                        <p:menuitem value="Configurações"/>
-                        <p:menuitem value="Sair" />    
-                    </p:submenu>
-
-                </p:menubar>
-            </h:form>
-        </div>
+        <ui:include src="menu.xhtml" />
         <div class="container content">
             <div class="row">
                 <div class="col">
