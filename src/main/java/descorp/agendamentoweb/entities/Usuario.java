@@ -19,6 +19,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -32,13 +34,24 @@ import javax.validation.constraints.Pattern;
  */
 @Entity
 @Table(name = "usuario")
-@Inheritance(strategy = InheritanceType.JOINED) 
-@DiscriminatorColumn(name = "DISC_USUARIO", 
+@NamedQueries(
+        {
+            @NamedQuery(
+                    name = "Usuario.PorEmail",
+                    query = "SELECT u FROM Usuario u "
+                    + "WHERE u.email = :email "
+                    + "AND u.senha = :senha"
+            )
+        }
+)
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "DISC_USUARIO",
         discriminatorType = DiscriminatorType.STRING, length = 1)
 @JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public abstract class Usuario implements Serializable {
+
     /*
      * @Id informa que o atributo representa a chave primária.
      * @GeneratedValue informa como gerar a chave primária.
@@ -61,7 +74,7 @@ public abstract class Usuario implements Serializable {
     @NotNull
     @Column(name = "senha", nullable = false, length = 20)
     protected String senha;
-    
+
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, orphanRemoval = true)
     protected List<Agendamento> agendamentos;
 
@@ -104,5 +117,5 @@ public abstract class Usuario implements Serializable {
     public void setAgendamentos(List<Agendamento> agendamentos) {
         this.agendamentos = agendamentos;
     }
-    
+
 }

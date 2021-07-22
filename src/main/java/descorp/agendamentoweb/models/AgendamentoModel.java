@@ -10,9 +10,12 @@ import descorp.agendamentoweb.entities.Procedimento;
 import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.entities.Usuario;
 import static descorp.agendamentoweb.models.GenericModel.em;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
@@ -62,6 +65,7 @@ public class AgendamentoModel extends GenericModel {
         return query.getResultList();
 
     }
+
     public Agendamento criarAgendamento(Date data, Date horario, Long idProc, Long idProf) {
 
         Agendamento agendamento = new Agendamento();
@@ -91,12 +95,24 @@ public class AgendamentoModel extends GenericModel {
 
     }
 
-    public void persistirAgendamento(Agendamento a) {     
+    public void persistirAgendamento(Agendamento agendamento) throws IOException {
+        String URL = "http://localhost:8080/agendamentoweb/";
+        String msgSucesso = "Agendamento criado com sucesso!";
+
+        try {
             EntityTransaction et = em.getTransaction();
             et.begin();
-            em.persist(a);
+            em.persist(agendamento);
             em.flush();
-            et.commit();                
+            et.commit();
+            em.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao persistir o agendamento: " + e.getMessage());
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().redirect(URL);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Procedimento criado com sucesso!", ""));
+        }
+
     }
 
     public Date criarData(int dia, int mes, int ano) {
