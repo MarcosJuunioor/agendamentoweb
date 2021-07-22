@@ -19,7 +19,7 @@
         </style>
     </h:head>
     <h:body>
-        <ui:include src="menu.xhtml" />
+        <ui:include src="resources/componentes/navbar.xhtml" />
         <div class="container content">
             <h:form>
                 <p:dataTable var="procedimento" value="#{procedimentoController.listaProcedimento}" paginator="true" emptyMessage="Sem procedimentos na base" rows="10" paginatorPosition="bottom">

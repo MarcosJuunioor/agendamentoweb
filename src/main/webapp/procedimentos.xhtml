@@ -20,7 +20,7 @@
         </style>
     </h:head>
     <h:body>
-        <ui:include src="menu.xhtml" />
+        <ui:include src="resources/componentes/navbar.xhtml" />
         <div class="container content">
             <h:form id="form">
                 <div class="row">
@@ -55,11 +55,11 @@
                             <p:column style="width:6rem" exportable="false">
                                 <p:commandButton icon="pi pi-pencil" update=":form:procedimento-conteudo"
                                                  oncomplete="PF('ProcedimentoDialog').show()"
-                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                                 styleClass="edit-button rounded-button ui-button-info ui-button-outlined" process="@this">
                                     <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>    
                                     <p:resetInput target=":form:procedimento-conteudo"/>                 
                                 </p:commandButton>
-                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                <p:commandButton class="ui-button-danger rounded-button ui-button-outlined" icon="pi pi-trash" process="@this"
                                                  oncomplete="PF('alertaApagarProcedimento').show()">
                                     <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>
                                 </p:commandButton>
@@ -74,7 +74,7 @@
                             <p:toolbarGroup align="right">
                                 <p:commandButton value="Novo Procedimento" icon="pi pi-plus" actionListener="#{procedimentoController.novoProcedimento}"
                                                  update=":form:procedimento-conteudo" oncomplete="PF('ProcedimentoDialog').show()"
-                                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                                 styleClass="ui-button-info" style="margin-right: .5rem">
                                     <p:resetInput target=":form:procedimento-conteudo"/>
                                 </p:commandButton>
                                 <p:commandButton id="btnApagarProcedimentos" value="#{procedimentoController.mensagemBotao}"
