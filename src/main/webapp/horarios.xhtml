@@ -12,7 +12,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
     </h:head>
-
     <h:body>
         <ui:include src="menu.xhtml" />
         <div class="container content">
@@ -24,25 +23,16 @@
                         <h:outputText value="#{horario.hora.hours}:#{horario.hora.minutes}0" />                       
                     </p:column>                                    
                     <p:column width="90">      
-                        <p:commandButton value="Agendar" action="#{agendamentoController.criarAgendamento(horario)}" update="@form">  
-                            <p:confirm message="Confirmar o agendamento para o horário: #{horario.hora.hours}:00"/>
+                        <p:commandButton value="Agendar" action="#{agendamentoController.criarAgendamento(horario)}" update="form">  
+                            <p:confirm
+                                message="Confirmar o agendamento para o horário: #{horario.hora.hours}:00"/>
                         </p:commandButton>
                     </p:column>                    
                 </p:dataTable>
-                <p:dialog id="dialogConfirmaAgendamento" 
-                          visible="false" 
-                          resizable="false" 
-                          closable="false" 
-                          closeOnEscape="false" 
-                          draggable="false" 
-                          modal="true" 
-                          widgetVar="widDialogConfirmaAgendamento">
-                    <p:panelGrid columns="2"/>
-                </p:dialog>
-                <p:confirmDialog global="true">
-                    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"/>
-                    <p:commandButton value="Não" styleClass="ui-confirmdialog-no"/>
-                </p:confirmDialog>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="500" styleClass="confirm" severity="warn" header="Confirmação" >
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat" icon="pi pi-times" />
+                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"  />
+                </p:confirmDialog>       
             </h:form>
         </div>       
     </h:body>
