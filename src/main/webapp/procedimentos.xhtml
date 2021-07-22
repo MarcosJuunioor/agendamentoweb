@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
 
         <h:outputScript library="js" name="procedimento.js" />
@@ -19,27 +20,7 @@
         </style>
     </h:head>
     <h:body>
-        <div class="card">
-            <h:form>
-                <p:growl id="messages"/>
-                <p:menubar>
-                    <p:menuitem url="/agendamentoweb"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
-                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
-                    <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
-                        <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
-                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
-                    </p:submenu>
-                    <p:menuitem value="Profissionais" icon="pi pi-fw pi-briefcase" url="/agendamentoweb/procedimentos" />
-                    <p:menuitem value="Procedimentos" icon="pi pi-fw pi-folder" url="/agendamentoweb/profissionais" />
-                    <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
-                        <p:menuitem value="Configurações"/>
-                        <p:menuitem value="Sair" />    
-                    </p:submenu>
-
-                </p:menubar>
-            </h:form>
-        </div>
-
+        <ui:include src="resources/componentes/navbar.xhtml" />
         <div class="container content">
             <h:form id="form">
                 <div class="row">
@@ -74,11 +55,11 @@
                             <p:column style="width:6rem" exportable="false">
                                 <p:commandButton icon="pi pi-pencil" update=":form:procedimento-conteudo"
                                                  oncomplete="PF('ProcedimentoDialog').show()"
-                                                 styleClass="edit-button rounded-button ui-button-success" process="@this">
+                                                 styleClass="edit-button rounded-button ui-button-info ui-button-outlined" process="@this">
                                     <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>    
                                     <p:resetInput target=":form:procedimento-conteudo"/>                 
                                 </p:commandButton>
-                                <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash" process="@this"
+                                <p:commandButton class="ui-button-danger rounded-button ui-button-outlined" icon="pi pi-trash" process="@this"
                                                  oncomplete="PF('alertaApagarProcedimento').show()">
                                     <f:setPropertyActionListener value="#{procedimento}" target="#{procedimentoController.procedimentoSelecionado}"/>
                                 </p:commandButton>
@@ -93,7 +74,7 @@
                             <p:toolbarGroup align="right">
                                 <p:commandButton value="Novo Procedimento" icon="pi pi-plus" actionListener="#{procedimentoController.novoProcedimento}"
                                                  update=":form:procedimento-conteudo" oncomplete="PF('ProcedimentoDialog').show()"
-                                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                                                 styleClass="ui-button-info" style="margin-right: .5rem">
                                     <p:resetInput target=":form:procedimento-conteudo"/>
                                 </p:commandButton>
                                 <p:commandButton id="btnApagarProcedimentos" value="#{procedimentoController.mensagemBotao}"
