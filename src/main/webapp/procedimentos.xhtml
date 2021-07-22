@@ -121,18 +121,18 @@
                         </p:dialog>
 
                         <p:confirmDialog widgetVar="alertaApagarProcedimento" showEffect="fade" width="500" styleClass="confirm"
-                                         message="Realmente deseja deletar este procedimento?" header="Confirmaï¿½ï¿½o" severity="warn">
+                                         message="Realmente deseja deletar este procedimento? Os agendamentos serão cancelados e os clientes, notificados via e-mail." header="Confirmação" severity="warn">
                             <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimento}"
                                              process="@this" oncomplete="PF('alertaApagarProcedimento').hide()" update="form:dt-procs"/>
-                            <p:commandButton value="Nï¿½o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('alertaApagarProcedimento').hide()"/>
                         </p:confirmDialog>
 
                         <p:confirmDialog widgetVar="alertaApagarProcedimentosSelecionados" showEffect="fade" width="500" styleClass="confirm"
-                                         message="Realmente deseja deletar os procedimentos selecionados?" header="Confirmaï¿½ï¿½o" severity="warn">
+                                         message="Realmente deseja deletar os procedimentos selecionados? Os agendamentos serão cancelados e os clientes, notificados via e-mail." header="Confirmação" severity="warn">
                             <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimentos}"
                                              process="@this" oncomplete="PF('alertaApagarProcedimentosSelecionados').hide()" update="btnApagarProcedimentos form"/>
-                            <p:commandButton value="Nï¿½o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('alertaApagarProcedimentosSelecionados').hide()"/>
                         </p:confirmDialog>
                     </div>
