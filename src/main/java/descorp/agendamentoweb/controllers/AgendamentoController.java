@@ -8,6 +8,7 @@ package descorp.agendamentoweb.controllers;
 import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.models.AgendamentoModel;
 import descorp.agendamentoweb.servlets.AgendamentoServlet;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -124,7 +125,7 @@ public class AgendamentoController implements Serializable {
         return sdf2.parse(saida);
     }
 
-    public void criarAgendamento(Agendamento agendamento) {
+    public void criarAgendamento(Agendamento agendamento) throws IOException {
         bean.persistirAgendamento(agendamento);
     }
 

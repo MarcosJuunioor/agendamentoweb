@@ -95,14 +95,14 @@ public class AgendamentoModel extends GenericModel {
 
     }
 
-    public void persistirAgendamento(Agendamento a) throws IOException {
+    public void persistirAgendamento(Agendamento agendamento) throws IOException {
         String URL = "http://localhost:8080/agendamentoweb/";
         String msgSucesso = "Agendamento criado com sucesso!";
 
         try {
             EntityTransaction et = em.getTransaction();
             et.begin();
-            em.persist(a);
+            em.persist(agendamento);
             em.flush();
             et.commit();
             em.close();

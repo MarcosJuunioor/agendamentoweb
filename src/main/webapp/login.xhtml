@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <h:outputStylesheet library="css" name="geral.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
+    </h:head>
+    <h:body>    
+        <h:form id="loginForm">
+            <p:growl id="msg" showDetail="true" life="4000" />
+            <p:panel id="loginPnl" header="Login"
+                     style="width: 350px; margin: 0 auto;">
+                <h:panelGrid id="loginPanel" columns="2" cellpadding="5">
+                    <h:outputText value="Email" />
+                    <p:inputText id="username" binding="#{userEmail}"/>
+                    <p:spacer /><p:spacer />	
+                    <h:outputText value="Senha" />
+                    <p:password id="password" binding="#{userPassword}"/>
+                </h:panelGrid>                
+                <h:panelGrid columns="1" cellpadding="10" width="100%">
+                    <p:commandButton value="Enviar" action="#{loginController.login(userEmail.value,userPassword.value)}" ajax="true" style="float: right"/>                    
+                    <p:commandButton id="btn" value="View" icon="pi pi-home" action="#{loginController.cadastrarUsuario()}">
+                        <p:ajax event="dialogReturn" listener="#{dfRootView.onReturnFromLevel1}" update="loginForm"/>
+                    </p:commandButton>
+                </h:panelGrid>
+            </p:panel>                             
+        </h:form>
+    </h:body>
+</html>
