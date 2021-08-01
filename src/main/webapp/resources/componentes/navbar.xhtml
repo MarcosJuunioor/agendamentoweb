@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <!-- SUBSTITUIR CARACTERES ESPECIAIS PELO SEU CODIGO ASCII-->
+    <div class="card">
+        <h:form>
+            <p:growl id="messages"/>
+            <p:menubar>
+                <p:menuitem url="/agendamentoweb/index.xhtml"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb/index.xhtml" />
+                <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
+                    <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb/index.xhtml" />
+                    <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
+                </p:submenu>
+                <p:menuitem value="Profissionais" icon="pi pi-fw pi-id-card" url="/agendamentoweb/profissionais" />
+                <p:menuitem value="Procedimentos" icon="pi pi-fw pi-list" url="/agendamentoweb/procedimentos" />
+                <p:submenu class="user-menu" label="Usuario" icon="pi pi-user">
+                    <p:menuitem value="Configura&#231;&#245;es"/>
+                    <p:menuitem value="Sair" />    
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+    </div>
+</ui:composition>

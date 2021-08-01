@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <div class="card">
+        <h:form>
+            <p:growl id="messages"/>
+            <p:menubar>
+                <p:menuitem url="/agendamentoweb"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
+                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb" />
+                <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
+                    <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb" />
+                    <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
+                </p:submenu>
+                <p:menuitem value="Profissionais" icon="pi pi-fw pi-briefcase" url="/agendamentoweb/profissionais" />
+                <p:menuitem value="Procedimentos" icon="pi pi-fw pi-folder" url="/agendamentoweb/procedimentos" />
+                <p:submenu class="user-menu" label="Usuário" icon="pi pi-user">
+                    <p:menuitem value="Configurações"/>
+                    <p:menuitem value="Sair" />    
+                </p:submenu>
+
+            </p:menubar>
+        </h:form>
+    </div>
+
+</ui:composition>
+
