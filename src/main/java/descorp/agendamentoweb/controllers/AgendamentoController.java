@@ -20,6 +20,10 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,6 +40,8 @@ public class AgendamentoController implements Serializable {
     private final ArrayList<String> horariosEstabelecimento;
     private final ArrayList<Agendamento> horariosDisponiveis;
     private List<Agendamento> agendamentos;
+    private Agendamento agendamentoSelecionado;
+    private List<Agendamento> agendamentosSelecionados;
 
     public AgendamentoController() {
         this.bean = new AgendamentoModel();
@@ -44,7 +50,7 @@ public class AgendamentoController implements Serializable {
 
     }
 
-    public List<Agendamento> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc) {
+    public List<Agendamento> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc, HttpSession session) {
 
         AgendamentoModel agendamentoModel = new AgendamentoModel();
 
@@ -74,7 +80,7 @@ public class AgendamentoController implements Serializable {
 
                 //Cria a lista de objetos que serão exibidos na tela
                 for (int a = 0; a < horariosEstabelecimento.size(); a++) {
-                    this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional));
+                    this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional, (Long) session.getAttribute("idUsuario")));
                 }
 
                 //Remove da lista de horários disponíveis os horário que já estão ocupados
@@ -127,6 +133,54 @@ public class AgendamentoController implements Serializable {
 
     public void criarAgendamento(Agendamento agendamento) throws IOException {
         bean.persistirAgendamento(agendamento);
+    }
+
+    public void apagarAgendamento() {
+
+    }
+
+    public void apagarAgendamentos() {
+
+    }
+
+    public boolean selecionouAgendamentos() {
+        return this.getAgendamentosSelecionados() != null && !this.agendamentosSelecionados.isEmpty();
+    }
+
+    public String getMensagemBotao() {
+        if (this.selecionouAgendamentos()) {
+            int qtd = this.getAgendamentosSelecionados().size();
+            return qtd > 1 ? qtd + " Agendamentos selecionados" : "1 agendamento selecionado";
+        }
+        return "Excluir";
+    }
+
+    /**
+     * @return the agendamentoSelecionado
+     */
+    public Agendamento getAgendamentoSelecionado() {
+        return agendamentoSelecionado;
+    }
+
+    /**
+     * @param agendamentoSelecionado the agendamentoSelecionado to set
+     */
+    public void setAgendamentoSelecionado(Agendamento agendamentoSelecionado) {
+        this.agendamentoSelecionado = agendamentoSelecionado;
+    }
+
+    /**
+     * @return the agendamentosSelecionados
+     */
+    public List<Agendamento> getAgendamentosSelecionados() {
+        return agendamentosSelecionados;
+    }
+
+    /**
+     * @param agendamentosSelecionados the agendamentosSelecionados to set
+     */
+    public void setAgendamentosSelecionados(List<Agendamento> agendamentosSelecionados) {
+        this.agendamentosSelecionados = agendamentosSelecionados;
     }
 
 }

@@ -15,10 +15,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.CacheRetrieveMode;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 /**
@@ -66,7 +69,7 @@ public class AgendamentoModel extends GenericModel {
 
     }
 
-    public Agendamento criarAgendamento(Date data, Date horario, Long idProc, Long idProf) {
+    public Agendamento criarAgendamento(Date data, Date horario, Long idProc, Long idProf, Long idUsuario) {
 
         Agendamento agendamento = new Agendamento();
 
@@ -75,7 +78,7 @@ public class AgendamentoModel extends GenericModel {
             agendamento.setData(criarData(data.getDay(), data.getMonth(), data.getYear()));
             agendamento.setHora(criarHora(horario.getHours(), horario.getMinutes(), horario.getSeconds()));
 
-            Usuario usuario = em.find(Usuario.class, 1L);
+            Usuario usuario = em.find(Usuario.class, idUsuario);
             agendamento.setUsuario(usuario);
 
             Procedimento procedimento = em.find(Procedimento.class, idProc);
@@ -96,23 +99,17 @@ public class AgendamentoModel extends GenericModel {
     }
 
     public void persistirAgendamento(Agendamento agendamento) throws IOException {
-        String URL = "http://localhost:8080/agendamentoweb/";
+        String URL = "/agendamentoweb/index.xhtml";
         String msgSucesso = "Agendamento criado com sucesso!";
 
         try {
-            EntityTransaction et = em.getTransaction();
-            et.begin();
+            this.beginTransaction();
             em.persist(agendamento);
             em.flush();
-            et.commit();
-            em.close();
+            this.commitTransaction();
         } catch (Exception e) {
             System.out.println("Erro ao persistir o agendamento: " + e.getMessage());
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(URL);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Procedimento criado com sucesso!", ""));
-        }
-
+        } 
     }
 
     public Date criarData(int dia, int mes, int ano) {

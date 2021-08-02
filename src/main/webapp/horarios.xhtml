@@ -17,21 +17,21 @@
         <div class="container content">
             <h:form id="form">
                 <p:dataTable id="horarios" var="horario" 
-                             value="#{agendamentoController.getHorariosIndisponiveis(request.getParameter('dataSelecionada'), request.getParameter('profissional'), request.getParameter('procedimento'))}"
+                             value="#{agendamentoController.getHorariosIndisponiveis(request.getParameter('dataSelecionada'), request.getParameter('profissional'), request.getParameter('procedimento'), request.getSession())}"
                              rowKey="#{horario}">                 
                     <p:column headerText="Horários disponíveis">
                         <h:outputText value="#{horario.hora.hours}:#{horario.hora.minutes}0" />                       
                     </p:column>                                    
                     <p:column width="90">      
-                        <p:commandButton value="Agendar" action="#{agendamentoController.criarAgendamento(horario)}" update="form">  
+                        <p:commandButton value="Agendar" action="#{agendamentoController.criarAgendamento(horario)}" update="form" oncomplete="location.reload();">  
                             <p:confirm
                                 message="Confirmar o agendamento para o horário: #{horario.hora.hours}:00"/>
                         </p:commandButton>
                     </p:column>                    
                 </p:dataTable>
                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="500" styleClass="confirm" severity="warn" header="Confirmação" >
-                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat" icon="pi pi-times" />
-                    <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"  />
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"  />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no ui-button-flat" icon="pi pi-times" />
                 </p:confirmDialog>       
             </h:form>
         </div>       

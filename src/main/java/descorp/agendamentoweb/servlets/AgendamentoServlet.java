@@ -79,8 +79,7 @@ public class AgendamentoServlet extends HttpServlet {
         int i = 0;
         int contador = 1;
         for (Agendamento a : agendamentos) {
-            i++;
-            if (i > 1) {
+            if (i >= 1) {
                 String dataAtual = df.format(a.getData());
                 String dataAnterior = df.format(agendamentos.get(i - 1).getData());
                 if (dataAtual.equals(dataAnterior)) {
@@ -92,6 +91,7 @@ public class AgendamentoServlet extends HttpServlet {
             if (contador == 6) {
                 datasIndisponiveis.add(df.format(a.getData()));
             }
+            i++;
         }
 
         String json = new ObjectMapper().writeValueAsString(datasIndisponiveis);
@@ -121,8 +121,7 @@ public class AgendamentoServlet extends HttpServlet {
     // path = agendamentos/datas-agendadas(GET)
     protected void datasAgendadas(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Long idUsuario = 1L;
-        request.getSession().setAttribute("idUsuario", idUsuario);
+        Long idUsuario = (Long)request.getSession().getAttribute("idUsuario");
         
         List<Date> datasAgendamentos = this.agendamentoModel.getDatasAgendamentos(idUsuario);
 
