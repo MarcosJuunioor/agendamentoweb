@@ -48,4 +48,11 @@ public class GenericModel {
             et = null;
         }
     }
+    
+    public void checkEM(){
+        if(em == null){
+            emf = Persistence.createEntityManagerFactory("agendamento_web");
+            em = emf.createEntityManager();
+        }
+    }
 }

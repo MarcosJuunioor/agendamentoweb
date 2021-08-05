@@ -86,7 +86,7 @@ public class Profissional implements Serializable {
     private Date horaFinal;
     
     @OneToMany(mappedBy = "profissional", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, orphanRemoval = true)
+            cascade = CascadeType.ALL)
     private List<Agendamento> agendamentos;
     
     @ManyToMany(fetch = FetchType.LAZY)

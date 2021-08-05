@@ -37,8 +37,8 @@ public class EmailSender{
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        String username = "ifpecaboteste@gmail.com";
-        String password = "Ifpec@boteste";
+        String username = "uipath.analisabr@gmail.com";
+        String password = "@u1p4th@";
 
         this.session = Session.getInstance(prop, new Authenticator() {
             @Override

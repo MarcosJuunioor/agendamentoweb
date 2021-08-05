@@ -1,7 +1,13 @@
 /* 
     Created on : 08/07/2021, 17:38:16
-    Author     : Beatriz Lima
+    Author     : Beatriz Silva
 */
+.title {
+    font-weight: 700;
+    color: #0288d1;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
 .ui-buttonset .ui-button {
     width: auto !important
 }
