@@ -5,7 +5,15 @@
  */
 package descorp.agendamentoweb.utilities;
 
+import descorp.agendamentoweb.controllers.AgendamentoController;
+import descorp.agendamentoweb.entities.Agendamento;
+import it.sauronsoftware.cron4j.Scheduler;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +34,7 @@ import javax.mail.internet.MimeMultipart;
  *
  * @author marco
  */
-public class EmailSender{
+public class EmailSender {
 
     private final Session session;
 
@@ -54,28 +62,27 @@ public class EmailSender{
             public void run() {
                 try {
                     Message message = new MimeMessage(session);
-                    
+
                     message.setFrom(new InternetAddress("ifpecaboteste@gmail.com"));
                     InternetAddress[] enderecos = new InternetAddress[emails.size()];
                     int i = 0;
-                    for(String e: emails){
+                    for (String e : emails) {
                         enderecos[i] = new InternetAddress(e);
                         i++;
                     }
-                    
+
                     message.setRecipients(
                             Message.RecipientType.TO, enderecos);
                     message.setSubject(assunto);
-                    
-                    
+
                     MimeBodyPart mimeBodyPart = new MimeBodyPart();
                     mimeBodyPart.setContent(msg, "text/html");
-                    
+
                     Multipart multipart = new MimeMultipart();
                     multipart.addBodyPart(mimeBodyPart);
-                    
+
                     message.setContent(multipart);
-                    
+
                     Transport.send(message);
                 } catch (AddressException ex) {
                     Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
@@ -85,5 +92,31 @@ public class EmailSender{
 
             }
         }.start();
+    }
+
+    public void enviarNotificacao() {
+
+        AgendamentoController mController = new AgendamentoController();
+
+        Scheduler mScheduler = new Scheduler();
+
+        Date diaAgendamento = new Date();
+        Calendar c = Calendar.getInstance();
+
+        c.setTime(diaAgendamento);
+        c.add(Calendar.DATE, 1);
+
+        List<Agendamento> agendamentos = mController.getAgendamentos(c.getTime().toString());
+
+        mScheduler.schedule("0 18 * * *", () -> {
+            System.out.println("Another minute ticked away...");
+            //Select email from usuario where id in(select usuario_id from agendamento where data = 'diaAgendamento');
+            for (int i = 0; i < agendamentos.size(); i++) {
+                enviarEmail("taoa@discente.ifpe.edu.br", "Cronjob rodando...", null);
+            }
+        });
+
+        mScheduler.start();
+
     }
 }
