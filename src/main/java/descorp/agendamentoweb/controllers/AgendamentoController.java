@@ -53,7 +53,7 @@ public class AgendamentoController implements Serializable {
             Long idProcedimento = Long.valueOf(idProc);
             Long idProfissional = Long.valueOf(idProf);
 
-            //Hor·rios nos quais o estabelecimento faz agendamentos            
+            //Hor√°rios nos quais o estabelecimento faz agendamentos            
             this.horariosEstabelecimento.add("08:00");
             this.horariosEstabelecimento.add("10:00");
             this.horariosEstabelecimento.add("12:00");
@@ -72,12 +72,12 @@ public class AgendamentoController implements Serializable {
                 //Recupera os agendamentos para o dia selecionado
                 agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
 
-                //Cria a lista de objetos que ser„o exibidos na tela
+                //Cria a lista de objetos que ser√£o exibidos na tela
                 for (int a = 0; a < horariosEstabelecimento.size(); a++) {
                     this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional));
                 }
 
-                //Remove da lista de hor·rios disponÌveis os hor·rio que j· est„o ocupados
+                //Remove da lista de hor√°rios dispon√≠veis os hor√°rio que j√° est√£o ocupados
                 if (agendamentosDia.size() > 0) {
 
                     for (Agendamento a : agendamentosDia) {
@@ -91,7 +91,7 @@ public class AgendamentoController implements Serializable {
                 }
 
             } catch (NumberFormatException e) {
-                System.err.println("Par‚metros n„o localizados: " + e.getMessage());
+                System.err.println("Par√¢metros n√£o localizados: " + e.getMessage());
             } catch (ParseException ex) {
                 Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -105,7 +105,7 @@ public class AgendamentoController implements Serializable {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.getAgendamentosUsuario(idUsuario, dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("Par‚metros n„o localizados: " + e.getMessage());
+            System.err.println("Par√¢metros n√£o localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -129,4 +129,7 @@ public class AgendamentoController implements Serializable {
         bean.persistirAgendamento(agendamento);
     }
 
+    public List<Agendamento> getAgendamentos(String toString) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

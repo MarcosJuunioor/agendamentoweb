@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 import java.util.List;
 /**
  *
- * @author tayn·
+ * @author tayn√°
  */
 public class SalaJpqlTest extends GenericTest{
     //Consulta do estabelecimento associado a ela

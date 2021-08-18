@@ -60,7 +60,7 @@ public class DiasSemanaCrudTest extends GenericTest{
     
     private static DiasSemana criarDiasSemana() {
         DiasSemana diasSemana = new DiasSemana();
-        diasSemana.setNome("Terça");
+        diasSemana.setNome("TerÃ§a");
         return diasSemana;
     }
 

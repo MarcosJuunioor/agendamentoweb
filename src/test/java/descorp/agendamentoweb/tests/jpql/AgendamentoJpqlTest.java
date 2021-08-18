@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author marco
  */
 public class AgendamentoJpqlTest extends GenericTest {
-    //Consulta de agendamento de uma data específica
+    //Consulta de agendamento de uma data especÃ­fica
     @Test
     public void agendamentoPorData() {
         TypedQuery<Agendamento> query = em.createQuery("select a from Agendamento a "

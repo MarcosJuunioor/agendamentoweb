@@ -87,7 +87,7 @@ public class AgendamentoModel extends GenericModel {
 
         } catch (Exception e) {
 
-            System.out.println("Erro na criação do agendamento: " + e.getMessage());
+            System.out.println("Erro na criaÃ§Ã£o do agendamento: " + e.getMessage());
 
         }
 

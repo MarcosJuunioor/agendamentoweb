@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author tayn·
+ * @author tayn√°
  */
 public class EstabelecimentoJpqlTest extends GenericTest{
     //Consulta de estabelecimento por CNPJ

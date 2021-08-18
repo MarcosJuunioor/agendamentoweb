@@ -109,7 +109,7 @@ public class ProfissionalController implements Serializable{
     public void apagarProfissional(){
         this.listaProfissional.remove(this.profissionalSelecionado);
         bean.deletarProfissional(this.profissionalSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionário Removido"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("FuncionÃ¡rio Removido"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     public boolean selecionouProfissionais(){
@@ -118,7 +118,7 @@ public class ProfissionalController implements Serializable{
     public String getMensagemBotao() {
         if(this.selecionouProfissionais()){
             int qtd = this.profissionaisSelecionados.size();
-            return qtd > 1 ? qtd + " funcionários selecionados" : "1 funcionário selecionado";
+            return qtd > 1 ? qtd + " funcionÃ¡rios selecionados" : "1 funcionÃ¡rio selecionado";
         }
         return "Excluir";
     }
@@ -127,7 +127,7 @@ public class ProfissionalController implements Serializable{
         this.listaProfissional.removeAll(this.profissionaisSelecionados);
         bean.deletarProfissionais(this.profissionaisSelecionados);
         this.profissionaisSelecionados = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionários Removidos"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("FuncionÃ¡rios Removidos"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     

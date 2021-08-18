@@ -26,8 +26,8 @@ public class ProfissionalValidationTest extends GenericTest {
         try {
             profissional = new Profissional();
             profissional.setNome("Andre Souza");
-            profissional.setProfissao("Dentist@");//Profissão inválida
-            profissional.setEspecializacao("Branqueamento1dentario");//Especialização inválida
+            profissional.setProfissao("Dentist@");//ProfissÃ£o invÃ¡lida
+            profissional.setEspecializacao("Branqueamento1dentario");//EspecializaÃ§Ã£o invÃ¡lida
             profissional.setHoraInicial(criarHora(8,0,0));
             profissional.setHoraFinal(criarHora(13,0,0));
             
@@ -38,8 +38,8 @@ public class ProfissionalValidationTest extends GenericTest {
             constraintViolations.forEach(violation -> {               
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),                    
                         CoreMatchers.anyOf(
-                                startsWith("class descorp.agendamentoweb.entities.Profissional.profissao: Apenas palavras com ou sem acentuação, não sendo permitido números e caracteres especiais."),
-                                startsWith("class descorp.agendamentoweb.entities.Profissional.especializacao: Apenas palavras com ou sem acentuação, não sendo permitido números e caracteres especiais.")
+                                startsWith("class descorp.agendamentoweb.entities.Profissional.profissao: Apenas palavras com ou sem acentuaÃ§Ã£o, nÃ£o sendo permitido nÃºmeros e caracteres especiais."),
+                                startsWith("class descorp.agendamentoweb.entities.Profissional.especializacao: Apenas palavras com ou sem acentuaÃ§Ã£o, nÃ£o sendo permitido nÃºmeros e caracteres especiais.")
                         )
                 );
             });
@@ -52,13 +52,13 @@ public class ProfissionalValidationTest extends GenericTest {
     @Test(expected = ConstraintViolationException.class)
     public void atualizarProfissionalInvalido() {
         Profissional profissional= em.find(Profissional.class, 1L);
-        profissional.setNome("Rafaela 1 Silva");//Nome inválido
+        profissional.setNome("Rafaela 1 Silva");//Nome invÃ¡lido
 
         try {
             em.flush();
         }catch (ConstraintViolationException ex) {
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("Cada palavra deve iniciar com letra maiúscula, seguida por letras minúsculas, não sendo permitido números e caracteres especiais.", violation.getMessage());
+            assertEquals("Cada palavra deve iniciar com letra maiÃºscula, seguida por letras minÃºsculas, nÃ£o sendo permitido nÃºmeros e caracteres especiais.", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }

@@ -35,7 +35,7 @@ public class DiasSemanaValidationTest extends GenericTest {
             constraintViolations.forEach(violation -> {               
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),                    
                         CoreMatchers.anyOf(
-                            startsWith("class descorp.agendamentoweb.entities.DiasSemana.nome: Cada palavra deve iniciar com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não.")
+                            startsWith("class descorp.agendamentoweb.entities.DiasSemana.nome: Cada palavra deve iniciar com letra maiÃºscula, e as demais minÃºsculas, podendo ser palavras acentuadas ou nÃ£o.")
                         )
                 ); 
             });
@@ -48,13 +48,13 @@ public class DiasSemanaValidationTest extends GenericTest {
     @Test(expected = ConstraintViolationException.class)
     public void atualizarDiasSemanaInvalido() {
         DiasSemana diasSemana= em.find(DiasSemana.class, 1L);
-        diasSemana.setNome("Segunda2");//Nome inválido
+        diasSemana.setNome("Segunda2");//Nome invÃ¡lido
 
         try {
             em.flush();
         }catch (ConstraintViolationException ex) {
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("Cada palavra deve iniciar com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não.", violation.getMessage());
+            assertEquals("Cada palavra deve iniciar com letra maiÃºscula, e as demais minÃºsculas, podendo ser palavras acentuadas ou nÃ£o.", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }

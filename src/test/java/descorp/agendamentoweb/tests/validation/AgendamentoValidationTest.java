@@ -33,8 +33,8 @@ public class AgendamentoValidationTest extends GenericTest {
 
         try {
             agendamento = new Agendamento();
-            agendamento.setData(criarData(15, Calendar.FEBRUARY, 2021));//data inv·lida
-            agendamento.setHora(null); //Hora inv·lida
+            agendamento.setData(criarData(15, Calendar.FEBRUARY, 2021));//data inv√°lida
+            agendamento.setHora(null); //Hora inv√°lida
 
             Usuario usuario = em.find(Usuario.class, 2L);
             agendamento.setUsuario(usuario);
@@ -52,7 +52,7 @@ public class AgendamentoValidationTest extends GenericTest {
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),
                         CoreMatchers.anyOf(
                                 startsWith("class descorp.agendamentoweb.entities.Agendamento.data: deve ser uma data futura"),
-                                startsWith("class descorp.agendamentoweb.entities.Agendamento.hora: n„o deve ser nulo")
+                                startsWith("class descorp.agendamentoweb.entities.Agendamento.hora: n√£o deve ser nulo")
                         )
                 ); 
             });
@@ -68,7 +68,7 @@ public class AgendamentoValidationTest extends GenericTest {
         TypedQuery<Agendamento> query = em.createQuery("select a from Agendamento a where a.data = :data", Agendamento.class);
         query.setParameter("data", criarData(10, Calendar.MARCH, 2021));
         Agendamento agendamento = query.getSingleResult();
-        agendamento.setData(criarData(10, Calendar.JANUARY, 2021)); // Data inv·lida
+        agendamento.setData(criarData(10, Calendar.JANUARY, 2021)); // Data inv√°lida
 
         try {
             em.flush();
