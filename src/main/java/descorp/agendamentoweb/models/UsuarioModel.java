@@ -38,7 +38,7 @@ public class UsuarioModel extends GenericModel implements Serializable {
         }
     }
 
-    public void registrar(String email, String senha) throws IOException {
+   /* public void registrar(String email, String senha) throws IOException {
 
         Cliente cliente = new Cliente();
 
@@ -60,5 +60,5 @@ public class UsuarioModel extends GenericModel implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Registro realizado com sucesso!", ""));
         }
 
-    }
+    } */
 }

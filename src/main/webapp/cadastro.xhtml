@@ -23,8 +23,8 @@
                     <p:password id="password" binding="#{userPassword}"/>
                 </h:panelGrid>                
                 <h:panelGrid columns="2" cellpadding="10" width="100%">
-                    <p:commandButton value="Entrar" action="#{loginController.login(userEmail.value,userPassword.value, request.getSession())}" style="float: left"/>                    
-                    <p:commandButton value="Cadastrar" onclick="window.location.href ='/agendamentoweb/cadastro.xhtml'" style="float: right"/>                    
+                    <p:commandButton value="Cadastrar" action="#{loginController.login(userEmail.value,userPassword.value, request.getSession())}" style="float: left"/>                    
+                    <p:commandButton value="Voltar" onclick="window.location.href ='/agendamentoweb/login.xhtml'" style="float: right"/>                    
                 </h:panelGrid>
             </p:panel>                             
         </h:form>

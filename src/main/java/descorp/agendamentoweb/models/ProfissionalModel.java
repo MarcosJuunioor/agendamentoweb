@@ -1,5 +1,7 @@
 package descorp.agendamentoweb.models;
 
+import descorp.agendamentoweb.entities.Agendamento;
+import descorp.agendamentoweb.entities.Cliente;
 import descorp.agendamentoweb.entities.Profissional;
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +29,10 @@ public class ProfissionalModel extends GenericModel implements Serializable{
         return profissional;
     }
     public List<Profissional> todosProfissionais(){
-        return em.createNamedQuery(Profissional.PROFISSIONAL_TODOS).getResultList();
+        checkEM();
+        List<Profissional> profissionais = em.createNamedQuery(Profissional.PROFISSIONAL_TODOS).getResultList();
+        
+        return profissionais;
     }
     public void atualizarProfissional(Profissional profissional){
         beginTransaction();
@@ -56,5 +61,17 @@ public class ProfissionalModel extends GenericModel implements Serializable{
         }
         em.flush();
         commitTransaction();
+    }
+    
+    public void agendamentoProfissional(Agendamento agendamento){
+        beginTransaction();
+        em.merge(agendamento);
+        em.flush();
+        commitTransaction();
+    }
+    
+    public Cliente clienteAgendamento(Long id){
+        checkEM();
+        return em.find(Cliente.class, id);
     }
 }

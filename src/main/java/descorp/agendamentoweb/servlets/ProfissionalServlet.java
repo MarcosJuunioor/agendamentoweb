@@ -28,8 +28,6 @@ public class ProfissionalServlet extends HttpServlet {
     
     // path = /profissional (GET)
     private void getProfissional(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long idUsuario = 2L;
-        request.getSession().setAttribute("idUsuario", idUsuario);
         request.getRequestDispatcher("/profissionais.xhtml").forward(request, response);
     }
     

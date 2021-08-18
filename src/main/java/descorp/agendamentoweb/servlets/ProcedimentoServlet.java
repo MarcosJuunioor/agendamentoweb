@@ -31,18 +31,12 @@ public class ProcedimentoServlet extends HttpServlet {
     // path = /procedimentos (GET)
     protected void getProcedimento(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Long idUsuario = 2L;
-        request.getSession().setAttribute("idUsuario", idUsuario);
         request.getRequestDispatcher("/procedimentos.xhtml").forward(request, response);
     }
     
     // path = procedimentos/procedimento (GET)
     protected void MaracarProcedimento(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        Long idUsuario = 2L;
-        request.getSession().setAttribute("idUsuario", idUsuario);
         request.getRequestDispatcher("/marcar-procedimento.xhtml").forward(request, response);
     }
     //path = procedimentos/listar-procedimentos

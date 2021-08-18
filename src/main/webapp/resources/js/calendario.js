@@ -30,6 +30,7 @@ xhttpDatasIndisponiveis.onload = function () {
 
     }
     );
+    console.log(datasIndisponiveis);
 };
 xhttpDatasIndisponiveis.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/datas-indisponiveis", false);
 xhttpDatasIndisponiveis.send();

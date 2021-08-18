@@ -18,7 +18,7 @@
                 <p:menuitem value="Procedimentos" icon="pi pi-fw pi-list" url="/agendamentoweb/procedimentos" />
                 <p:submenu class="user-menu" label="Usuario" icon="pi pi-user">
                     <p:menuitem value="Configura&#231;&#245;es"/>
-                    <p:menuitem value="Sair" />    
+                    <p:menuitem value="Sair" action="#{loginController.logout(request.getSession())}"/>    
                 </p:submenu>
             </p:menubar>
         </h:form>

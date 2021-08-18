@@ -29,21 +29,26 @@ import org.hibernate.validator.constraints.br.CPF;
  * @author marco
  */
 @Entity
-@Table(name="cliente") 
+@Table(name = "cliente")
 @DiscriminatorValue(value = "c")
-@PrimaryKeyJoinColumn(name="id_usuario", referencedColumnName = "id")
+@PrimaryKeyJoinColumn(name = "id_usuario", referencedColumnName = "id")
 @NamedQueries(
         {
             @NamedQuery(
                     name = "Cliente.PorCpf",
                     query = "SELECT c FROM Cliente c "
-                            + "WHERE c.CPF = :CPF"
+                    + "WHERE c.CPF = :CPF"
+            ),
+            @NamedQuery(
+                    name = "Cliente.PorIdUsuario",
+                    query = "SELECT c FROM Cliente c "
+                    + "WHERE c.id = :idUsuario"
             )
         }
 )
 @JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "id")
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Cliente extends Usuario implements Serializable {
     //Apenas palavras que começam com letra maiúscula, e as demais minúsculas
     @Pattern(regexp = "^(\\b[A-Z]\\w*\\s*)+$", message="{descorp.agendamentoweb.entities.Cliente.nome}")
@@ -53,19 +58,18 @@ public class Cliente extends Usuario implements Serializable {
     @CPF
     @Column(name = "cpf", nullable = false, length = 15)
     private String CPF;
-    
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "cliente_has_procedimento", joinColumns = {
         @JoinColumn(name = "cliente_id")},
             inverseJoinColumns = {
                 @JoinColumn(name = "procedimento_id")})
     private List<Procedimento> procedimentos;
-    
 
-    public String getNome(){
+    public String getNome() {
         return nome;
     }
-    
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -91,5 +95,5 @@ public class Cliente extends Usuario implements Serializable {
     public void setProcedimentos(List<Procedimento> procedimentos) {
         this.procedimentos = procedimentos;
     }
-    
+
 }

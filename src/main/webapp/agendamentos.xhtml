@@ -14,26 +14,75 @@
         <ui:include src="resources/componentes/navbar.xhtml" />
         <div class="container content">
             <h:form id="form">
-                <p:dataTable id="agendamentos" var="agendamento" 
-                             value="#{agendamentoController.getAgendamentosUsuario(request.getSession().getAttribute('idUsuario'),request.getParameter('data'))}" 
-                             selectionMode="single" rowKey="#{agendamento.id}">
-                    <f:facet name="header">
-                        Agendamentos
-                    </f:facet>
-                    <p:column headerText="Procedimento">
-                        <h:outputText value="#{agendamento.procedimento.nome}" />
-                    </p:column>
-                    <p:column headerText="Duração do Procedimento">
-                        <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.procedimento.duracao)}" />
-                    </p:column>
-                    <p:column headerText="Profissional">
-                        <h:outputText value="#{agendamento.profissional.nome}" />
-                    </p:column>
-                    <p:column headerText="Hora">
-                        <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.hora)}" />
-                    </p:column>
+                <div class="row">
+                    <div class="col">
+                        <p:dataTable id="agendamentos" var="agendamento"  widgetVar="agendamentos" 
+                                     value="#{agendamentoController.getAgendamentosUsuario(request.getSession().getAttribute('idUsuario'),request.getParameter('data'))}" 
+                                     emptyMessage="Sem agendamentos nesta data." rows="10" rowSelectMode="add" selection="#{agendamentoController.agendamentosSelecionados}"
+                                     rowKey="#{agendamento.id}">
+                            <f:facet name="header">
+                                Agendamentos
+                            </f:facet>
 
-                </p:dataTable>
+                            <p:ajax event="rowSelect" update=":form:btnApagarAgendamentos"/>
+                            <p:ajax event="rowUnselect" update=":form:btnApagarAgendamentos"/>
+                            <p:ajax event="rowSelectCheckbox" update=":form:btnApagarAgendamentos"/>
+                            <p:ajax event="rowUnselectCheckbox" update=":form:btnApagarAgendamentos"/>
+                            <p:ajax event="toggleSelect" update=":form:btnApagarAgendamentos"/>
+
+                            <p:column selectionMode="multiple" exportable="false"></p:column>
+                            <p:column headerText="Procedimento">
+                                <h:outputText value="#{agendamento.procedimento.nome}" />
+                            </p:column>
+                            <p:column headerText="Duração do Procedimento">
+                                <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.procedimento.duracao)}" />
+                            </p:column>
+                            <p:column headerText="agendamento">
+                                <h:outputText value="#{agendamento.profissional.nome}" />
+                            </p:column>
+                            <p:column headerText="Hora">
+                                <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.hora)}" />
+                            </p:column>
+                            <p:column style="width:6rem" exportable="false">
+                                <p:commandButton class="ui-button-danger rounded-button ui-button-outlined" icon="pi pi-trash" process="@this"
+                                                 oncomplete="PF('alertaApagarAgendamento').show()">
+                                    <f:setPropertyActionListener value="#{agendamento}" target="#{agendamentoController.agendamentoSelecionado}"/>
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p:toolbar>
+                            <p:toolbarGroup></p:toolbarGroup>
+                            <p:toolbarGroup align="right">
+                                <p:commandButton id="btnApagarAgendamentos" value="#{agendamentoController.mensagemBotao}"
+                                                 icon="pi pi-trash" oncomplete="PF('alertaApagarAgendamentosSelecionados').show()"
+                                                 styleClass="ui-button-danger" disabled="#{!agendamentoController.selecionouAgendamentos()}"
+                                                 update="@this">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>
+
+
+                        <p:confirmDialog widgetVar="alertaApagarAgendamento" showEffect="fade" width="500" styleClass="confirm"
+                                         message="Realmente deseja deletar este agendamento?" header="Confirmação" severity="warn">
+                            <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{agendamentoController.apagarAgendamento}"
+                                             process="@this" oncomplete="PF('alertaApagarAgendamento').hide()" update="form:agendamentos"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('alertaApagarAgendamento').hide()"/>
+                        </p:confirmDialog>
+
+                        <p:confirmDialog widgetVar="alertaApagarAgendamentosSelecionados" showEffect="fade" width="500" styleClass="confirm"
+                                         message="Realmente deseja deletar os agendamentos selecionados?" header="Confirmação" severity="warn">
+                            <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{agendamentoController.apagarAgendamentos}"
+                                             process="@this" oncomplete="PF('alertaApagarAgendamentosSelecionados').hide()" update="btnApagarAgendamentos"/>
+                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                             onclick="PF('alertaApagarAgendamentosSelecionados').hide()"/>
+                        </p:confirmDialog>
+                    </div>
+                </div>
             </h:form>
         </div>
     </h:body>
