@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package descorp.agendamentoweb.utilities;
+package descorp.agendamentoweb.servlets;
 
 import descorp.agendamentoweb.controllers.AgendamentoController;
 import descorp.agendamentoweb.entities.Agendamento;
+import descorp.agendamentoweb.utilities.EmailSender;
 import it.sauronsoftware.cron4j.Scheduler;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,16 +28,18 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 
 /**
  *
- * @author marco
+ * @author thiagoaraujo
  */
-public class EmailSender {
-
+public class EmailServiceServlet extends HttpServlet {
+    
     private final Session session;
-
-    public EmailSender() {
+    
+    public EmailServiceServlet() {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
         prop.put("mail.smtp.starttls.enable", "true");
@@ -56,7 +57,16 @@ public class EmailSender {
         });
     }
 
-    public void enviarEmail(String assunto, String msg, ArrayList<String> emails) {
+     public void init() throws ServletException
+    {
+          System.out.println("----------");
+          System.out.println("---------- Servlet do Email rodando! ----------");
+          System.out.println("----------");
+          enviarNotificacao();
+    }
+
+     
+     public void enviarEmail(String assunto, String msg, ArrayList<String> emails) {
         new Thread() {
             @Override
             public void run() {
@@ -93,8 +103,8 @@ public class EmailSender {
             }
         }.start();
     }
-
-    public void enviarNotificacao() {
+     
+     public void enviarNotificacao() {
 
         AgendamentoController mController = new AgendamentoController();
 
@@ -108,11 +118,15 @@ public class EmailSender {
 
         //List<Agendamento> agendamentos = mController.getAgendamentos(c.getTime().toString());
 
-        mScheduler.schedule("0 18 * * *", () -> {
+        mScheduler.schedule("* * * * *", () -> {
             System.out.println("Another minute ticked away...");
+            List<String> emails = new ArrayList<String>();
+            emails.add("taoalu@gmail.com");
             //Select email from usuario where id in(select usuario_id from agendamento where data = 'diaAgendamento');
+            enviarEmail("Confirmação de Horário", "Email enviado automaticamente...", (ArrayList<String>) emails);
+            System.out.println("E-mail Enviado!");
 //            for (int i = 0; i < agendamentos.size(); i++) {
-//                enviarEmail("taoa@discente.ifpe.edu.br", "Cronjob rodando...", null);
+//                
 //            }
         });
 
