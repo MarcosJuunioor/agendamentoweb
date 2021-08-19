@@ -149,40 +149,28 @@
                               showEffect="fade" modal="true" widgetVar="RealocarDialog" responsive="true" styleClass="crud">
                         <p:outputPanel id="realocacao-content" class="ui-fluid col">
                             <div class="row">
-                                <h:outputLabel for="todos" rendered="#{profissionalController.exibirMenuTodos()}" class="title">
-                                    Alocar profissional para todos: 
-                                </h:outputLabel>
-                                <p:selectOneMenu value="#{profissionalController.profissionalRealocado}" id="todos" rendered="#{profissionalController.exibirMenuTodos()}"
-                                                 hideNoSelectionOption="#{not empty profissionalController.profissionalRealocado}">
-                                    <p:ajax event="change" listener="#{profissionalController.realocarTodosAgendamentos()}" oncomplete="PF('realocBTN').enable();"/>
-                                    <f:selectItem itemLabel="--- Selecione um profissional ---" itemValue="#{null}" noSelectionOption="true"/>
-                                    <f:selectItems value="#{profissionalController.listaProfissional}" var="profissional" 
-                                                   itemValue="#{profissional.id}" itemLabel="#{profissional.nome} - #{profissional.especializacao}"
-                                                   itemDisabled="#{(profissionalController.profissionalSelecionado == profissional)}"/>
-                                </p:selectOneMenu>
-                                <p:divider />
                             </div>
                             <p:repeat value="#{profissionalController.listaAgendamentosFuturos}" var="agendamento">
                                 <div class="row">
                                     <h:outputText value="#{agendamento.procedimento.nome}" class="title"/>
                                 </div>
                                 <div class="row">
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <b>
-                                            <h:outputText value="Horário: "/>
+                                            <h:outputText value="Data e Hora: "/>
                                         </b>
                                     </div>
-                                    <div class="col-9">
-                                        <h:outputText value="#{profissionalController.formatarData(agendamento.data)}" />
+                                    <div class="col-8">
+                                        <h:outputText value="#{profissionalController.formatarData(agendamento)}" />
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         <b>
                                             <h:outputText value="Cliente: "/>
                                         </b>
                                     </div>
-                                    <div class="col-9">
+                                    <div class="col-8">
                                         <h:outputText value="#{profissionalController.clienteNome(agendamento.usuario.id)}"/>
                                     </div>
                                 </div>
@@ -193,7 +181,7 @@
                                                           hideNoSelectionOption="#{not empty profissionalController.idProfissionalRealocado}">
                                             <p:ajax event="change" listener="#{profissionalController.realocarAgendamento(agendamento)}" oncomplete="checarMenu();"/>
                                             <f:selectItem itemLabel="--- Selecione um profissional ---" itemValue="#{null}" noSelectionOption="true"/>
-                                            <f:selectItems value="#{profissionalController.listaProfissional}" var="profissional" 
+                                            <f:selectItems value="#{profissionalController.getProfissionaisLivre(agendamento)}" var="profissional" 
                                                            itemValue="#{profissional.id}" itemLabel="#{profissional.nome} - #{profissional.especializacao}"
                                                            itemDisabled="#{(profissionalController.profissionalSelecionado == profissional)}"/>
                                         </p:selectOneMenu>
@@ -207,7 +195,7 @@
                                              onclick="PF('RealocarDialog').hide()" update="form" process="@this"/>
 
                             <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('RealocarDialog').hide()" 
-                                             class="ui-button-secondary" update="todos"/>
+                                             class="ui-button-secondary"/>
                         </f:facet>
                     </p:dialog>
                 </div>

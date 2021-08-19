@@ -7,11 +7,13 @@ import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.models.DiasSemanaModel;
 import descorp.agendamentoweb.models.ProfissionalModel;
 import descorp.agendamentoweb.utilities.EmailSender;
+import java.awt.BorderLayout;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -53,9 +55,12 @@ public class ProfissionalController implements Serializable{
         this.hrFinal = "";
     }
     
-    public String formatarData(Date data){
+    public String formatarData(Agendamento agendamento){
         DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        return fmt.format(data);
+        String datahora = fmt.format(agendamento.getData());
+        fmt = new SimpleDateFormat("hh:mm");
+        datahora += " "+fmt.format(agendamento.getHora());
+        return datahora;
     }   
     
     public boolean exibirMenuTodos(){
@@ -208,6 +213,53 @@ public class ProfissionalController implements Serializable{
             this.apagarProfissional();
         }
     } 
+    
+    //Checa quais profissionais estão livres para o agendamento
+    public List<Profissional> getProfissionaisLivre(Agendamento agendamento){
+        float minuto = 60;
+        //hora final e inicial do agendamento
+        float hrInicialAgedamento = agendamento.getHora().getHours() + (agendamento.getHora().getMinutes()/60);
+        float duracao = (float)agendamento.getProcedimento().getDuracao().getHours() + ((float)agendamento.getProcedimento().getDuracao().getMinutes()/ minuto);
+        float hrFinalAgedamento = Float.sum(hrInicialAgedamento, duracao);
+        System.out.println(
+                "Agendamento: Inicial-"+hrInicialAgedamento+
+                "| Duração-"+agendamento.getProcedimento().getDuracao().getHours()+":"+agendamento.getProcedimento().getDuracao().getMinutes()+
+                "("+duracao+")"+
+                "| Final-"+hrFinalAgedamento);
+        List<Profissional> profissionaisLivre = new ArrayList<>();
+        for(Profissional profissional: this.listaProfissional){
+            if(this.profissionalSelecionado == profissional){
+                continue;
+            }
+            boolean salvar = true;
+            //Verificar agendamentos desse profissional
+            for(Agendamento agendProf: profissional.getAgendamentos()){
+                //Se tem mesma data do agendamento
+                if(agendProf.getData().compareTo(agendamento.getData()) == 0){
+                    
+                    //hora inicial e final do agendamento do profissional avaliado
+                    float hrInicialAgedamentoP = agendProf.getHora().getHours() + (agendProf.getHora().getMinutes()/60);
+                    float duracaoP = (float)agendProf.getProcedimento().getDuracao().getHours() + ((float)agendProf.getProcedimento().getDuracao().getMinutes()/ minuto);
+                    float hrFinalAgedamentoP = Float.sum(hrInicialAgedamentoP, duracaoP);
+
+                    
+                    if((hrInicialAgedamento <=  hrFinalAgedamentoP) && (hrFinalAgedamento >= hrInicialAgedamentoP) ){
+                        //System.out.println("Entrou: AgI="+hrInicialAgedamento+", AgF="+hrFinalAgedamento+"AgPI="+hrInicialAgedamentoP+", AgFP="+hrFinalAgedamentoP+"-"+agendProf.getId());
+                        System.out.println(
+                "AgendamentoP: Inicial-"+hrInicialAgedamentoP+
+                "| Duração-"+agendProf.getProcedimento().getDuracao().getHours()+":"+agendProf.getProcedimento().getDuracao().getMinutes()+
+                "("+duracaoP+")"+
+                "| Final-"+hrFinalAgedamentoP);
+                        salvar = false;
+                    }
+                }
+            }
+            if(salvar){
+                profissionaisLivre.add(profissional);
+            }
+        }
+        return profissionaisLivre;
+    }
     
     public List<Profissional> getListaProfissional() {
         this.listaProfissional = bean.todosProfissionais();
