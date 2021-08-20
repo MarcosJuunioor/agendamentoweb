@@ -37,7 +37,7 @@ public class ProcedimentoValidationTest extends GenericTest {
             Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
             constraintViolations.forEach(violation -> {
                 assertEquals(violation.getMessage(),
-                "n„o deve ser nulo"
+                "n√£o deve ser nulo"
                 ); 
             });
 
@@ -50,13 +50,13 @@ public class ProcedimentoValidationTest extends GenericTest {
     @Test(expected = ConstraintViolationException.class)
     public void atualizarProcedimentoInvalido() {
         Procedimento procedimento = em.find(Procedimento.class, 1L);
-        procedimento.setNatureza(null);//Natureza inv·lida
+        procedimento.setNatureza(null);//Natureza inv√°lida
 
         try {
             em.flush();
         } catch (ConstraintViolationException ex) {
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("n„o deve ser nulo", violation.getMessage());
+            assertEquals("n√£o deve ser nulo", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }

@@ -67,7 +67,13 @@ import javax.validation.constraints.NotNull;
                     name = "Agendamento.DatasAgendadas",
                     query = "SELECT DISTINCT(a.data) FROM Agendamento a "
                     + "ORDER BY a.data"
-            ),}
+            ),
+            @NamedQuery(
+                    name = "Agendamento.agendamentosDoDia",
+                    query = "Select u.email from Usuario u "
+                    + "where u.id in(select a.usuario.id from Agendamento a where a.data = :diaAgendamento)"
+            )
+        }
 )
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,

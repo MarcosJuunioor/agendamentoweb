@@ -66,7 +66,7 @@ public class ProfissionalCrudTest extends GenericTest{
     private static Profissional criarProfissional() {
         Profissional profissional = new Profissional();
         profissional.setNome("Maria Jose");
-        profissional.setProfissao("Médico");
+        profissional.setProfissao("MÃ©dico");
         profissional.setEspecializacao("Otorrinolaringologista");
         profissional.setHoraInicial(criarHora(8,0,0));
         profissional.setHoraFinal(criarHora(17,0,0));

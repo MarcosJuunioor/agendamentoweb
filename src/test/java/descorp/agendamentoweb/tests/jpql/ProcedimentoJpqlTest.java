@@ -20,13 +20,13 @@ public class ProcedimentoJpqlTest extends GenericTest{
     public void procedimentosPorNatureza(){
         TypedQuery<Procedimento> query = em.createQuery("select p from Procedimento p where p.natureza = :natureza", 
                 Procedimento.class);
-        query.setParameter("natureza", "Estético");
+        query.setParameter("natureza", "EstÃ©tico");
         List<Procedimento> procedimentos = query.getResultList();
         assertNotNull(procedimentos);
         assertEquals(5, procedimentos.size());
     }
     
-    //Consulta dos procedimentos que possuem duração superior a X horas
+    //Consulta dos procedimentos que possuem duraÃ§Ã£o superior a X horas
     @Test
     public void procedimentosComDuracaoMaiorQue(){
         TypedQuery<Procedimento> query = em.createQuery("select p from Procedimento p where p.duracao > :duracao", 

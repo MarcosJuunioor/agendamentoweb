@@ -26,12 +26,10 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.primefaces.PrimeFaces;
 import static java.util.concurrent.TimeUnit.*;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -71,7 +69,7 @@ public class AgendamentoController implements Serializable {
             Long idProcedimento = Long.valueOf(idProc);
             Long idProfissional = Long.valueOf(idProf);
 
-            //Hor·rios nos quais o estabelecimento faz agendamentos            
+            //Hor√É¬°rios nos quais o estabelecimento faz agendamentos            
             this.horariosEstabelecimento.add("08:00");
             this.horariosEstabelecimento.add("10:00");
             this.horariosEstabelecimento.add("12:00");
@@ -90,12 +88,12 @@ public class AgendamentoController implements Serializable {
                 //Recupera os agendamentos para o dia selecionado
                 agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
 
-                //Cria a lista de objetos que ser„o exibidos na tela
+                //Cria a lista de objetos que ser√É¬£o exibidos na tela
                 for (int a = 0; a < horariosEstabelecimento.size(); a++) {
                     this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional, (Long) session.getAttribute("idUsuario")));
                 }
 
-                //Remove da lista de hor·rios disponÌveis os hor·rio que j· est„o ocupados
+                //Remove da lista de hor√É¬°rios dispon√É¬≠veis os hor√É¬°rio que j√É¬° est√É¬£o ocupados
                 if (agendamentosDia.size() > 0) {
 
                     for (Agendamento a : agendamentosDia) {
@@ -109,7 +107,7 @@ public class AgendamentoController implements Serializable {
                 }
 
             } catch (NumberFormatException e) {
-                System.err.println("Par‚metros n„o localizados: " + e.getMessage());
+                System.err.println("Par√É¬¢metros n√É¬£o localizados: " + e.getMessage());
             } catch (ParseException ex) {
                 Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -123,11 +121,18 @@ public class AgendamentoController implements Serializable {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.getAgendamentosUsuario(idUsuario, dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("Par‚metros n„o localizados: " + e.getMessage());
+            System.err.println("Par√É¬¢metros n√É¬£o localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this.agendamentos;
+    }
+    
+    public List<String> getAgendamentosDoDia(Date data){
+        
+        List<String> mListaEmail = this.bean.getDatasAgendamentosDoDia(data);
+        return mListaEmail;
+        
     }
 
     public List<Agendamento> consultarAgendamentosPorData(String data) {
@@ -135,7 +140,7 @@ public class AgendamentoController implements Serializable {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.consultarAgendamentosPorData(dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("Par‚metros n„o localizados: " + e.getMessage());
+            System.err.println("Par√¢metros n√£o localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -146,7 +151,7 @@ public class AgendamentoController implements Serializable {
         try {
             cliente = this.clienteModel.consultarClientePorId(idUsuario);
         } catch (Exception e) {
-            System.err.println("ExceÁ„o ao consultar cliente por ID: "+e.getMessage());
+            System.err.println("Exce√ß√£o ao consultar cliente por ID: "+e.getMessage());
         } 
         return this.cliente;
     }
@@ -171,8 +176,8 @@ public class AgendamentoController implements Serializable {
         }
     }
 
-    /* A cada 24h, verifica se h· agendamentos prÛximos.
-       Se faltar um dia, o usu·rio deve ser notificado.
+    /* A cada 24h, verifica se h√° agendamentos pr√≥ximos.
+       Se faltar um dia, o usu√°rio deve ser notificado.
      */
     public static void verificarSeTemNotificacao() {
         final Runnable notification = new Runnable() {
@@ -189,7 +194,7 @@ public class AgendamentoController implements Serializable {
 
         scheduler.scheduleAtFixedRate(new Runnable() {
             public void run() {
-                //Cancela caso n„o haja agendamentos atuais ou futuros.
+                //Cancela caso n√£o haja agendamentos atuais ou futuros.
                 notificationHandle.cancel(true);
             }
         }, 0, 1, DAYS);
@@ -248,6 +253,15 @@ public class AgendamentoController implements Serializable {
      */
     public void setAgendamentosSelecionados(List<Agendamento> agendamentosSelecionados) {
         this.agendamentosSelecionados = agendamentosSelecionados;
+    }
+
+    public List<Agendamento> getAgendamentos(String data) {
+        
+        List<Agendamento> agendamentos = new ArrayList<Agendamento>();
+        
+        
+        
+        return agendamentos;
     }
 
 }

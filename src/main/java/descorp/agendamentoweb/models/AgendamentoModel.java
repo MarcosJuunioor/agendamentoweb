@@ -11,18 +11,11 @@ import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.entities.Usuario;
 import static descorp.agendamentoweb.models.GenericModel.em;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.persistence.CacheRetrieveMode;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 /**
  *
@@ -71,6 +64,18 @@ public class AgendamentoModel extends GenericModel {
 
     }
 
+    public List<String> getDatasAgendamentosDoDia(Date data) {
+        TypedQuery<String> query = em.createNamedQuery("Agendamento.agendamentosDoDia", String.class)
+                .setParameter("diaAgendamento", data);
+        //
+        List<String> mList = new ArrayList<String>();
+        //
+        for (String s : query.getResultList()) {
+            mList.add(s);
+        }
+        return mList;
+    }
+
     public List<Agendamento> getAgendamentosUsuario(Long idUsuario, Date data) {
         TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorIdUsuarioEData", Agendamento.class)
                 .setParameter("idUsuario", idUsuario)
@@ -101,7 +106,7 @@ public class AgendamentoModel extends GenericModel {
 
         } catch (Exception e) {
 
-            System.out.println("Erro na criação do agendamento: " + e.getMessage());
+            System.out.println("Erro na criaÃ§Ã£o do agendamento: " + e.getMessage());
 
         }
 

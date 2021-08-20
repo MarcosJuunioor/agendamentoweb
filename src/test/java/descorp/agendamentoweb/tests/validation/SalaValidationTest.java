@@ -29,7 +29,7 @@ public class SalaValidationTest extends GenericTest{
         Sala sala = null;
         try {
             sala = new Sala();
-            sala.setNumSala(null);//N˙mero de sala inv·lido
+            sala.setNumSala(null);//N√∫mero de sala inv√°lido
             
             Estabelecimento estabelecimento = em.find(Estabelecimento.class, 6L);
             sala.setEstabelecimento(estabelecimento);
@@ -42,7 +42,7 @@ public class SalaValidationTest extends GenericTest{
             constraintViolations.forEach(violation -> {
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),
                         CoreMatchers.anyOf(
-                                startsWith("class descorp.agendamentoweb.entities.Sala.numSala: n„o deve ser nulo")   
+                                startsWith("class descorp.agendamentoweb.entities.Sala.numSala: n√£o deve ser nulo")   
                         )
                 );
             });
@@ -58,13 +58,13 @@ public class SalaValidationTest extends GenericTest{
         TypedQuery<Sala> query = em.createNamedQuery("Sala.PorNumSala", Sala.class);
         query.setParameter("numSala", 300);
         Sala sala = query.getSingleResult();
-        sala.setNumSala(null); //N˙mero de sala inv·lido
+        sala.setNumSala(null); //N√∫mero de sala inv√°lido
 
         try {
             em.flush();
         } catch (ConstraintViolationException ex) {    
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("n„o deve ser nulo", violation.getMessage());
+            assertEquals("n√£o deve ser nulo", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }

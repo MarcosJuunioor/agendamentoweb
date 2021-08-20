@@ -36,7 +36,7 @@ public class ClienteJpqlTest extends GenericTest{
         assertEquals(3,quantidadeClientes);
     }
 
-    //Consulta do cliente com agendamento mais prÛximo
+    //Consulta do cliente com agendamento mais pr√≥ximo
     @Test
     public void getClienteComAgendamentoMaisProximo(){
         TypedQuery<Date> queryData = em.createQuery("select min(a.data) from Cliente c "
@@ -56,7 +56,7 @@ public class ClienteJpqlTest extends GenericTest{
         queryCliente.setParameter("data", data);
         Cliente cliente = queryCliente.getSingleResult();
         assertNotNull(cliente);
-        assertEquals("Tayn· Alexandra",cliente.getNome());
+        assertEquals("Tayn√° Alexandra",cliente.getNome());
     }
     
     //Consulta do cliente com agendamento mais distante
