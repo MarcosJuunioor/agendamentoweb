@@ -5,14 +5,7 @@
  */
 package descorp.agendamentoweb.utilities;
 
-import descorp.agendamentoweb.controllers.AgendamentoController;
-import descorp.agendamentoweb.entities.Agendamento;
-import it.sauronsoftware.cron4j.Scheduler;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -56,7 +49,7 @@ public class EmailSender {
         });
     }
 
-    public void enviarEmail(String assunto, String msg, ArrayList<String> emails) {
+    public void enviarEmail(String assunto, String msg, List<String> emails) {
         new Thread() {
             @Override
             public void run() {
@@ -89,34 +82,7 @@ public class EmailSender {
                 } catch (MessagingException ex) {
                     Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         }.start();
-    }
-
-    public void enviarNotificacao() {
-
-        AgendamentoController mController = new AgendamentoController();
-
-        Scheduler mScheduler = new Scheduler();
-
-        Date diaAgendamento = new Date();
-        Calendar c = Calendar.getInstance();
-
-        c.setTime(diaAgendamento);
-        c.add(Calendar.DATE, 1);
-
-        //List<Agendamento> agendamentos = mController.getAgendamentos(c.getTime().toString());
-
-        mScheduler.schedule("0 18 * * *", () -> {
-            System.out.println("Another minute ticked away...");
-            //Select email from usuario where id in(select usuario_id from agendamento where data = 'diaAgendamento');
-//            for (int i = 0; i < agendamentos.size(); i++) {
-//                enviarEmail("taoa@discente.ifpe.edu.br", "Cronjob rodando...", null);
-//            }
-        });
-
-        mScheduler.start();
-
     }
 }

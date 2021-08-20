@@ -98,16 +98,16 @@
     <!--############## PROCEDIMENTO ##############--> 
     <!-- Procedimento ID 1 -->
     <PROCEDIMENTO       duracao_procedimento="1:00:00" 
-                          natureza_procedimento="Estético" 
-                          nome_procedimento="Limpeza de pele"/>
+                        natureza_procedimento="Estético" 
+                        nome_procedimento="Limpeza de pele"/>
     <!-- Procedimento ID 2 -->
     <PROCEDIMENTO       duracao_procedimento="2:00:00" 
                         natureza_procedimento="Dentário" 
                         nome_procedimento="Branqueamento de dentes"/>
     <!-- Procedimento ID 3 -->
     <PROCEDIMENTO       duracao_procedimento="1:30:00" 
-                            natureza_procedimento="Estético" 
-                            nome_procedimento="Limpeza de sobrancelha"/>
+                        natureza_procedimento="Estético" 
+                        nome_procedimento="Limpeza de sobrancelha"/>
   
     <!-- Procedimento ID 4 -->
     <PROCEDIMENTO       duracao_procedimento="1:20:00" 
@@ -258,12 +258,14 @@
                        procedimento_id="6" 
                        profissional_id="6"
                        usuario_id="1"/>
-    <!-- AGENDAMENTO ID 13 -->
-    <AGENDAMENTO       data="2021-08-16" 
+    <!-- AGENDAMENTO ID 14 -->
+    <AGENDAMENTO       data="2021-08-20" 
                        hora="10:00:00"
                        procedimento_id="2" 
                        profissional_id="2"
                        usuario_id="1"/>
+    
+    
      
     <!--############## CLIENTE_HAS_PROCEDIMENTO ##############--> 
     <!-- CLIENTE_HAS_PROCEDIMENTO ID 1 -->
@@ -285,19 +287,19 @@
     <!-- PROCEDIMENTO_PROFISSIONAL ID 1 -->
     <PROCEDIMENTO_PROFISSIONAL       profissional_id="1" 
                                      procedimento_id="1"/> 
-        <!-- PROCEDIMENTO_PROFISSIONAL ID 2 -->
+    <!-- PROCEDIMENTO_PROFISSIONAL ID 2 -->
     <PROCEDIMENTO_PROFISSIONAL       profissional_id="2" 
                                      procedimento_id="2"/> 
-        <!-- PROCEDIMENTO_PROFISSIONAL ID 3 -->
+    <!-- PROCEDIMENTO_PROFISSIONAL ID 3 -->
     <PROCEDIMENTO_PROFISSIONAL       profissional_id="3" 
                                      procedimento_id="3"/> 
-        <!-- PROCEDIMENTO_PROFISSIONAL ID 4 -->
+    <!-- PROCEDIMENTO_PROFISSIONAL ID 4 -->
     <PROCEDIMENTO_PROFISSIONAL       profissional_id="4" 
                                      procedimento_id="4"/> 
-        <!-- PROCEDIMENTO_PROFISSIONAL ID 5 -->
+    <!-- PROCEDIMENTO_PROFISSIONAL ID 5 -->
     <PROCEDIMENTO_PROFISSIONAL       profissional_id="5" 
                                      procedimento_id="5"/> 
-        <!-- PROCEDIMENTO_PROFISSIONAL ID 6 -->
+    <!-- PROCEDIMENTO_PROFISSIONAL ID 6 -->
     <PROCEDIMENTO_PROFISSIONAL       profissional_id="6" 
                                      procedimento_id="6"/> 
     

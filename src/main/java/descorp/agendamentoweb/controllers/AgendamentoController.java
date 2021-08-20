@@ -20,9 +20,6 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -117,6 +114,13 @@ public class AgendamentoController implements Serializable {
         }
         return this.agendamentos;
     }
+    
+    public List<String> getAgendamentosDoDia(Date data){
+        
+        List<String> mListaEmail = this.bean.getDatasAgendamentosDoDia(data);
+        return mListaEmail;
+        
+    }
 
     public String getDuracaoFMT(Date duracao) {
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
@@ -181,6 +185,15 @@ public class AgendamentoController implements Serializable {
      */
     public void setAgendamentosSelecionados(List<Agendamento> agendamentosSelecionados) {
         this.agendamentosSelecionados = agendamentosSelecionados;
+    }
+
+    public List<Agendamento> getAgendamentos(String data) {
+        
+        List<Agendamento> agendamentos = new ArrayList<Agendamento>();
+        
+        
+        
+        return agendamentos;
     }
 
 }

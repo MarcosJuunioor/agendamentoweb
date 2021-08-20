@@ -6,28 +6,12 @@
 package descorp.agendamentoweb.servlets;
 
 import descorp.agendamentoweb.controllers.AgendamentoController;
-import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.utilities.EmailSender;
 import it.sauronsoftware.cron4j.Scheduler;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.Authenticator;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
@@ -36,79 +20,18 @@ import javax.servlet.http.HttpServlet;
  * @author thiagoaraujo
  */
 public class EmailServiceServlet extends HttpServlet {
-    
-    private final Session session;
-    
-    public EmailServiceServlet() {
-        Properties prop = new Properties();
-        prop.put("mail.smtp.auth", true);
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.host", "smtp.gmail.com");
-        prop.put("mail.smtp.port", "587");
-        prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        String username = "uipath.analisabr@gmail.com";
-        String password = "@u1p4th@";
 
-        this.session = Session.getInstance(prop, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+    EmailSender mSender = new EmailSender();
+
+    public void init() throws ServletException {
+        enviarNotificacao();
     }
 
-     public void init() throws ServletException
-    {
-          System.out.println("----------");
-          System.out.println("---------- Servlet do Email rodando! ----------");
-          System.out.println("----------");
-          enviarNotificacao();
-    }
-
-     
-     public void enviarEmail(String assunto, String msg, ArrayList<String> emails) {
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    Message message = new MimeMessage(session);
-
-                    message.setFrom(new InternetAddress("ifpecaboteste@gmail.com"));
-                    InternetAddress[] enderecos = new InternetAddress[emails.size()];
-                    int i = 0;
-                    for (String e : emails) {
-                        enderecos[i] = new InternetAddress(e);
-                        i++;
-                    }
-
-                    message.setRecipients(
-                            Message.RecipientType.TO, enderecos);
-                    message.setSubject(assunto);
-
-                    MimeBodyPart mimeBodyPart = new MimeBodyPart();
-                    mimeBodyPart.setContent(msg, "text/html");
-
-                    Multipart multipart = new MimeMultipart();
-                    multipart.addBodyPart(mimeBodyPart);
-
-                    message.setContent(multipart);
-
-                    Transport.send(message);
-                } catch (AddressException ex) {
-                    Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (MessagingException ex) {
-                    Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-        }.start();
-    }
-     
-     public void enviarNotificacao() {
+    public void enviarNotificacao() {
 
         AgendamentoController mController = new AgendamentoController();
 
-        Scheduler mScheduler = new Scheduler();
+        Scheduler jobNotificacoes = new Scheduler();
 
         Date diaAgendamento = new Date();
         Calendar c = Calendar.getInstance();
@@ -116,21 +39,20 @@ public class EmailServiceServlet extends HttpServlet {
         c.setTime(diaAgendamento);
         c.add(Calendar.DATE, 1);
 
-        //List<Agendamento> agendamentos = mController.getAgendamentos(c.getTime().toString());
+        List<String> mListaEmails = mController.getAgendamentosDoDia(c.getTime());
 
-        mScheduler.schedule("* * * * *", () -> {
-            System.out.println("Another minute ticked away...");
-            List<String> emails = new ArrayList<String>();
-            emails.add("taoalu@gmail.com");
-            //Select email from usuario where id in(select usuario_id from agendamento where data = 'diaAgendamento');
-            enviarEmail("Confirmação de Horário", "Email enviado automaticamente...", (ArrayList<String>) emails);
-            System.out.println("E-mail Enviado!");
-//            for (int i = 0; i < agendamentos.size(); i++) {
-//                
-//            }
+        jobNotificacoes.schedule("* * * * *", () -> {
+            try {
+                mSender.enviarEmail("Confirmação de Horário", "Email enviado automaticamente...", mListaEmails);
+                System.out.println("Enviando notificação para a lista de e-mails: ");
+                for (String s : mListaEmails) {
+                    System.out.println(s);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao enviar notificação: " + e.getMessage());
+            }
+
         });
-
-        mScheduler.start();
-
+        jobNotificacoes.start();
     }
 }
