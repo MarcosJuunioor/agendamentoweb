@@ -276,12 +276,12 @@ public class AgendamentoController implements Serializable {
         if(agora.equals(dataSelecionada)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode apagar!", "Agendamento na data atual não podem ser cancelados"));
             PrimeFaces.current().ajax().update("form:msgs");
-            return;
+        } else {
+            this.bean.apagarAgendamento(this.agendamentoSelecionado);
+            this.agendamentos.remove(this.agendamentoSelecionado);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
+            PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
         }
-        this.bean.apagarAgendamento(this.agendamentoSelecionado);
-        this.agendamentos.remove(this.agendamentoSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
     }
 
     public void apagarAgendamentos() {

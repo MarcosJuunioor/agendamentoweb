@@ -76,7 +76,7 @@ public class EmailSender {
 
                     message.setContent(multipart);
 
-                    //Transport.send(message);
+                    Transport.send(message);
                 } catch (AddressException ex) {
                     Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (MessagingException ex) {
