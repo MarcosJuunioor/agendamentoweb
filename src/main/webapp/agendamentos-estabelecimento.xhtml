@@ -5,7 +5,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
     <h:head>
         <title>Agendamentos</title>
         <h:outputStylesheet library="css" name="geral.css"/>
@@ -17,7 +16,7 @@
                 <div class="row">
                     <div class="col">
                         <p:dataTable id="agendamentos" var="agendamento"  widgetVar="agendamentos" 
-                                     value="#{agendamentoController.getAgendamentosUsuario(request.getSession().getAttribute('idUsuario'),request.getParameter('data'))}" 
+                                     value="#{agendamentoController.consultarAgendamentosPorData(request.getParameter('dataSelecionada'))}" 
                                      emptyMessage="Sem agendamentos nesta data." rows="10" rowSelectMode="add" selection="#{agendamentoController.agendamentosSelecionados}"
                                      rowKey="#{agendamento.id}">
                             <f:facet name="header">
@@ -31,13 +30,16 @@
                             <p:ajax event="toggleSelect" update=":form:btnApagarAgendamentos"/>
 
                             <p:column selectionMode="multiple" exportable="false"></p:column>
+                            <p:column headerText="Cliente">
+                                <h:outputText value="#{agendamentoController.consultarClientePorIdUsuario(agendamento.usuario.id).nome}" />
+                            </p:column>
                             <p:column headerText="Procedimento">
                                 <h:outputText value="#{agendamento.procedimento.nome}" />
                             </p:column>
                             <p:column headerText="Duração do Procedimento">
                                 <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.procedimento.duracao)}" />
                             </p:column>
-                            <p:column headerText="agendamento">
+                            <p:column headerText="Profissional">
                                 <h:outputText value="#{agendamento.profissional.nome}" />
                             </p:column>
                             <p:column headerText="Hora">

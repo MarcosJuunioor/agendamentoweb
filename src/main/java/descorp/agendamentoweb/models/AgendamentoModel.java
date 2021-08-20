@@ -40,6 +40,17 @@ public class AgendamentoModel extends GenericModel {
         return agendamentos;
     }
 
+    public List<Date> consultarDatasAgendadasEstabelecimento() {
+        TypedQuery<Date> query = em.createNamedQuery("Agendamento.DatasAgendadas", Date.class);
+        return query.getResultList();
+    }
+    
+    public List<Agendamento> consultarAgendamentosPorData(Date data){
+        TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorData", Agendamento.class)
+                .setParameter("data", data);
+        return query.getResultList();
+    }
+
     public List<Agendamento> consultarHorariosIndisponiveis(Long idProfissional, Long idProcedimento, Date data) {
         TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorProfissional", Agendamento.class)
                 .setParameter("idProfissional", idProfissional)
@@ -99,9 +110,6 @@ public class AgendamentoModel extends GenericModel {
     }
 
     public void persistirAgendamento(Agendamento agendamento) throws IOException {
-        String URL = "/agendamentoweb/index.xhtml";
-        String msgSucesso = "Agendamento criado com sucesso!";
-
         try {
             this.beginTransaction();
             em.persist(agendamento);
@@ -109,7 +117,30 @@ public class AgendamentoModel extends GenericModel {
             this.commitTransaction();
         } catch (Exception e) {
             System.out.println("Erro ao persistir o agendamento: " + e.getMessage());
-        } 
+        }
+    }
+
+    public void apagarAgendamento(Agendamento agendamento) {
+        try {
+            this.beginTransaction();
+            em.remove(agendamento);
+            this.commitTransaction();
+        } catch (Exception e) {
+            System.out.println("Erro ao apagar o agendamento: " + e.getMessage());
+        }
+
+    }
+
+    public void apagarAgendamentos(List<Agendamento> agendamentos) {
+        try {
+            this.beginTransaction();
+            for (Agendamento a : agendamentos) {
+                em.remove(a);
+            }
+            this.commitTransaction();
+        } catch (Exception e) {
+            System.out.println("Erro ao apagar o agendamento: " + e.getMessage());
+        }
     }
 
     public Date criarData(int dia, int mes, int ano) {

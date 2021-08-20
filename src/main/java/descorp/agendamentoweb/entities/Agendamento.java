@@ -62,8 +62,12 @@ import javax.validation.constraints.NotNull;
                     query = "SELECT a FROM Agendamento a "
                     + "WHERE a.usuario.id = :idUsuario "
                     + "AND a.data = :data"
-            )
-        }
+            ),
+            @NamedQuery(
+                    name = "Agendamento.DatasAgendadas",
+                    query = "SELECT DISTINCT(a.data) FROM Agendamento a "
+                    + "ORDER BY a.data"
+            ),}
 )
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,

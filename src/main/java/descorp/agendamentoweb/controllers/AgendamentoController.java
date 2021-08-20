@@ -6,7 +6,9 @@
 package descorp.agendamentoweb.controllers;
 
 import descorp.agendamentoweb.entities.Agendamento;
+import descorp.agendamentoweb.entities.Cliente;
 import descorp.agendamentoweb.models.AgendamentoModel;
+import descorp.agendamentoweb.models.ClienteModel;
 import descorp.agendamentoweb.servlets.AgendamentoServlet;
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,15 +17,21 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.primefaces.PrimeFaces;
+import static java.util.concurrent.TimeUnit.*;
 
 /**
  *
@@ -37,14 +45,18 @@ public class AgendamentoController implements Serializable {
 
     @EJB
     private final AgendamentoModel bean;
+    private final ClienteModel clienteModel;
+    private Cliente cliente;
     private final ArrayList<String> horariosEstabelecimento;
     private final ArrayList<Agendamento> horariosDisponiveis;
     private List<Agendamento> agendamentos;
     private Agendamento agendamentoSelecionado;
     private List<Agendamento> agendamentosSelecionados;
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     public AgendamentoController() {
-        this.bean = new AgendamentoModel();
+        this.bean = new AgendamentoModel ();
+        this.clienteModel = new ClienteModel();
         this.horariosEstabelecimento = new ArrayList<String>();
         this.horariosDisponiveis = new ArrayList<Agendamento>();
 
@@ -118,6 +130,27 @@ public class AgendamentoController implements Serializable {
         return this.agendamentos;
     }
 
+    public List<Agendamento> consultarAgendamentosPorData(String data) {
+        try {
+            Date dataObj = this.getDateByString(data);
+            this.agendamentos = this.bean.consultarAgendamentosPorData(dataObj);
+        } catch (NumberFormatException e) {
+            System.err.println("Parâmetros não localizados: " + e.getMessage());
+        } catch (ParseException ex) {
+            Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return this.agendamentos;
+    }
+
+    public Cliente consultarClientePorIdUsuario(Long idUsuario) {
+        try {
+            cliente = this.clienteModel.consultarClientePorId(idUsuario);
+        } catch (Exception e) {
+            System.err.println("Exceção ao consultar cliente por ID: "+e.getMessage());
+        } 
+        return this.cliente;
+    }
+
     public String getDuracaoFMT(Date duracao) {
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
         String duracaoSTR = fmt.format(duracao);
@@ -133,14 +166,48 @@ public class AgendamentoController implements Serializable {
 
     public void criarAgendamento(Agendamento agendamento) throws IOException {
         bean.persistirAgendamento(agendamento);
+        if (scheduler.isShutdown()) {
+            verificarSeTemNotificacao();
+        }
+    }
+
+    /* A cada 24h, verifica se há agendamentos próximos.
+       Se faltar um dia, o usuário deve ser notificado.
+     */
+    public static void verificarSeTemNotificacao() {
+        final Runnable notification = new Runnable() {
+            public void run() {
+                /* Notifica caso haja agendamentos para o dia atual
+                   ou posterior.
+                 */
+                AgendamentoModel agendamentoModel = new AgendamentoModel();
+
+            }
+        };
+        final ScheduledFuture<?> notificationHandle
+                = scheduler.scheduleAtFixedRate(notification, 0, 1, DAYS);
+
+        scheduler.scheduleAtFixedRate(new Runnable() {
+            public void run() {
+                //Cancela caso não haja agendamentos atuais ou futuros.
+                notificationHandle.cancel(true);
+            }
+        }, 0, 1, DAYS);
     }
 
     public void apagarAgendamento() {
-
+        this.bean.apagarAgendamento(this.agendamentoSelecionado);
+        this.agendamentos.remove(this.agendamentoSelecionado);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
+        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
     }
 
     public void apagarAgendamentos() {
-
+        this.bean.apagarAgendamentos(this.agendamentosSelecionados);
+        this.agendamentos.removeAll(this.agendamentosSelecionados);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamentos Removidos"));
+        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+        this.agendamentosSelecionados = null;
     }
 
     public boolean selecionouAgendamentos() {

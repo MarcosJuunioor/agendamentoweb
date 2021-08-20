@@ -34,11 +34,7 @@ public class ProcedimentoServlet extends HttpServlet {
         request.getRequestDispatcher("/procedimentos.xhtml").forward(request, response);
     }
     
-    // path = procedimentos/procedimento (GET)
-    protected void MaracarProcedimento(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.getRequestDispatcher("/marcar-procedimento.xhtml").forward(request, response);
-    }
+
     //path = procedimentos/listar-procedimentos
     protected void getListaProcedimentos(HttpServletRequest request, HttpServletResponse response) throws IOException{
         SimpleDateFormat fmt = new SimpleDateFormat("hh:mm:ss");  
@@ -69,9 +65,6 @@ public class ProcedimentoServlet extends HttpServlet {
         try{
            endPoint = request.getRequestURI().split("/")[3];
             switch (endPoint) {
-                case "procedimento":
-                    this.MaracarProcedimento(request, response);
-                    break;
                 case "listar-procedimentos":
                     this.getListaProcedimentos(request, response);
                     break;
