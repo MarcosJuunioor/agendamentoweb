@@ -5,22 +5,12 @@
  */
 package descorp.agendamentoweb.controllers;
 
-import com.sun.faces.util.Util;
-import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.Cliente;
-import descorp.agendamentoweb.entities.Procedimento;
-import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.entities.Usuario;
-import descorp.agendamentoweb.models.AgendamentoModel;
 import descorp.agendamentoweb.models.ClienteModel;
 import descorp.agendamentoweb.models.UsuarioModel;
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -52,22 +42,27 @@ public class LoginController implements Serializable {
     }
 
     public void login(String e, String s, HttpSession session) throws IOException {
-        String URL = session.getServletContext().getContextPath()+"/index.xhtml";
+        String URLCliente = session.getServletContext().getContextPath()+"/index.xhtml";
+        String URLEstabelecimento = session.getServletContext().getContextPath()+"/calendario-estabelecimento.xhtml";
         Usuario mUsuario = bean.validarUsuario(e, s);
         
         if (mUsuario != null) {
             session.setAttribute("idUsuario", mUsuario.getId());
             Cliente cliente = this.clienteBean.consultarClientePorId(mUsuario.getId());
-            if(cliente!=null){
-                session.setAttribute("tipoUsuario", "cliente");
-            }else{
-                session.setAttribute("tipoUsuario", "estabelecimento");
-            }
             
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Sucesso",
                     "Login realizado com sucesso!"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect(URL);
+            
+            if(cliente!=null){
+                session.setAttribute("tipoUsuario", "cliente");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(URLCliente);
+            }else{
+                session.setAttribute("tipoUsuario", "estabelecimento");
+                FacesContext.getCurrentInstance().getExternalContext().redirect(URLEstabelecimento);
+            }
+           
+            
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                     "Falha",
@@ -75,8 +70,15 @@ public class LoginController implements Serializable {
         }
     }
 
-    public void registrar(String email, String senha) throws IOException {
-        //bean.registrar(email, senha);
+    public void registrar(HttpSession session, String email, String senha, String nome, String cpf, String telefone) throws IOException {
+        Cliente cliente = new Cliente();
+        cliente.setEmail(email);
+        cliente.setSenha(senha);
+        cliente.setNome(nome);
+        cliente.setCPF(cpf);
+        cliente.setTelefone(telefone);
+        clienteBean.registrarCliente(cliente);
+        FacesContext.getCurrentInstance().getExternalContext().redirect(session.getServletContext().getContextPath()+"/login.xhtml");
     }
 
     public Usuario getUsuario(String e, String p) {
@@ -86,14 +88,10 @@ public class LoginController implements Serializable {
     public void logout(HttpSession session){
         session.invalidate();
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect(session.getServletContext().getContextPath());
+            FacesContext.getCurrentInstance().getExternalContext().redirect(session.getServletContext().getContextPath()+"/login.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /*public void cadastrarUsuario() {
-        Map<String,Object> options = new HashMap<String, Object>();
-        options.put("modal", true);
-        PrimeFaces.current().dialog().openDynamic("Cadastro de Clientes", options, null);
-    } */
+
 }

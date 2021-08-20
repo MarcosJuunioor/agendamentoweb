@@ -28,9 +28,9 @@ public class EstabelecimentoCrudTest extends GenericTest{
     @Test
     public void consultarEstabelecimento(){
         Estabelecimento estabelecimento = em.find(Estabelecimento.class, 3L);
-        assertEquals("eveline@gmail.com", estabelecimento.getEmail());
+        assertEquals("estabelecimento@gmail.com", estabelecimento.getEmail());
         assertEquals("8188441409", estabelecimento.getTelefone());
-        assertEquals("128322", estabelecimento.getSenha());
+        assertEquals("123456", estabelecimento.getSenha());
         assertEquals("Eveline Esteticista", estabelecimento.getRazaoSocial());
         assertEquals("12.345.678/9101-11", estabelecimento.getCNPJ());
     }

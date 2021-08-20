@@ -11,19 +11,28 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
     </h:head>
     <h:body>    
-        <h:form id="loginForm">
+        <h:form id="cadastroForm">
             <p:growl id="msg" showDetail="true" life="4000" />
-            <p:panel id="loginPnl" header="Login"
+            <p:panel id="cadastroPnl" header="Cadastro"
                      style="width: 350px; margin: 0 auto;">
-                <h:panelGrid id="loginPanel" columns="2" cellpadding="5">
+                <h:panelGrid id="cadastroPanel" columns="2" cellpadding="5">
                     <h:outputText value="Email" />
-                    <p:inputText id="username" binding="#{userEmail}"/>
+                    <p:inputText id="email" binding="#{userEmail}"/>
                     <p:spacer /><p:spacer />	
                     <h:outputText value="Senha" />
                     <p:password id="password" binding="#{userPassword}"/>
+                    <p:spacer /><p:spacer />	
+                    <h:outputText value="Nome Completo" />
+                    <p:inputText id="name" binding="#{userName}"/>
+                    <p:spacer /><p:spacer />	
+                    <h:outputText value="CPF" />
+                    <p:inputText id="CPF" binding="#{userCPF}"/>
+                    <p:spacer /><p:spacer />	
+                    <h:outputText value="Telefone" />
+                    <p:inputText id="telefone" binding="#{userPhone}"/>
                 </h:panelGrid>                
                 <h:panelGrid columns="2" cellpadding="10" width="100%">
-                    <p:commandButton value="Cadastrar" action="#{loginController.login(userEmail.value,userPassword.value, request.getSession())}" style="float: left"/>                    
+                    <p:commandButton value="Cadastrar" action="#{loginController.registrar(request.getSession(), userEmail.value, userPassword.value, userName.value, userCPF.value, userPhone.value)}" style="float: left"/>                    
                     <p:commandButton value="Voltar" onclick="window.location.href ='/agendamentoweb/login.xhtml'" style="float: right"/>                    
                 </h:panelGrid>
             </p:panel>                             

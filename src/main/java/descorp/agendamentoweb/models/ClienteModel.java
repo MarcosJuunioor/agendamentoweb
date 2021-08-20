@@ -31,5 +31,15 @@ public class ClienteModel extends GenericModel implements Serializable {
             return null;
         }
     }
-    
+
+    public void registrarCliente(Cliente cliente) {
+        try {
+            this.beginTransaction();
+            this.em.persist(cliente);
+            this.commitTransaction();
+        } catch (Exception e) {
+            System.out.println("Erro ao persistir cliente:" + e.getMessage());
+        }
+    }
+
 }
