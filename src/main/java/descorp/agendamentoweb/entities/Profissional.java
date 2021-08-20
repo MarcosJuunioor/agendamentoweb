@@ -48,6 +48,11 @@ import javax.validation.constraints.Size;
             @NamedQuery(
                     name = Profissional.PROFISSIONAL_TODOS,
                     query = "SELECT p FROM Profissional p"
+            ),
+            @NamedQuery(
+                    name = Profissional.PROFISSIONAL_LIVRES,
+                    query = "SELECT p FROM Profissional p WHERE NOT EXISTS"
+                            +"(SELECT a FROM Agendamento a WHERE a.data = :data AND a.hora = :hora AND a.profissional = p)"
             )
         }
 )
@@ -57,6 +62,7 @@ import javax.validation.constraints.Size;
 public class Profissional implements Serializable {
     
     public static final String PROFISSIONAL_TODOS = "Profissional.TodosProfissionais";
+    public static final String PROFISSIONAL_LIVRES = "Profissional.LivreParaData";
 
     private static final long serialVersionUID = 1L;
     @Id
