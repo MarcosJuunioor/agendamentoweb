@@ -140,7 +140,7 @@ public class ProcedimentoController implements Serializable {
         String assuntoEmail = "Cancelamento de Agendamento - " + this.procedimentoSelecionado.getNome();
         String mensagemEmail = "O seu agendamento para "
                 + this.procedimentoSelecionado.getNome()
-                + "foi cancelado por força maior. Para mais informações, "
+                + "foi cancelado por forÃ§a maior. Para mais informaÃ§Ãµes, "
                 + "entre em contato com o estabelecimento.";
 
         es.enviarEmail(assuntoEmail, mensagemEmail, enderecos);
@@ -166,7 +166,7 @@ public class ProcedimentoController implements Serializable {
         String assuntoEmail = "Cancelamento de Agendamento - " + this.procedimentoSelecionado.getNome();
         String mensagemEmail = "O seu agendamento para "
                 + this.procedimentoSelecionado.getNome()
-                + " foi cancelado por força maior. Para mais informações, "
+                + " foi cancelado por forÃ§a maior. Para mais informaÃ§Ãµes, "
                 + "entre em contato com o estabelecimento.";
 
         es.enviarEmail(assuntoEmail, mensagemEmail, enderecos);

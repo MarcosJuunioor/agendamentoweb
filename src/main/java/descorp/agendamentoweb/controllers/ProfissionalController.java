@@ -1,28 +1,23 @@
 package descorp.agendamentoweb.controllers;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.DiasSemana;
 import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.models.DiasSemanaModel;
 import descorp.agendamentoweb.models.ProfissionalModel;
 import descorp.agendamentoweb.utilities.EmailSender;
-import java.awt.BorderLayout;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import org.primefaces.PrimeFaces;
 
 
@@ -116,13 +111,13 @@ public class ProfissionalController implements Serializable{
     public void apagarProfissional(){
         //this.listaProfissional.remove(this.profissionalSelecionado);
         bean.deletarProfissional(this.profissionalSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcion·rio Removido"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcion√É¬°rio Removido"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     public boolean selecionouProfissionais(){
         return this.profissionaisSelecionados != null && !this.profissionaisSelecionados.isEmpty();
     }
-    //Realoca agendamento a nÌvel de Objeto, enquanto o usu·rio modifica a tela
+    //Realoca agendamento a n√≠vel de Objeto, enquanto o usu√°rio modifica a tela
     public void realocarAgendamento(Agendamento agendamento){
         Profissional profissional = bean.consultarProfissional(this.idProfissionalRealocado);
         agendamento.setProfissional(profissional);
@@ -130,7 +125,7 @@ public class ProfissionalController implements Serializable{
         this.profissionalRealocado = null;
         PrimeFaces.current().ajax().update("form:todos");
     }
-    //Realoca todos agendamentos a nÌvel de Objeto, enquanto o usu·rio modifica a tela todos
+    //Realoca todos agendamentos a n√≠vel de Objeto, enquanto o usu√°rio modifica a tela todos
     public void realocarTodosAgendamentos(){
         Profissional profissional = bean.consultarProfissional(this.profissionalRealocado);
         for(Agendamento agendamento: this.listaAgendamentosFuturos){
@@ -139,7 +134,7 @@ public class ProfissionalController implements Serializable{
         this.idProfissionalRealocado = this.profissionalRealocado;
         PrimeFaces.current().ajax().update("form:realocacao-content");
     }
-    //Realiza a realoc„o em todos os agendamentos futuros e depois apaga o profissional e avisa ao cliente
+    //Realiza a realoc√£o em todos os agendamentos futuros e depois apaga o profissional e avisa ao cliente
     public void realocarAgendamentosEApaga(){
         EmailSender es = new EmailSender();
         
@@ -153,13 +148,13 @@ public class ProfissionalController implements Serializable{
             ArrayList<String> enderecos = new ArrayList<>();
             enderecos.add(agendamento.getUsuario().getEmail());
             String saudacao = (hora<12)?("Bom dia"):( (hora<18)?("Boa tarde"):("Boa Noite") );
-            String assuntoEmail = "AlteraÁ„o do profissional no seu agendamento - " + agendamento.getProcedimento().getNome();
+            String assuntoEmail = "Altera√ß√£o do profissional no seu agendamento - " + agendamento.getProcedimento().getNome();
             String mensagemEmail = saudacao+", "+this.clienteNome(agendamento.getUsuario().getId())+"!<br><br>"
                     + "O profissional, "+this.profissionalSelecionado.getNome()+", para seu agendamento de "
                     + agendamento.getProcedimento().getNome()+", "
-                    + "n„o vai mais poder te atender por forÁa maior.<br>Quem ir· te atender ser· "
+                    + "n√£o vai mais poder te atender por for√ßa maior.<br>Quem ir√° te atender ser√° "
                     + agendamento.getProfissional().getNome()+".<br><br>"
-                    + "Para mais informaÁıes, entre em contato com o estabelecimento.";
+                    + "Para mais informa√ß√µes, entre em contato com o estabelecimento.";
 
             es.enviarEmail(assuntoEmail, mensagemEmail, enderecos);
         }
@@ -176,7 +171,7 @@ public class ProfissionalController implements Serializable{
     public String getMensagemBotao() {
         if(this.selecionouProfissionais()){
             int qtd = this.profissionaisSelecionados.size();
-            return qtd > 1 ? qtd + " funcion·rios selecionados" : "1 funcion·rio selecionado";
+            return qtd > 1 ? qtd + " funcion√É¬°rios selecionados" : "1 funcion√É¬°rio selecionado";
         }
         return "Excluir";
     }
@@ -185,11 +180,11 @@ public class ProfissionalController implements Serializable{
         this.listaProfissional.removeAll(this.profissionaisSelecionados);
         bean.deletarProfissionais(this.profissionaisSelecionados);
         this.profissionaisSelecionados = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcion·rios Removidos"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcion√É¬°rios Removidos"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     
-    //Checa se h· agendamento futuros de uma profissional
+    //Checa se h√° agendamento futuros de uma profissional
     public List<Agendamento> agendamentosFuturos(Profissional profissional){
         List<Agendamento> agendFuturos = new ArrayList<>();
         Date dataAtual = new Date(System.currentTimeMillis());
@@ -214,7 +209,7 @@ public class ProfissionalController implements Serializable{
         }
     } 
     
-    //Checa quais profissionais est„o livres para o agendamento
+    //Checa quais profissionais estao livres para o agendamento
     public List<Profissional> getProfissionaisLivre(Agendamento agendamento){
         return bean.ProfissionaisLivres(agendamento);
     }

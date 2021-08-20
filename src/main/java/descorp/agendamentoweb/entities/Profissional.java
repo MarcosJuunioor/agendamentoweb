@@ -28,7 +28,7 @@ import javax.validation.constraints.Size;
 
 /**
  * 
- * @author TaynÃ¡
+ * @author TaynÃƒÂ¡
  * @author Evellinne;
  */
 @Entity
@@ -72,13 +72,13 @@ public class Profissional implements Serializable {
     @Size(max = 60)
     @Column(name = "nome_profissional", nullable = false, length = 60)
     private String nome;
-    //Apenas palavras com ou sem acentuação, não sendo permitido caracteres especiais
-    @Pattern(regexp = "^([A-Za-záéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ])+$", message="{descorp.agendamentoweb.entities.Profissional.profissao}")
+    //Apenas palavras com ou sem acentuaÃ§Ã£o, nÃ£o sendo permitido caracteres especiais
+    @Pattern(regexp = "^([A-Za-zÃ¡Ã©Ã­Ã³ÃºÃ Ã¢ÃªÃ´Ã£ÃµÃ¼Ã§ÃÃ‰ÃÃ“ÃšÃ€Ã‚ÃŠÃ”ÃƒÃ•ÃœÃ‡ ])+$", message="{descorp.agendamentoweb.entities.Profissional.profissao}")
     @Size(max = 60)
     @Column(name = "profissao", nullable = false, length = 60)
     private String profissao;
-    //Apenas palavras com ou sem acentuação, não sendo permitido caracteres especiais
-    @Pattern(regexp = "^([A-Za-záéíóúàâêôãõüçÁÉÍÓÚÀÂÊÔÃÕÜÇ ])+$", message="{descorp.agendamentoweb.entities.Profissional.especializacao}")
+    //Apenas palavras com ou sem acentuaÃ§Ã£o, nÃ£o sendo permitido caracteres especiais
+    @Pattern(regexp = "^([A-Za-zÃ¡Ã©Ã­Ã³ÃºÃ Ã¢ÃªÃ´Ã£ÃµÃ¼Ã§ÃÃ‰ÃÃ“ÃšÃ€Ã‚ÃŠÃ”ÃƒÃ•ÃœÃ‡ ])+$", message="{descorp.agendamentoweb.entities.Profissional.especializacao}")
     @Size(max = 60)
     @Column(name = "especializacao", nullable = false, length = 60)
     private String especializacao;

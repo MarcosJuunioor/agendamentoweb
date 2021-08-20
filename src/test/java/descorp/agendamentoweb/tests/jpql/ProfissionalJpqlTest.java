@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  */
 public class ProfissionalJpqlTest extends GenericTest{
         
-//Consulta de profissionais por profiss„o
+//Consulta de profissionais por profiss√£o
     @Test
         public void profissionalPorProfissao(){
             TypedQuery<Profissional> query = em.createQuery("select p from Profissional p WHERE p.profissao= :profissao", Profissional.class);
@@ -26,14 +26,14 @@ public class ProfissionalJpqlTest extends GenericTest{
             assertEquals("Dentista", profissionais.getProfissao());
         }   
     
-//Consulta de profissionais por especializaÁ„o
+//Consulta de profissionais por especializa√ß√£o
         @Test
         public void profissionalPorEspecializacao(){
             TypedQuery<Profissional> query = em.createQuery("select p from Profissional p WHERE p.especializacao= :especializacao", Profissional.class);
-            query.setParameter("especializacao", "Branqueamento dent·rio");
+            query.setParameter("especializacao", "Branqueamento dent√°rio");
             Profissional profissionais = query.getSingleResult();
             assertNotNull(profissionais);
-            assertEquals("Branqueamento dent·rio", profissionais.getEspecializacao());
+            assertEquals("Branqueamento dent√°rio", profissionais.getEspecializacao());
         }
 
 }

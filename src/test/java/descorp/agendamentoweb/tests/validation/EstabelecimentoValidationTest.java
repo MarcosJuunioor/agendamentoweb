@@ -29,7 +29,7 @@ public class EstabelecimentoValidationTest extends GenericTest {
             estabelecimento.setTelefone("81988771548");
             estabelecimento.setSenha("5487");
             estabelecimento.setRazaoSocial("Recanto da Beleza");
-            estabelecimento.setCNPJ("00156458000199");//CNPJ inválido
+            estabelecimento.setCNPJ("00156458000199");//CNPJ invÃ¡lido
 
             Endereco endereco = em.find(Endereco.class, 1L);
             estabelecimento.setEndereco(endereco);
@@ -42,7 +42,7 @@ public class EstabelecimentoValidationTest extends GenericTest {
             constraintViolations.forEach(violation -> {
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),
                         CoreMatchers.anyOf(
-                                startsWith("class descorp.agendamentoweb.entities.Estabelecimento.CNPJ: CNPJ inválido. Deve estar no formado NN.NNN.NNN/NNNN-NN, onde N é número natural")
+                                startsWith("class descorp.agendamentoweb.entities.Estabelecimento.CNPJ: CNPJ invÃ¡lido. Deve estar no formado NN.NNN.NNN/NNNN-NN, onde N Ã© nÃºmero natural")
                         )
                 );
             });
@@ -64,7 +64,7 @@ public class EstabelecimentoValidationTest extends GenericTest {
             em.flush();
         } catch (ConstraintViolationException ex) {
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("CNPJ inválido. Deve estar no formado NN.NNN.NNN/NNNN-NN, onde N é número natural", violation.getMessage());
+            assertEquals("CNPJ invÃ¡lido. Deve estar no formado NN.NNN.NNN/NNNN-NN, onde N Ã© nÃºmero natural", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }

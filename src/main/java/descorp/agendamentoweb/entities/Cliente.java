@@ -50,9 +50,8 @@ import org.hibernate.validator.constraints.br.CPF;
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
 public class Cliente extends Usuario implements Serializable {
-
-    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas
-    @Pattern(regexp = "^(\\b[A-Z]\\w*\\s*)+$", message = "{descorp.agendamentoweb.entities.Cliente.nome}")
+    //Apenas palavras que comeÃ§am com letra maiÃºscula, e as demais minÃºsculas
+    @Pattern(regexp = "^(\\b[A-Z]\\w*\\s*)+$", message="{descorp.agendamentoweb.entities.Cliente.nome}")
     @Size(max = 60)
     @Column(name = "nome", nullable = false, length = 60)
     private String nome;

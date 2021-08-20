@@ -12,10 +12,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 /**
  *
- * @author tayn·
+ * @author tayn√°
  */
 public class EnderecoJpqlTest extends GenericTest{
-    //Consulta de um endereÁo pelo CEP
+    //Consulta de um endere√ßo pelo CEP
     @Test
     public void enderecoPorCep() {
         TypedQuery<Endereco> query = em.createQuery(

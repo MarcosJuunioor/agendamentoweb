@@ -28,8 +28,8 @@ public class ClienteValidationTest extends GenericTest {
             cliente.setEmail("julio@gmail.com");
             cliente.setSenha("Juli0@123");
             cliente.setTelefone("81978571456");
-            cliente.setNome("julio andrade"); //Nome inválido
-            cliente.setCPF("123"); //Cpf inválido
+            cliente.setNome("julio andrade"); //Nome invÃ¡lido
+            cliente.setCPF("123"); //Cpf invÃ¡lido
             em.persist(cliente);
             em.flush();
         } catch (ConstraintViolationException ex) {
@@ -38,8 +38,8 @@ public class ClienteValidationTest extends GenericTest {
             constraintViolations.forEach(violation -> {
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),
                         CoreMatchers.anyOf(
-                                startsWith("class descorp.agendamentoweb.entities.Cliente.nome: Cada palavra deve iniciar com letra maiúscula, seguida por letras minúsculas."),
-                                startsWith("class descorp.agendamentoweb.entities.Cliente.CPF: número do registro de contribuinte individual brasileiro (CPF) inválido")
+                                startsWith("class descorp.agendamentoweb.entities.Cliente.nome: Cada palavra deve iniciar com letra maiÃºscula, seguida por letras minÃºsculas."),
+                                startsWith("class descorp.agendamentoweb.entities.Cliente.CPF: nÃºmero do registro de contribuinte individual brasileiro (CPF) invÃ¡lido")
                         )
                 );
             });
@@ -60,7 +60,7 @@ public class ClienteValidationTest extends GenericTest {
             em.flush();
         } catch (ConstraintViolationException ex) {
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("Cada palavra deve iniciar com letra maiúscula, seguida por letras minúsculas.", violation.getMessage());
+            assertEquals("Cada palavra deve iniciar com letra maiÃºscula, seguida por letras minÃºsculas.", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }

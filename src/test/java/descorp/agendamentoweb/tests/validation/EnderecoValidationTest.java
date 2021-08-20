@@ -23,12 +23,12 @@ public class EnderecoValidationTest extends GenericTest{
         Endereco endereco = null;
         try {
             endereco = new Endereco();
-            endereco.setBairro("CÈu Azul");
-            endereco.setCep("57465-547");//CEP inv·lido
+            endereco.setBairro("C√©u Azul");
+            endereco.setCep("57465-547");//CEP inv√°lido
             endereco.setCidade("Camaragibe");
-            endereco.setEstado("JA");//Estado Inv·lido
+            endereco.setEstado("JA");//Estado Inv√°lido
             endereco.setNumero(51);
-            endereco.setRua("Rua do CÈu");
+            endereco.setRua("Rua do C√©u");
             
             em.persist(endereco);
             em.flush();
@@ -38,8 +38,8 @@ public class EnderecoValidationTest extends GenericTest{
             constraintViolations.forEach(violation -> {
                 assertThat(violation.getRootBeanClass() + "." + violation.getPropertyPath() + ": " + violation.getMessage(),
                         CoreMatchers.anyOf(
-                                startsWith("class descorp.agendamentoweb.entities.Endereco.cep: CEP inv·lido. Deve estar no formado NN.NNN-NNN, onde N È n˙mero natural"),
-                                startsWith("class descorp.agendamentoweb.entities.Endereco.estado: Estado Inv·lido")
+                                startsWith("class descorp.agendamentoweb.entities.Endereco.cep: CEP inv√°lido. Deve estar no formado NN.NNN-NNN, onde N √© n√∫mero natural"),
+                                startsWith("class descorp.agendamentoweb.entities.Endereco.estado: Estado Inv√°lido")
                                 
                         )
                 );
@@ -62,7 +62,7 @@ public class EnderecoValidationTest extends GenericTest{
             em.flush();
         } catch (ConstraintViolationException ex) {    
             ConstraintViolation violation = ex.getConstraintViolations().iterator().next();
-            assertEquals("Estado Inv·lido", violation.getMessage());
+            assertEquals("Estado Inv√°lido", violation.getMessage());
             assertEquals(1, ex.getConstraintViolations().size());
             throw ex;
         }
