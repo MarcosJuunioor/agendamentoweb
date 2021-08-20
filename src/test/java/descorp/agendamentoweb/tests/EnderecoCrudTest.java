@@ -32,7 +32,7 @@ public class EnderecoCrudTest extends GenericTest {
         assertEquals("51.250-490", endereco.getCep());
         assertEquals("Lima Campos", endereco.getRua());
         assertEquals(240, (int)endereco.getNumero());
-        assertEquals("Jord„o", endereco.getBairro());
+        assertEquals("Jord√£o", endereco.getBairro());
         assertEquals("Recife", endereco.getCidade());
         assertEquals("PE", endereco.getEstado());
     }

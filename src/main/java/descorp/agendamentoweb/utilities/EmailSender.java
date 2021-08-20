@@ -6,6 +6,7 @@
 package descorp.agendamentoweb.utilities;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,7 +27,7 @@ import javax.mail.internet.MimeMultipart;
  *
  * @author marco
  */
-public class EmailSender{
+public class EmailSender {
 
     private final Session session;
 
@@ -37,8 +38,8 @@ public class EmailSender{
         prop.put("mail.smtp.host", "smtp.gmail.com");
         prop.put("mail.smtp.port", "587");
         prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
-        String username = "ifpecaboteste@gmail.com";
-        String password = "Ifpec@boteste";
+        String username = "uipath.analisabr@gmail.com";
+        String password = "@u1p4th@";
 
         this.session = Session.getInstance(prop, new Authenticator() {
             @Override
@@ -48,41 +49,39 @@ public class EmailSender{
         });
     }
 
-    public void enviarEmail(String assunto, String msg, ArrayList<String> emails) {
+    public void enviarEmail(String assunto, String msg, List<String> emails) {
         new Thread() {
             @Override
             public void run() {
                 try {
                     Message message = new MimeMessage(session);
-                    
+
                     message.setFrom(new InternetAddress("ifpecaboteste@gmail.com"));
                     InternetAddress[] enderecos = new InternetAddress[emails.size()];
                     int i = 0;
-                    for(String e: emails){
+                    for (String e : emails) {
                         enderecos[i] = new InternetAddress(e);
                         i++;
                     }
-                    
+
                     message.setRecipients(
                             Message.RecipientType.TO, enderecos);
                     message.setSubject(assunto);
-                    
-                    
+
                     MimeBodyPart mimeBodyPart = new MimeBodyPart();
                     mimeBodyPart.setContent(msg, "text/html");
-                    
+
                     Multipart multipart = new MimeMultipart();
                     multipart.addBodyPart(mimeBodyPart);
-                    
+
                     message.setContent(multipart);
-                    
+
                     Transport.send(message);
                 } catch (AddressException ex) {
                     Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (MessagingException ex) {
                     Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
                 }
-
             }
         }.start();
     }

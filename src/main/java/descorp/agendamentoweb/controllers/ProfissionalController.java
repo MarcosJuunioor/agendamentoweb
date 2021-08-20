@@ -1,10 +1,14 @@
 package descorp.agendamentoweb.controllers;
 
+import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.DiasSemana;
 import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.models.DiasSemanaModel;
 import descorp.agendamentoweb.models.ProfissionalModel;
+import descorp.agendamentoweb.utilities.EmailSender;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,7 +18,9 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import org.primefaces.PrimeFaces;
 
 
@@ -32,7 +38,10 @@ public class ProfissionalController implements Serializable{
     private List<Profissional> listaProfissional;
     private List<String> diasSelecionados;
     private Profissional profissionalSelecionado;
+    private Long profissionalRealocado;
     private List<Profissional> profissionaisSelecionados;
+    private List<Agendamento> listaAgendamentosFuturos; 
+    private Long idProfissionalRealocado;
     private String hrInicial;
     private String hrFinal;
     
@@ -43,16 +52,20 @@ public class ProfissionalController implements Serializable{
         this.hrInicial = "";
         this.hrFinal = "";
     }
-
-    public List<Profissional> getListaProfissional() {
-        if(this.listaProfissional == null || this.listaProfissional.isEmpty()){
-            this.listaProfissional = bean.todosProfissionais();
-        }
-        return listaProfissional;
+    
+    public String formatarData(Date data){
+        DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        return fmt.format(data);
+    }   
+    
+    public boolean exibirMenuTodos(){
+        if (this.listaAgendamentosFuturos == null)
+            return false;
+        return (this.listaAgendamentosFuturos.size() > 1);
     }
-
-    public void setListaProfissional(List<Profissional> listaProfissional) {
-        this.listaProfissional = listaProfissional;
+    
+    public String clienteNome(Long usuarioID){
+        return bean.clienteAgendamento(usuarioID).getNome();
     }
     
     public void editarProfissional() throws ParseException{
@@ -88,17 +101,6 @@ public class ProfissionalController implements Serializable{
         return dias;
     }
     
-    public void setProfissionalSelecionado(Profissional profissionalSelecionado) {
-        this.diasSelecionados = new ArrayList<>();
-        for(DiasSemana ds: profissionalSelecionado.getDiasSemana()){
-            this.diasSelecionados.add(ds.getNome());
-        }
-        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
-        this.hrInicial = fmt.format(profissionalSelecionado.getHoraInicial());
-        this.hrFinal = fmt.format(profissionalSelecionado.getHoraFinal());
-        this.profissionalSelecionado = profissionalSelecionado;
-    }
-    
     public void novoProfissional(){
         this.profissionalSelecionado = new Profissional();
         this.diasSelecionados = new ArrayList<>();
@@ -107,18 +109,69 @@ public class ProfissionalController implements Serializable{
     }
     
     public void apagarProfissional(){
-        this.listaProfissional.remove(this.profissionalSelecionado);
+        //this.listaProfissional.remove(this.profissionalSelecionado);
         bean.deletarProfissional(this.profissionalSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcion�rio Removido"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("FuncionÃ¡rio Removido"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     public boolean selecionouProfissionais(){
         return this.profissionaisSelecionados != null && !this.profissionaisSelecionados.isEmpty();
-    }    
+    }
+    //Realoca agendamento a nível de Objeto, enquanto o usuário modifica a tela
+    public void realocarAgendamento(Agendamento agendamento){
+        Profissional profissional = bean.consultarProfissional(this.idProfissionalRealocado);
+        agendamento.setProfissional(profissional);
+        //colocar null no menu de todos
+        this.profissionalRealocado = null;
+        PrimeFaces.current().ajax().update("form:todos");
+    }
+    //Realoca todos agendamentos a nível de Objeto, enquanto o usuário modifica a tela todos
+    public void realocarTodosAgendamentos(){
+        Profissional profissional = bean.consultarProfissional(this.profissionalRealocado);
+        for(Agendamento agendamento: this.listaAgendamentosFuturos){
+            agendamento.setProfissional(profissional);
+        }
+        this.idProfissionalRealocado = this.profissionalRealocado;
+        PrimeFaces.current().ajax().update("form:realocacao-content");
+    }
+    //Realiza a realocão em todos os agendamentos futuros e depois apaga o profissional e avisa ao cliente
+    public void realocarAgendamentosEApaga(){
+        EmailSender es = new EmailSender();
+        
+        for(Agendamento agendamento: this.listaAgendamentosFuturos){
+            //Atualiza o agendamento com novo profissional
+            bean.agendamentoProfissional(agendamento);
+            //Tira do profissional anterior
+            this.profissionalSelecionado.getAgendamentos().remove(agendamento);
+            //Enviar email
+            int hora = new Date(System.currentTimeMillis()).getHours();
+            ArrayList<String> enderecos = new ArrayList<>();
+            enderecos.add(agendamento.getUsuario().getEmail());
+            String saudacao = (hora<12)?("Bom dia"):( (hora<18)?("Boa tarde"):("Boa Noite") );
+            String assuntoEmail = "Alteração do profissional no seu agendamento - " + agendamento.getProcedimento().getNome();
+            String mensagemEmail = saudacao+", "+this.clienteNome(agendamento.getUsuario().getId())+"!<br><br>"
+                    + "O profissional, "+this.profissionalSelecionado.getNome()+", para seu agendamento de "
+                    + agendamento.getProcedimento().getNome()+", "
+                    + "não vai mais poder te atender por força maior.<br>Quem irá te atender será "
+                    + agendamento.getProfissional().getNome()+".<br><br>"
+                    + "Para mais informações, entre em contato com o estabelecimento.";
+
+            es.enviarEmail(assuntoEmail, mensagemEmail, enderecos);
+        }
+        this.apagarProfissional();
+    }
+    public ArrayList<Integer> loopAgendamento(){
+        ArrayList<Integer> lista = new ArrayList<>();
+        int tam = this.listaAgendamentosFuturos==null?0:this.listaAgendamentosFuturos.size();
+        for(int i= 0; i<tam; i++){
+            lista.add(i);
+        }
+        return lista;
+    }
     public String getMensagemBotao() {
         if(this.selecionouProfissionais()){
             int qtd = this.profissionaisSelecionados.size();
-            return qtd > 1 ? qtd + " funcion�rios selecionados" : "1 funcion�rio selecionado";
+            return qtd > 1 ? qtd + " funcionÃ¡rios selecionados" : "1 funcionÃ¡rio selecionado";
         }
         return "Excluir";
     }
@@ -127,8 +180,42 @@ public class ProfissionalController implements Serializable{
         this.listaProfissional.removeAll(this.profissionaisSelecionados);
         bean.deletarProfissionais(this.profissionaisSelecionados);
         this.profissionaisSelecionados = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcion�rios Removidos"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("FuncionÃ¡rios Removidos"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
+    }
+    
+    //Checa se há agendamento futuros de uma profissional
+    public List<Agendamento> agendamentosFuturos(Profissional profissional){
+        List<Agendamento> agendFuturos = new ArrayList<>();
+        Date dataAtual = new Date(System.currentTimeMillis());
+        this.idProfissionalRealocado = null;
+        this.profissionalRealocado = null;
+        for(Agendamento agendamento: profissional.getAgendamentos()){
+            if(agendamento.getData().after(dataAtual)){
+                agendFuturos.add(agendamento);
+            }
+        }
+        return agendFuturos;
+    }
+    
+    //Checar profissionalSelecionado antes de deletar
+    public void checarDeleteProfissionalSelecionado(){
+        this.listaAgendamentosFuturos = agendamentosFuturos(profissionalSelecionado);
+        if(this.listaAgendamentosFuturos.size()>0){
+            PrimeFaces.current().ajax().update("form:realocacao");
+            PrimeFaces.current().executeScript("PF('RealocarDialog').show();");
+        } else {
+            this.apagarProfissional();
+        }
+    } 
+    
+    public List<Profissional> getListaProfissional() {
+        this.listaProfissional = bean.todosProfissionais();
+        return listaProfissional;
+    }
+
+    public void setListaProfissional(List<Profissional> listaProfissional) {
+        this.listaProfissional = listaProfissional;
     }
     
     public List<String> getDiasSelecionados() {
@@ -141,6 +228,17 @@ public class ProfissionalController implements Serializable{
 
     public Profissional getProfissionalSelecionado() {
         return profissionalSelecionado;
+    }
+    
+    public void setProfissionalSelecionado(Profissional profissionalSelecionado) {
+        this.diasSelecionados = new ArrayList<>();
+        for(DiasSemana ds: profissionalSelecionado.getDiasSemana()){
+            this.diasSelecionados.add(ds.getNome());
+        }
+        SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
+        this.hrInicial = fmt.format(profissionalSelecionado.getHoraInicial());
+        this.hrFinal = fmt.format(profissionalSelecionado.getHoraFinal());
+        this.profissionalSelecionado = profissionalSelecionado;
     }
 
     public String getHrInicial() {
@@ -165,5 +263,29 @@ public class ProfissionalController implements Serializable{
 
     public void setProfissionaisSelecionados(List<Profissional> profissionaisSelecionados) {
         this.profissionaisSelecionados = profissionaisSelecionados;
+    }
+
+    public List<Agendamento> getListaAgendamentosFuturos() {
+        return listaAgendamentosFuturos;
+    }
+
+    public void setListaAgendamentosFuturos(List<Agendamento> listaAgendamentosFuturos) {
+        this.listaAgendamentosFuturos = listaAgendamentosFuturos;
+    }
+
+    public Long getProfissionalRealocado() {
+        return profissionalRealocado;
+    }
+
+    public void setProfissionalRealocado(Long profissionalRealocado) {
+        this.profissionalRealocado = profissionalRealocado;
+    }
+
+    public Long getIdProfissionalRealocado() {
+        return idProfissionalRealocado;
+    }
+
+    public void setIdProfissionalRealocado(Long idProfissionalRealocado) {
+        this.idProfissionalRealocado = idProfissionalRealocado;
     }
 }

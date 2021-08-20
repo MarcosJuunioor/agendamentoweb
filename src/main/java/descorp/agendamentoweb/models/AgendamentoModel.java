@@ -11,18 +11,11 @@ import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.entities.Usuario;
 import static descorp.agendamentoweb.models.GenericModel.em;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.persistence.CacheRetrieveMode;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 /**
  *
@@ -38,6 +31,17 @@ public class AgendamentoModel extends GenericModel {
         TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.Indisponiveis", Agendamento.class);
         List<Agendamento> agendamentos = query.getResultList();
         return agendamentos;
+    }
+
+    public List<Date> consultarDatasAgendadasEstabelecimento() {
+        TypedQuery<Date> query = em.createNamedQuery("Agendamento.DatasAgendadas", Date.class);
+        return query.getResultList();
+    }
+    
+    public List<Agendamento> consultarAgendamentosPorData(Date data){
+        TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorData", Agendamento.class)
+                .setParameter("data", data);
+        return query.getResultList();
     }
 
     public List<Agendamento> consultarHorariosIndisponiveis(Long idProfissional, Long idProcedimento, Date data) {
@@ -58,6 +62,18 @@ public class AgendamentoModel extends GenericModel {
 
         return query.getResultList();
 
+    }
+
+    public List<String> getDatasAgendamentosDoDia(Date data) {
+        TypedQuery<String> query = em.createNamedQuery("Agendamento.agendamentosDoDia", String.class)
+                .setParameter("diaAgendamento", data);
+        //
+        List<String> mList = new ArrayList<String>();
+        //
+        for (String s : query.getResultList()) {
+            mList.add(s);
+        }
+        return mList;
     }
 
     public List<Agendamento> getAgendamentosUsuario(Long idUsuario, Date data) {
@@ -90,7 +106,7 @@ public class AgendamentoModel extends GenericModel {
 
         } catch (Exception e) {
 
-            System.out.println("Erro na criação do agendamento: " + e.getMessage());
+            System.out.println("Erro na criaÃ§Ã£o do agendamento: " + e.getMessage());
 
         }
 
@@ -99,9 +115,6 @@ public class AgendamentoModel extends GenericModel {
     }
 
     public void persistirAgendamento(Agendamento agendamento) throws IOException {
-        String URL = "/agendamentoweb/index.xhtml";
-        String msgSucesso = "Agendamento criado com sucesso!";
-
         try {
             this.beginTransaction();
             em.persist(agendamento);
@@ -109,7 +122,30 @@ public class AgendamentoModel extends GenericModel {
             this.commitTransaction();
         } catch (Exception e) {
             System.out.println("Erro ao persistir o agendamento: " + e.getMessage());
-        } 
+        }
+    }
+
+    public void apagarAgendamento(Agendamento agendamento) {
+        try {
+            this.beginTransaction();
+            em.remove(agendamento);
+            this.commitTransaction();
+        } catch (Exception e) {
+            System.out.println("Erro ao apagar o agendamento: " + e.getMessage());
+        }
+
+    }
+
+    public void apagarAgendamentos(List<Agendamento> agendamentos) {
+        try {
+            this.beginTransaction();
+            for (Agendamento a : agendamentos) {
+                em.remove(a);
+            }
+            this.commitTransaction();
+        } catch (Exception e) {
+            System.out.println("Erro ao apagar o agendamento: " + e.getMessage());
+        }
     }
 
     public Date criarData(int dia, int mes, int ano) {

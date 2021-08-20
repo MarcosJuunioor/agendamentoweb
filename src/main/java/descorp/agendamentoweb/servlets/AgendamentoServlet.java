@@ -100,6 +100,24 @@ public class AgendamentoServlet extends HttpServlet {
         response.getWriter().write(json);
     }
 
+    // path = agendamentos/datas-agendadas-estabelecimento (GET)
+    protected void datasAgendadasEstabelecimento(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        List<Date> datasAgendadas = this.agendamentoModel.consultarDatasAgendadasEstabelecimento();
+
+        ArrayList<String> datasAgendadasAux = new ArrayList<String>();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+        for (Date d : datasAgendadas) {
+            datasAgendadasAux.add(df.format(d));
+        }
+        
+        String json = new ObjectMapper().writeValueAsString(datasAgendadasAux);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(json);
+    }
+
     // path = agendamentos/dias-profissional(GET)
     protected void getDiasDaSemanaDoProfissional(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -121,8 +139,8 @@ public class AgendamentoServlet extends HttpServlet {
     // path = agendamentos/datas-agendadas(GET)
     protected void datasAgendadas(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Long idUsuario = (Long)request.getSession().getAttribute("idUsuario");
-        
+        Long idUsuario = (Long) request.getSession().getAttribute("idUsuario");
+
         List<Date> datasAgendamentos = this.agendamentoModel.getDatasAgendamentos(idUsuario);
 
         ArrayList<String> datasAgendadas = new ArrayList<String>();
@@ -143,6 +161,13 @@ public class AgendamentoServlet extends HttpServlet {
             throws ServletException, IOException {
         request.getRequestDispatcher("/agendamentos.xhtml").forward(request, response);
     }
+
+    // path = agendamentos/procedimento (GET)
+    protected void marcarProcedimento(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/marcar-procedimento.xhtml").forward(request, response);
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -170,6 +195,10 @@ public class AgendamentoServlet extends HttpServlet {
             datasAgendadas(request, response);
         } else if (endPoint.equals("agendamentos-usuario")) {
             agendamentosUsuario(request, response);
+        } else if (endPoint.equals("procedimento")) {
+            marcarProcedimento(request, response);
+        } else if (endPoint.equals("datas-agendadas-estabelecimento")) {
+            datasAgendadasEstabelecimento(request, response);
         }
     }
 

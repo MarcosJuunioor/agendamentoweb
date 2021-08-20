@@ -1,21 +1,39 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <!-- SUBSTITUIR CARACTERES ESPECIAIS PELO SEU CODIGO ASCII-->
     <div class="card">
         <h:form>
             <p:growl id="messages"/>
             <p:menubar>
-                <p:menuitem url="/agendamentoweb/index.xhtml"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
-                <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb/index.xhtml" />
-                <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
-                    <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb/index.xhtml" />
-                    <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/procedimentos/procedimento" />
-                </p:submenu>
-                <p:menuitem value="Profissionais" icon="pi pi-fw pi-id-card" url="/agendamentoweb/profissionais" />
-                <p:menuitem value="Procedimentos" icon="pi pi-fw pi-list" url="/agendamentoweb/procedimentos" />
+                <c:if test="#{request.getSession().getAttribute('tipoUsuario').equals('cliente')}">
+                    <p:menuitem url="/agendamentoweb/index.xhtml"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
+                </c:if>
+                <c:if test="#{request.getSession().getAttribute('tipoUsuario').equals('cliente')}">
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb/index.xhtml" />
+                </c:if>
+                <c:if test="#{request.getSession().getAttribute('tipoUsuario').equals('estabelecimento')}">
+                    <p:menuitem url="/agendamentoweb/calendario-estabelecimento.xhtml"><span id="aplication-title" >AgendamentoWeb</span></p:menuitem>
+                </c:if>
+                <c:if test="#{request.getSession().getAttribute('tipoUsuario').equals('estabelecimento')}">
+                    <p:menuitem value="Home" icon="pi pi-fw pi-home" url="/agendamentoweb/calendario-estabelecimento.xhtml" />
+                </c:if>
+                <c:if test="#{request.getSession().getAttribute('tipoUsuario').equals('estabelecimento')}">
+                    <p:menuitem value="Agendamentos dos Clientes" icon="pi pi-fw pi-list" url="/agendamentoweb/calendario-estabelecimento.xhtml" />
+                </c:if>
+                <c:if test="#{request.getSession().getAttribute('tipoUsuario').equals('cliente')}">
+                    <p:submenu label="Agendamentos" icon="pi pi-fw pi-calendar">
+                        <p:menuitem value="Meus Agendamentos" icon="pi pi-fw pi-list" url="/agendamentoweb/index.xhtml" />
+                        <p:menuitem value="Novo" icon="pi pi-fw pi-calendar-plus" url="/agendamentoweb/agendamentos/procedimento" />
+                    </p:submenu>
+                </c:if>
+                <c:if test="#{request.getSession().getAttribute('tipoUsuario').equals('estabelecimento')}">
+                    <p:menuitem value="Profissionais" icon="pi pi-fw pi-id-card" url="/agendamentoweb/profissionais" />
+                    <p:menuitem value="Procedimentos" icon="pi pi-fw pi-list" url="/agendamentoweb/procedimentos" />
+                </c:if>
                 <p:submenu class="user-menu" label="Usuario" icon="pi pi-user">
                     <p:menuitem value="Configura&#231;&#245;es"/>
                     <p:menuitem value="Sair" action="#{loginController.logout(request.getSession())}"/>    

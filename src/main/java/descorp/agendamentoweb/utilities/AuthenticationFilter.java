@@ -21,36 +21,54 @@ import javax.servlet.http.HttpSession;
 @WebFilter("/AuthenticationFilter")
 public class AuthenticationFilter implements Filter {
 
-	private ServletContext context;
-	
-	public void init(FilterConfig fConfig) throws ServletException {
-		this.context = fConfig.getServletContext();
-		this.context.log("AuthenticationFilter initialized");
-	}
-	
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    private ServletContext context;
 
-		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse res = (HttpServletResponse) response;
-		
-		String uri = req.getRequestURI();
-		this.context.log("Requested Resource::"+uri);
-		
-		HttpSession session = req.getSession();
-		this.context.log("Session aqui: "+uri);
-             
-		if(session.getAttribute("idUsuario") == null){
-			this.context.log("Unauthorized access request");
-			res.sendRedirect("/agendamentoweb");
-		}else{
-			// pass the request along the filter chain
-			chain.doFilter(request, response);
-		} 
-		
-	}
+    public void init(FilterConfig fConfig) throws ServletException {
+        this.context = fConfig.getServletContext();
+        this.context.log("AuthenticationFilter initialized");
+    }
 
-	public void destroy() {
-		//close any resources here
-	}
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+
+        HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
+
+        String uri = req.getRequestURI();
+        String resource = uri.split("/")[2];
+        HttpSession session = req.getSession();
+
+        this.context.log("URI:" + uri);
+
+        if (session.getAttribute("idUsuario") == null) {
+            if (uri.equals("/agendamentoweb/login.xhtml")
+                    || resource.equals("javax.faces.resource")
+                    || uri.equals("/agendamentoweb/cadastro.xhtml")) {
+                chain.doFilter(request, response);
+            } else {
+                this.context.log("Unauthorized access request");
+                res.sendRedirect("/agendamentoweb/login.xhtml");
+            }
+        } else {
+            if (resource.equals("procedimentos")
+                    || resource.equals("profissionais")
+                    || resource.equals("calendario-estabelecimento")
+                    || resource.equals("agendamentos-estabelecimento")) {
+                if (session.getAttribute("tipoUsuario").equals("estabelecimento")) {
+                    chain.doFilter(request, response);
+                } else {
+                    this.context.log("Unauthorized access request");
+                    res.sendRedirect("/agendamentoweb/login.xhtml");
+                }
+            }else{
+                // pass the request along the filter chain
+                chain.doFilter(request, response);
+            }
+        }
+
+    }
+
+    public void destroy() {
+        //close any resources here
+    }
 
 }

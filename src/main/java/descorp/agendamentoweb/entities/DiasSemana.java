@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author TaynÃ¡
+ * @author TaynÃƒÂ¡
  * @author Evellinne;
  */
 @Entity
@@ -50,8 +50,8 @@ public class DiasSemana implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //Apenas palavras que começam com letra maiúscula, e as demais minúsculas, podendo ser palavras acentuadas ou não, sendo a maior palavra com 7 letras e a menor com 5.
-    @Pattern(regexp = "^([A-Za-zçá])+$", message="{descorp.agendamentoweb.entities.DiasSemana.nome}")
+    //Apenas palavras que comeÃ§am com letra maiÃºscula, e as demais minÃºsculas, podendo ser palavras acentuadas ou nÃ£o, sendo a maior palavra com 7 letras e a menor com 5.
+    @Pattern(regexp = "^([A-Za-zÃ§Ã¡])+$", message="{descorp.agendamentoweb.entities.DiasSemana.nome}")
     @Size(max = 10)
     @Column(name = "nome_dia", nullable = false, length = 20)
     private String nome;
