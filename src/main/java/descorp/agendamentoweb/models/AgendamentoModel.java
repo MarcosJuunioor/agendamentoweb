@@ -11,6 +11,7 @@ import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.entities.Usuario;
 import static descorp.agendamentoweb.models.GenericModel.em;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
  *
  * @author marco
  */
-public class AgendamentoModel extends GenericModel {
+public class AgendamentoModel extends GenericModel implements Serializable{
 
     public AgendamentoModel() {
         super();
@@ -61,6 +62,7 @@ public class AgendamentoModel extends GenericModel {
     }
 
     public List<Agendamento> getAgendamentosUsuario(Long idUsuario, Date data) {
+        checkEM();
         TypedQuery<Agendamento> query = em.createNamedQuery("Agendamento.PorIdUsuarioEData", Agendamento.class)
                 .setParameter("idUsuario", idUsuario)
                 .setParameter("data", data);
@@ -110,6 +112,13 @@ public class AgendamentoModel extends GenericModel {
         } catch (Exception e) {
             System.out.println("Erro ao persistir o agendamento: " + e.getMessage());
         } 
+    }
+    
+    public void atualizarAgendamento(Agendamento agendamento){
+        this.beginTransaction();
+        em.merge(agendamento);
+        em.flush();
+        this.commitTransaction();
     }
 
     public Date criarData(int dia, int mes, int ano) {
