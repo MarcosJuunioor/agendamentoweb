@@ -4,24 +4,24 @@
  * and open the template in the editor.
  */
 
-//Configuração do prime faces para o calendário em português
-PrimeFaces.locales['pt'] = {closeText: 'Fechar', prevText: 'Anterior', nextText: 'Próximo', currentText: 'Começo', monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Só Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mês', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia'};
+//Configuraï¿½ï¿½o do prime faces para o calendï¿½rio em portuguï¿½s
+PrimeFaces.locales['pt'] = {closeText: 'Fechar', prevText: 'Anterior', nextText: 'Prï¿½ximo', currentText: 'Comeï¿½o', monthNames: ['Janeiro', 'Fevereiro', 'Marï¿½o', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'], monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'], dayNames: ['Domingo', 'Segunda', 'Terï¿½a', 'Quarta', 'Quinta', 'Sexta', 'Sï¿½bado'], dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sï¿½b'], dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'], weekHeader: 'Semana', firstDay: 0, isRTL: false, showMonthAfterYear: false, yearSuffix: '', timeOnlyTitle: 'Sï¿½ Horas', timeText: 'Tempo', hourText: 'Hora', minuteText: 'Minuto', secondText: 'Segundo', ampm: false, month: 'Mï¿½s', week: 'Semana', day: 'Dia', allDayText: 'Todo o Dia'};
 //Data atual
 today = Date();
 
 diasSemana = [
     {nome: "Domingo", num: 0},
     {nome: "Segunda", num: 1},
-    {nome: "Terça", num: 2},
+    {nome: "TerÃ§a", num: 2},
     {nome: "Quarta", num: 3},
     {nome: "Quinta", num: 4},
     {nome: "Sexta", num: 5},
-    {nome: "Sábado", num: 6},
+    {nome: "SÃ¡bado", num: 6},
 ];
 disabledDays = [];
 disabledDates = [];
 
-//Pega as datas indisponíveis para agendamento
+//Pega as datas indisponï¿½veis para agendamento
 const xhttpDatasIndisponiveis = new XMLHttpRequest();
 xhttpDatasIndisponiveis.onload = function () {
     datasIndisponiveis = JSON.parse(this.responseText);
@@ -65,6 +65,9 @@ function atualizarDiasProfissional(idProfissional){
 function disableAllTheseDays(date) {
     var day = date.getDay();
     var disable = true;
+    if(formatDate(Date.now()) === formatDate(date)){
+        return [false, ''];
+    }
     disabledDays.forEach(function (disableDay) {
         if (disableDay === day) {
             disable = false;

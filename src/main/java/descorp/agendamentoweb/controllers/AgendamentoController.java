@@ -74,20 +74,13 @@ public class AgendamentoController implements Serializable {
             Long idProcedimento = Long.valueOf(idProc);
             Long idProfissional = Long.valueOf(idProf);
 
-            //Horários nos quais o estabelecimento faz agendamentos 
-            Date agora = Calendar.getInstance().getTime();
-            for (int i=8; i<=18; i=i+2){
-                String hora;
-                //Se for marcar um agendamento para data de hoje, verificar se é uma hora futura
-                if(getDataFMT(agora).equals(dataSelecionada) && agora.getHours()>= i){
-                    continue;
-                } else if(i<10){
-                    hora = "0"+i+":00";
-                } else {
-                    hora = i+":00";
-                }
-                this.horariosEstabelecimento.add(hora);
-            }
+            //Horários nos quais o estabelecimento faz agendamentos   
+            this.horariosEstabelecimento.add("08:00");
+            this.horariosEstabelecimento.add("10:00");
+            this.horariosEstabelecimento.add("12:00");
+            this.horariosEstabelecimento.add("14:00");
+            this.horariosEstabelecimento.add("16:00");
+            this.horariosEstabelecimento.add("18:00");
 
             try {
                 String startDateString = dataSelecionada;
@@ -107,8 +100,6 @@ public class AgendamentoController implements Serializable {
 
                 //Remove da lista de horÃƒÂ¡rios disponÃƒÂ­veis os horÃƒÂ¡rio que jÃƒÂ¡ estÃƒÂ£o ocupados
                 if (agendamentosDia.size() > 0) {
-                    
-                    
 
                     for (Agendamento a : agendamentosDia) {
                         String hora = getDuracaoFMT(a.getHora());
@@ -152,7 +143,7 @@ public class AgendamentoController implements Serializable {
         Long idProcedimento = this.agendamentoSelecionado.getProcedimento().getId();
         Long idProfissional = this.agendamentoSelecionado.getProfissional().getId();
 
-        //Horários nos quais o estabelecimento faz agendamentos            
+        //Horários nos quais o estabelecimento faz agendamentos     
         horarios.add("08:00");
         horarios.add("10:00");
         horarios.add("12:00");
@@ -280,6 +271,13 @@ public class AgendamentoController implements Serializable {
     }
 
     public void apagarAgendamento() {
+        String agora = getDataFMT(Calendar.getInstance().getTime());
+        String dataSelecionada = getDataFMT(this.agendamentoSelecionado.getData());
+        if(agora.equals(dataSelecionada)){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode apagar!", "Agendamento na data atual não podem ser cancelados"));
+            PrimeFaces.current().ajax().update("form:msgs");
+            return;
+        }
         this.bean.apagarAgendamento(this.agendamentoSelecionado);
         this.agendamentos.remove(this.agendamentoSelecionado);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
@@ -287,11 +285,25 @@ public class AgendamentoController implements Serializable {
     }
 
     public void apagarAgendamentos() {
-        this.bean.apagarAgendamentos(this.agendamentosSelecionados);
-        this.agendamentos.removeAll(this.agendamentosSelecionados);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamentos Removidos"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
-        this.agendamentosSelecionados = null;
+        String agora = getDataFMT(Calendar.getInstance().getTime());
+        boolean apagar = true;
+        for(Agendamento agendamento: this.agendamentosSelecionados){
+            //Verifica se há algum agendamento na data atual
+            if(agora.equals( getDataFMT(agendamento.getData()) )){
+                apagar = false;
+            }
+        }
+        if(apagar){
+            this.bean.apagarAgendamentos(this.agendamentosSelecionados);
+            this.agendamentos.removeAll(this.agendamentosSelecionados);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamentos Removidos"));
+            PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+            this.agendamentosSelecionados = null;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode apagar!", "Há algum agendamento para data de hoje, e este não pode ser cancelado, desmarque e tente novamente"));
+            PrimeFaces.current().ajax().update("form:msgs");
+        }
+        
     }
 
     public boolean selecionouAgendamentos() {

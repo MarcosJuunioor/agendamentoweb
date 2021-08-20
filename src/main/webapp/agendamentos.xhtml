@@ -37,10 +37,10 @@
                             <p:column headerText="Procedimento">
                                 <h:outputText value="#{agendamento.procedimento.nome}" />
                             </p:column>
-                            <p:column headerText="Duração do Procedimento">
+                            <p:column headerText="DuraÃ§Ã£o do Procedimento">
                                 <h:outputText value="#{agendamentoController.getDuracaoFMT(agendamento.procedimento.duracao)}" />
                             </p:column>
-                            <p:column headerText="agendamento">
+                            <p:column headerText="Agendamento">
                                 <h:outputText value="#{agendamento.profissional.nome}" />
                             </p:column>
                             <p:column headerText="Data e Hora">
@@ -62,7 +62,6 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <p:growl id="msgs" showDetail="true"/>
                         <p:toolbar>
                             <p:toolbarGroup></p:toolbarGroup>
                             <p:toolbarGroup align="right">
@@ -76,18 +75,18 @@
 
 
                         <p:confirmDialog widgetVar="alertaApagarAgendamento" showEffect="fade" width="500" styleClass="confirm"
-                                         message="Realmente deseja deletar este agendamento?" header="Confirmação" severity="warn">
+                                         message="Realmente deseja deletar este agendamento?" header="ConfirmaÃ§Ã£o" severity="warn">
                             <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{agendamentoController.apagarAgendamento}"
                                              process="@this" oncomplete="PF('alertaApagarAgendamento').hide()" update="form:agendamentos"/>
-                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                            <p:commandButton value="NÃ£o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('alertaApagarAgendamento').hide()"/>
                         </p:confirmDialog>
 
                         <p:confirmDialog widgetVar="alertaApagarAgendamentosSelecionados" showEffect="fade" width="500" styleClass="confirm"
-                                         message="Realmente deseja deletar os agendamentos selecionados?" header="Confirmação" severity="warn">
+                                         message="Realmente deseja deletar os agendamentos selecionados?" header="ConfirmaÃ§Ã£o" severity="warn">
                             <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{agendamentoController.apagarAgendamentos}"
                                              process="@this" oncomplete="PF('alertaApagarAgendamentosSelecionados').hide()" update="btnApagarAgendamentos"/>
-                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                            <p:commandButton value="NÃ£o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('alertaApagarAgendamentosSelecionados').hide()"/>
                         </p:confirmDialog>
                     </div>
@@ -105,7 +104,7 @@
                                     <p:ajax event="dateSelect" update=":form:reagendamento-calendario"/>
                                 </p:calendar>
                                 <b>
-                                    <h:outputText value="Selecione um horário" rendered="#{(agendamentoController.dtSelecionada != null)}" class='title'/>
+                                    <h:outputText value="Selecione um horÃ¡rio" rendered="#{(agendamentoController.dtSelecionada != null)}" class='title'/>
                                 </b>
                                 <p:selectOneListbox value="#{agendamentoController.reagendamentoSelecionado}" rendered="#{(agendamentoController.dtSelecionada != null)}" >
                                     <f:selectItems value="#{agendamentoController.listarHorarios()}" var="horario" itemLabel="#{horario}" itemValue="#{horario}"/>
