@@ -1,6 +1,5 @@
 package descorp.agendamentoweb.controllers;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.DiasSemana;
 import descorp.agendamentoweb.entities.Profissional;
@@ -18,9 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import org.primefaces.PrimeFaces;
 
 
@@ -53,9 +50,12 @@ public class ProfissionalController implements Serializable{
         this.hrFinal = "";
     }
     
-    public String formatarData(Date data){
+    public String formatarData(Agendamento agendamento){
         DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        return fmt.format(data);
+        String datahora = fmt.format(agendamento.getData());
+        fmt = new SimpleDateFormat("hh:mm");
+        datahora += " "+fmt.format(agendamento.getHora());
+        return datahora;
     }   
     
     public boolean exibirMenuTodos(){
@@ -208,6 +208,11 @@ public class ProfissionalController implements Serializable{
             this.apagarProfissional();
         }
     } 
+    
+    //Checa quais profissionais estao livres para o agendamento
+    public List<Profissional> getProfissionaisLivre(Agendamento agendamento){
+        return bean.ProfissionaisLivres(agendamento);
+    }
     
     public List<Profissional> getListaProfissional() {
         this.listaProfissional = bean.todosProfissionais();

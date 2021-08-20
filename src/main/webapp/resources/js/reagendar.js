@@ -35,29 +35,32 @@ xhttpDatasIndisponiveis.onload = function () {
 xhttpDatasIndisponiveis.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/datas-indisponiveis", false);
 xhttpDatasIndisponiveis.send();
 
+
 //Pega os dias da semana em que o profissional trabalha
-const xhttpDiasProfissional = new XMLHttpRequest();
-xhttpDiasProfissional.onload = function () {
+function atualizarDiasProfissional(idProfissional){
+    console.log(idProfissional);
+    let xhttpDiasProfissional = new XMLHttpRequest();
+    xhttpDiasProfissional.onload = function () {
+        console.log(this.responseText);
+        diasProfissional = JSON.parse(this.responseText);
+        diasSemana.forEach(function (diaSemana) {
+            var exibir = false;
+            diasProfissional.forEach(function (diaProfissional) {
 
-    diasProfissional = JSON.parse(this.responseText);
-    diasSemana.forEach(function (diaSemana) {
-        var exibir = false;
-        diasProfissional.forEach(function (diaProfissional) {
+                if (diaProfissional === diaSemana.nome) {
 
-            if (diaProfissional === diaSemana.nome) {
-
-                exibir = true;
+                    exibir = true;
+                }
             }
-        }
-        );
-        if (!exibir) {
-            disabledDays.push(diaSemana.num);
-        }
-    });
-};
-xhttpDiasProfissional.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/dias-profissional", false);
-xhttpDiasProfissional.send();
-
+            );
+            if (!exibir) {
+                disabledDays.push(diaSemana.num);
+            }
+        });
+    };
+    xhttpDiasProfissional.open("GET", "http://localhost:8080/agendamentoweb/agendamentos/dias-profissional", false);
+    xhttpDiasProfissional.send();
+}
 //Rotina para desabilitar datas 
 function disableAllTheseDays(date) {
     var day = date.getDay();
@@ -101,6 +104,5 @@ function enviarData() {
 
 function listarHorarios(procedimentoID, profissionalID) {
     var data = document.getElementById("calendario:c1_input").value;
-    window.location.href = "http://localhost:8080/agendamentoweb/agendamentos/horarios?profissional=" + 1 + "&procedimento=" + 1 + "&dataSelecionada=" + data;
+    window.location.href = "http://localhost:8080/agendamentoweb/agendamentos/horarios?profissional=" + profissionalID + "&procedimento=" + procedimentoID + "&dataSelecionada=" + data;
 }
-

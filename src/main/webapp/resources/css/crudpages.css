@@ -17,7 +17,7 @@
 .crud {
     max-width: 525px;
     left: 497px;
-    top: 15.7px;
+    top: 15.7px !important;
     z-index: 1006;
     display: block;
 }

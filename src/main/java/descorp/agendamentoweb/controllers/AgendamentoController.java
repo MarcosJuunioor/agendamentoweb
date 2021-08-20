@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -51,13 +52,17 @@ public class AgendamentoController implements Serializable {
     private Agendamento agendamentoSelecionado;
     private List<Agendamento> agendamentosSelecionados;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private String reagendamentoSelecionado;
+    private Date dtSelecionada;
+    
+    private Long idUsuario; 
+    private String data;
 
     public AgendamentoController() {
         this.bean = new AgendamentoModel ();
         this.clienteModel = new ClienteModel();
         this.horariosEstabelecimento = new ArrayList<String>();
         this.horariosDisponiveis = new ArrayList<Agendamento>();
-
     }
 
     public List<Agendamento> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc, HttpSession session) {
@@ -69,7 +74,7 @@ public class AgendamentoController implements Serializable {
             Long idProcedimento = Long.valueOf(idProc);
             Long idProfissional = Long.valueOf(idProf);
 
-            //HorÃ¡rios nos quais o estabelecimento faz agendamentos            
+            //Horários nos quais o estabelecimento faz agendamentos   
             this.horariosEstabelecimento.add("08:00");
             this.horariosEstabelecimento.add("10:00");
             this.horariosEstabelecimento.add("12:00");
@@ -88,12 +93,12 @@ public class AgendamentoController implements Serializable {
                 //Recupera os agendamentos para o dia selecionado
                 agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
 
-                //Cria a lista de objetos que serÃ£o exibidos na tela
+                //Cria a lista de objetos que serÃƒÂ£o exibidos na tela
                 for (int a = 0; a < horariosEstabelecimento.size(); a++) {
                     this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional, (Long) session.getAttribute("idUsuario")));
                 }
 
-                //Remove da lista de horÃ¡rios disponÃ­veis os horÃ¡rio que jÃ¡ estÃ£o ocupados
+                //Remove da lista de horÃƒÂ¡rios disponÃƒÂ­veis os horÃƒÂ¡rio que jÃƒÂ¡ estÃƒÂ£o ocupados
                 if (agendamentosDia.size() > 0) {
 
                     for (Agendamento a : agendamentosDia) {
@@ -107,7 +112,7 @@ public class AgendamentoController implements Serializable {
                 }
 
             } catch (NumberFormatException e) {
-                System.err.println("ParÃ¢metros nÃ£o localizados: " + e.getMessage());
+                System.err.println("ParÃƒÂ¢metros nÃƒÂ£o localizados: " + e.getMessage());
             } catch (ParseException ex) {
                 Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -116,18 +121,77 @@ public class AgendamentoController implements Serializable {
         return this.horariosDisponiveis;
     }
 
-    public List<Agendamento> getAgendamentosUsuario(Long idUsuario, String data) {
+    public List<Agendamento> getAgendamentosUsuario(Long id, String dt) {
+        if(idUsuario==null && data==null){
+            this.idUsuario = id;
+            this.data = dt;
+        }
         try {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.getAgendamentosUsuario(idUsuario, dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("ParÃ¢metros nÃ£o localizados: " + e.getMessage());
+            System.err.println("ParÃƒÂ¢metros nÃƒÂ£o localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this.agendamentos;
     }
     
+    public ArrayList<String> listarHorarios(){
+        ArrayList<String> horarios = new ArrayList<>();
+
+        Long idProcedimento = this.agendamentoSelecionado.getProcedimento().getId();
+        Long idProfissional = this.agendamentoSelecionado.getProfissional().getId();
+
+        //Horários nos quais o estabelecimento faz agendamentos     
+        horarios.add("08:00");
+        horarios.add("10:00");
+        horarios.add("12:00");
+        horarios.add("14:00");
+        horarios.add("16:00");
+        horarios.add("18:00");
+
+        try {
+
+            //Recupera os agendamentos para o dia selecionado
+            agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, this.dtSelecionada);
+
+            //Remove da lista de horários disponíveis os horário que já estão ocupados
+            if (agendamentosDia.size() > 0) {
+                for (Agendamento a : agendamentosDia) {
+                    String hora = getDuracaoFMT(a.getHora());
+                    for (int i = 0; i < horarios.size(); i++) {
+                        if (horarios.get(i).equals(hora)) {
+                            horarios.remove(i);
+                        }
+                    }
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            System.err.println("Parâmetros não localizados: " + e.getMessage());
+        }
+
+        return horarios;
+    }
+    
+    //Realiza a troca da data e hora de uma agendamento
+    public void reagendar(){
+        //Trocar data e hora
+        this.agendamentoSelecionado.setData(this.dtSelecionada);
+        this.data = getDataFMT(dtSelecionada);
+        Date hora = agendamentoSelecionado.getHora();
+        hora.setHours(Integer.parseInt(this.reagendamentoSelecionado.split(":")[0]));
+        hora.setMinutes(Integer.parseInt(this.reagendamentoSelecionado.split(":")[1]));
+        this.agendamentoSelecionado.setHora(hora);
+        //Atualizar agendamento
+        bean.atualizarAgendamento(agendamentoSelecionado);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Editado!", "Nova data e hora: "+getDataFMT(this.dtSelecionada)+" "+getDuracaoFMT(hora)));
+        
+        this.dtSelecionada = null;
+        
+        //window.location.href = "http://localhost:8080/agendamentoweb/agendamentos/horarios?profissional=" + 1 + "&procedimento=" + 1 + "&dataSelecionada=" + data;
+    }
     public List<String> getAgendamentosDoDia(Date data){
         
         List<String> mListaEmail = this.bean.getDatasAgendamentosDoDia(data);
@@ -140,7 +204,7 @@ public class AgendamentoController implements Serializable {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.consultarAgendamentosPorData(dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("Parâmetros não localizados: " + e.getMessage());
+            System.err.println("ParÃ¢metros nÃ£o localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -151,7 +215,7 @@ public class AgendamentoController implements Serializable {
         try {
             cliente = this.clienteModel.consultarClientePorId(idUsuario);
         } catch (Exception e) {
-            System.err.println("Exceção ao consultar cliente por ID: "+e.getMessage());
+            System.err.println("ExceÃ§Ã£o ao consultar cliente por ID: "+e.getMessage());
         } 
         return this.cliente;
     }
@@ -160,6 +224,12 @@ public class AgendamentoController implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
         String duracaoSTR = fmt.format(duracao);
         return duracaoSTR;
+    }
+    
+    public String getDataFMT(Date data) {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        String dataSTR = fmt.format(data);
+        return dataSTR;
     }
 
     public Date getDateByString(String data) throws ParseException {
@@ -176,8 +246,8 @@ public class AgendamentoController implements Serializable {
         }
     }
 
-    /* A cada 24h, verifica se há agendamentos próximos.
-       Se faltar um dia, o usuário deve ser notificado.
+    /* A cada 24h, verifica se hÃ¡ agendamentos prÃ³ximos.
+       Se faltar um dia, o usuÃ¡rio deve ser notificado.
      */
     public static void verificarSeTemNotificacao() {
         final Runnable notification = new Runnable() {
@@ -194,25 +264,46 @@ public class AgendamentoController implements Serializable {
 
         scheduler.scheduleAtFixedRate(new Runnable() {
             public void run() {
-                //Cancela caso não haja agendamentos atuais ou futuros.
+                //Cancela caso nÃ£o haja agendamentos atuais ou futuros.
                 notificationHandle.cancel(true);
             }
         }, 0, 1, DAYS);
     }
 
     public void apagarAgendamento() {
-        this.bean.apagarAgendamento(this.agendamentoSelecionado);
-        this.agendamentos.remove(this.agendamentoSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+        String agora = getDataFMT(Calendar.getInstance().getTime());
+        String dataSelecionada = getDataFMT(this.agendamentoSelecionado.getData());
+        if(agora.equals(dataSelecionada)){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode apagar!", "Agendamento na data atual não podem ser cancelados"));
+            PrimeFaces.current().ajax().update("form:msgs");
+        } else {
+            this.bean.apagarAgendamento(this.agendamentoSelecionado);
+            this.agendamentos.remove(this.agendamentoSelecionado);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
+            PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+        }
     }
 
     public void apagarAgendamentos() {
-        this.bean.apagarAgendamentos(this.agendamentosSelecionados);
-        this.agendamentos.removeAll(this.agendamentosSelecionados);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamentos Removidos"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
-        this.agendamentosSelecionados = null;
+        String agora = getDataFMT(Calendar.getInstance().getTime());
+        boolean apagar = true;
+        for(Agendamento agendamento: this.agendamentosSelecionados){
+            //Verifica se há algum agendamento na data atual
+            if(agora.equals( getDataFMT(agendamento.getData()) )){
+                apagar = false;
+            }
+        }
+        if(apagar){
+            this.bean.apagarAgendamentos(this.agendamentosSelecionados);
+            this.agendamentos.removeAll(this.agendamentosSelecionados);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamentos Removidos"));
+            PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+            this.agendamentosSelecionados = null;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode apagar!", "Há algum agendamento para data de hoje, e este não pode ser cancelado, desmarque e tente novamente"));
+            PrimeFaces.current().ajax().update("form:msgs");
+        }
+        
     }
 
     public boolean selecionouAgendamentos() {
@@ -255,6 +346,22 @@ public class AgendamentoController implements Serializable {
         this.agendamentosSelecionados = agendamentosSelecionados;
     }
 
+    public Date getDtSelecionada() {
+        return dtSelecionada;
+    }
+
+    public void setDtSelecionada(Date dataSelecionada) {
+        this.dtSelecionada = dataSelecionada;
+    }
+
+    public String getReagendamentoSelecionado() {
+        return reagendamentoSelecionado;
+    }
+
+    public void setReagendamentoSelecionado(String reagendamentoSelecionado) {
+        this.reagendamentoSelecionado = reagendamentoSelecionado;
+    }
+ 
     public List<Agendamento> getAgendamentos(String data) {
         
         List<Agendamento> agendamentos = new ArrayList<Agendamento>();
@@ -263,5 +370,4 @@ public class AgendamentoController implements Serializable {
         
         return agendamentos;
     }
-
 }
