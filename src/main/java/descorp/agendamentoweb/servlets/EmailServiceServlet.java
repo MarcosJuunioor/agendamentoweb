@@ -39,10 +39,10 @@ public class EmailServiceServlet extends HttpServlet {
         c.setTime(diaAgendamento);
         c.add(Calendar.DATE, 1);
 
-        List<String> mListaEmails = mController.getAgendamentosDoDia(c.getTime());
 
         jobNotificacoes.schedule("* * * * *", () -> {
             try {
+                List<String> mListaEmails = mController.getAgendamentosDoDia(c.getTime());
                 mSender.enviarEmail("Confirmação de Horário", "Email enviado automaticamente...", mListaEmails);
                 System.out.println("Enviando notificação para a lista de e-mails: ");
                 for (String s : mListaEmails) {

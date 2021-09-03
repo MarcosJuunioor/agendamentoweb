@@ -29,9 +29,8 @@ import org.primefaces.PrimeFaces;
 @ViewScoped
 public class ProfissionalController implements Serializable{
 
-    @EJB
-    private ProfissionalModel bean;
     
+    private ProfissionalModel bean;
     private List<Profissional> listaProfissional;
     private List<String> diasSelecionados;
     private Profissional profissionalSelecionado;

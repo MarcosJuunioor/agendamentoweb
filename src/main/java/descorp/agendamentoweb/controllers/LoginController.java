@@ -29,7 +29,6 @@ import org.primefaces.PrimeFaces;
 @ViewScoped
 public class LoginController implements Serializable {
 
-    @EJB
     private final UsuarioModel bean;
     private final ClienteModel clienteBean;
     

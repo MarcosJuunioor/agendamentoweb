@@ -27,9 +27,7 @@ import descorp.agendamentoweb.utilities.EmailSender;
 @ViewScoped
 public class ProcedimentoController implements Serializable {
 
-    @EJB
     private ProcedimentoModel bean;
-
     private List<String> profissionais;
     private List<String> profissionaisSelecionados;
     private List<Procedimento> listaProcedimento;
