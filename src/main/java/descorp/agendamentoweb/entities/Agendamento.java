@@ -1,7 +1,7 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * AND open the template in the editor.
  */
 package descorp.agendamentoweb.entities;
 
@@ -70,8 +70,9 @@ import javax.validation.constraints.NotNull;
             ),
             @NamedQuery(
                     name = "Agendamento.agendamentosDoDia",
-                    query = "Select u.email from Usuario u "
-                    + "where u.id in(select a.usuario.id from Agendamento a where a.data = :diaAgendamento)"
+                    query = "SELECT u.email, c.nome, a.hora, a.data "
+                          + "FROM Usuario u, Agendamento a, Cliente c, Profissional pf, Procedimento pc "
+                          + "WHERE u.id in(select a.usuario.id from Agendamento a where a.data = :diaAgendamento)"
             )
         }
 )
@@ -102,7 +103,17 @@ public class Agendamento implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "profissional_id", referencedColumnName = "id")
     private Profissional profissional;
+    @Column(columnDefinition = "varchar(1) default 'N'")
+    private String notificado;
+    
+    public String getNotificado() {
+        return notificado;
+    }
 
+    public void setNotificado(String notificado) {
+        this.notificado = notificado;
+    }
+    
     public Long getId() {
         return id;
     }

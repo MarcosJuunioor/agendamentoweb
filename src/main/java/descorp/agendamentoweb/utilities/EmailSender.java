@@ -85,4 +85,37 @@ public class EmailSender {
             }
         }.start();
     }
+
+    public void enviarEmailNotificacao(String assunto, String msg, String email) {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    Message message = new MimeMessage(session);
+
+                    message.setFrom(new InternetAddress("ifpecaboteste@gmail.com"));
+                    InternetAddress endereco = new InternetAddress(email);
+
+                    message.setRecipient(
+                            Message.RecipientType.TO, endereco);
+                    message.setSubject(assunto);
+
+                    MimeBodyPart mimeBodyPart = new MimeBodyPart();
+                    mimeBodyPart.setContent(msg, "text/html");
+
+                    Multipart multipart = new MimeMultipart();
+                    multipart.addBodyPart(mimeBodyPart);
+
+                    message.setContent(multipart);
+                    
+                    Transport.send(message);
+
+                } catch (AddressException ex) {
+                    Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MessagingException ex) {
+                    Logger.getLogger(EmailSender.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }.start();
+    }
 }

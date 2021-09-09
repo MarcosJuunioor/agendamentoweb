@@ -40,7 +40,7 @@ public class AgendamentoJpqlTest extends GenericTest {
 
         List<Long> listaQuantAgendamentosPorCliente = query.getResultList();
         //O primeiro cliente possui 8 agendamentos
-        assertEquals("8", listaQuantAgendamentosPorCliente.get(0).toString());
+        assertEquals("9", listaQuantAgendamentosPorCliente.get(0).toString());
         //O segundo cliente possui 6 agendamentos
         assertEquals("6", listaQuantAgendamentosPorCliente.get(1).toString());
     }
