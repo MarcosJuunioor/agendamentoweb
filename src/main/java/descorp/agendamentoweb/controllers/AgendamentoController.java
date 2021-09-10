@@ -7,8 +7,11 @@ package descorp.agendamentoweb.controllers;
 
 import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.Cliente;
+import descorp.agendamentoweb.entities.Procedimento;
+import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.models.AgendamentoModel;
 import descorp.agendamentoweb.models.ClienteModel;
+import descorp.agendamentoweb.models.ProcedimentoModel;
 import descorp.agendamentoweb.servlets.AgendamentoServlet;
 import java.io.IOException;
 import java.io.Serializable;
@@ -31,6 +34,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.PrimeFaces;
 import static java.util.concurrent.TimeUnit.*;
 import javax.faces.context.FacesContext;
+import org.eclipse.persistence.sdo.helper.extension.SDOUtil;
 
 /**
  *
@@ -42,9 +46,9 @@ public class AgendamentoController implements Serializable {
 
     List<Agendamento> agendamentosDia;
 
-    @EJB
     private final AgendamentoModel bean;
     private final ClienteModel clienteModel;
+    private final ProcedimentoModel procedimentoModel;
     private Cliente cliente;
     private final ArrayList<String> horariosEstabelecimento;
     private final ArrayList<Agendamento> horariosDisponiveis;
@@ -52,17 +56,38 @@ public class AgendamentoController implements Serializable {
     private Agendamento agendamentoSelecionado;
     private List<Agendamento> agendamentosSelecionados;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private String reagendamentoSelecionado;
+    private String horarioStrSelecionado;
     private Date dtSelecionada;
-    
+    private ArrayList<Long> idProfissionais;
     private Long idUsuario; 
+    private Long idCliente; 
+    private Long idProcedimento; 
+    private Long idProfissional; 
     private String data;
+    private ArrayList<String> horarioDisponiveis;
 
     public AgendamentoController() {
         this.bean = new AgendamentoModel ();
         this.clienteModel = new ClienteModel();
+        this.procedimentoModel = new ProcedimentoModel();
         this.horariosEstabelecimento = new ArrayList<String>();
         this.horariosDisponiveis = new ArrayList<Agendamento>();
+        this.agendamentoSelecionado = new Agendamento();
+        this.horarioDisponiveis = new ArrayList<>();
+    }
+    
+    public ArrayList<String> getHorarioEstabelecimento(){
+        ArrayList<String> horarios = new ArrayList<>();
+
+        //Horários nos quais o estabelecimento faz agendamentos     
+        horarios.add("08:00");
+        horarios.add("10:00");
+        horarios.add("12:00");
+        horarios.add("14:00");
+        horarios.add("16:00");
+        horarios.add("18:00");
+        
+        return horarios;
     }
 
     public List<Agendamento> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc, HttpSession session) {
@@ -138,23 +163,16 @@ public class AgendamentoController implements Serializable {
     }
     
     public ArrayList<String> listarHorarios(){
-        ArrayList<String> horarios = new ArrayList<>();
+        ArrayList<String> horarios = this.getHorarioEstabelecimento();
 
-        Long idProcedimento = this.agendamentoSelecionado.getProcedimento().getId();
-        Long idProfissional = this.agendamentoSelecionado.getProfissional().getId();
+        Long idProc = this.agendamentoSelecionado.getProcedimento().getId();
+        Long idProf = this.agendamentoSelecionado.getProfissional().getId();
 
-        //Horários nos quais o estabelecimento faz agendamentos     
-        horarios.add("08:00");
-        horarios.add("10:00");
-        horarios.add("12:00");
-        horarios.add("14:00");
-        horarios.add("16:00");
-        horarios.add("18:00");
 
         try {
 
             //Recupera os agendamentos para o dia selecionado
-            agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, this.dtSelecionada);
+            agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProf, idProc, this.dtSelecionada);
 
             //Remove da lista de horários disponíveis os horário que já estão ocupados
             if (agendamentosDia.size() > 0) {
@@ -181,16 +199,14 @@ public class AgendamentoController implements Serializable {
         this.agendamentoSelecionado.setData(this.dtSelecionada);
         this.data = getDataFMT(dtSelecionada);
         Date hora = agendamentoSelecionado.getHora();
-        hora.setHours(Integer.parseInt(this.reagendamentoSelecionado.split(":")[0]));
-        hora.setMinutes(Integer.parseInt(this.reagendamentoSelecionado.split(":")[1]));
+        hora.setHours(Integer.parseInt(this.horarioStrSelecionado.split(":")[0]));
+        hora.setMinutes(Integer.parseInt(this.horarioStrSelecionado.split(":")[1]));
         this.agendamentoSelecionado.setHora(hora);
         //Atualizar agendamento
         bean.atualizarAgendamento(agendamentoSelecionado);
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Editado!", "Nova data e hora: "+getDataFMT(this.dtSelecionada)+" "+getDuracaoFMT(hora)));
         
         this.dtSelecionada = null;
-        
-        //window.location.href = "http://localhost:8080/agendamentoweb/agendamentos/horarios?profissional=" + 1 + "&procedimento=" + 1 + "&dataSelecionada=" + data;
     }
     public List<String> getAgendamentosDoDia(Date data){
         
@@ -317,7 +333,77 @@ public class AgendamentoController implements Serializable {
         }
         return "Excluir";
     }
+    
+    //Metodo que faz a pesquisa de clientes por nome
+    public List<Cliente> pesquisaClientes(String query){
+        String q = query.toLowerCase();
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        //if(q.length() > 2){
+            for(Cliente c: clienteModel.todosClientes()){
+                if(c.getCPF().contains(q) || c.getNome().toLowerCase().contains(q)){
+                    clientes.add(c);
+                }
+            }
+        //}
+        return clientes;
+    }
+    
+    
+    //Método chamado quando a variavel idCliente sofrer alteração do valor na interface
+    public void clienteChange(){
+        this.horarioDisponiveis = new ArrayList<>();
+        this.agendamentoSelecionado = new Agendamento();
+        this.cliente = clienteModel.consultarClientePorId(this.idCliente);
+        this.agendamentoSelecionado.setUsuario(this.cliente);
+    }
+    
+    //Método chamado quando a variavel idProcedimento sofrer alteração do valor na interface
+    public void procedimentoChange(){
+        this.agendamentoSelecionado.setProcedimento(procedimentoModel.consultarProcediemnto(idProcedimento));
+        this.agendamentoSelecionado.setProfissional(null);
+        this.agendamentoSelecionado.setData(null);
+        this.agendamentoSelecionado.setHora(null);
+        this.horarioDisponiveis = new ArrayList<>();
+        this.idProfissional = null;
+        this.idProfissionais = new ArrayList<>();
+        //salva na lista de id, os ids dos profissionais do procedimento selecionado
+        for(Profissional profissional: this.agendamentoSelecionado.getProcedimento().getProfissionais()){
+            this.idProfissionais.add(profissional.getId());
+        }
+    }
+    
+    //Método chamado quando a variavel idProfissional sofrer alteração do valor na interface
+    public void profissionalChange(HttpSession sessao){
+        sessao.setAttribute("idProfissional", this.idProfissional);
+        this.agendamentoSelecionado.setData(null);
+        this.agendamentoSelecionado.setHora(null);
+        this.horarioDisponiveis = new ArrayList<>();
+        for(Profissional profissional: this.agendamentoSelecionado.getProcedimento().getProfissionais()){
+            if(profissional.getId().equals(this.idProfissional)){
+                 this.agendamentoSelecionado.setProfissional(profissional);
+                 break;
+            }
+        }
+    }
+    //Método chamado quando a data do agendamento sofrer alteração do valor na interface
+    public void dataChange(){
+        this.agendamentoSelecionado.setHora(null);
+        this.dtSelecionada = this.agendamentoSelecionado.getData();
+        this.horarioDisponiveis = this.listarHorarios();
+        for(String h: this.horarioDisponiveis){
+            System.out.print(h+" |");
+        }
+                
+    }
 
+    public void criarAgendamento(HttpSession sessao) throws IOException{
+        String[] hora = this.horarioStrSelecionado.split(":");
+        this.agendamentoSelecionado.setHora(bean.criarHora(Integer.parseInt(hora[0]), Integer.parseInt(hora[1]), 0));
+        this.bean.persistirAgendamento(agendamentoSelecionado);
+        String URLEstabelecimento = sessao.getServletContext().getContextPath()+"/agendamentos-estabelecimento.xhtml?dataSelecionada="+getDataFMT(agendamentoSelecionado.getData());
+        FacesContext.getCurrentInstance().getExternalContext().redirect(URLEstabelecimento);
+        
+    }
     /**
      * @return the agendamentoSelecionado
      */
@@ -354,20 +440,65 @@ public class AgendamentoController implements Serializable {
         this.dtSelecionada = dataSelecionada;
     }
 
-    public String getReagendamentoSelecionado() {
-        return reagendamentoSelecionado;
+    public String getHorarioStrSelecionado() {
+        return horarioStrSelecionado;
     }
 
-    public void setReagendamentoSelecionado(String reagendamentoSelecionado) {
-        this.reagendamentoSelecionado = reagendamentoSelecionado;
+    public void setHorarioStrSelecionado(String horarioStrSelecionado) {
+        this.horarioStrSelecionado = horarioStrSelecionado;
     }
- 
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public Long getIdProcedimento() {
+        return idProcedimento;
+    }
+
+    public void setIdProcedimento(Long idProcedimento) {
+        this.idProcedimento = idProcedimento;
+    }
+
+    public Long getIdProfissional() {
+        return idProfissional;
+    }
+
+    public void setIdProfissional(Long idProfissional) {
+        this.idProfissional = idProfissional;
+    }
+
+    public ArrayList<Long> getIdProfissionais() {
+        return idProfissionais;
+    }
+
+    public void setIdProfissionais(ArrayList<Long> idProfissionais) {
+        this.idProfissionais = idProfissionais;
+    }
+
+    public ArrayList<String> getHorarioDisponiveis() {
+        return horarioDisponiveis;
+    }
+
+    public void setHorarioDisponiveis(ArrayList<String> horarioDisponiveis) {
+        this.horarioDisponiveis = horarioDisponiveis;
+    }
+    
     public List<Agendamento> getAgendamentos(String data) {
         
         List<Agendamento> agendamentos = new ArrayList<Agendamento>();
-        
-        
-        
         return agendamentos;
     }
 }

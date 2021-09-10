@@ -106,7 +106,7 @@
                                 <b>
                                     <h:outputText value="Selecione um horário" rendered="#{(agendamentoController.dtSelecionada != null)}" class='title'/>
                                 </b>
-                                <p:selectOneListbox value="#{agendamentoController.reagendamentoSelecionado}" rendered="#{(agendamentoController.dtSelecionada != null)}" >
+                                <p:selectOneListbox value="#{agendamentoController.horarioStrSelecionado}" rendered="#{(agendamentoController.dtSelecionada != null)}" >
                                     <f:selectItems value="#{agendamentoController.listarHorarios()}" var="horario" itemLabel="#{horario}" itemValue="#{horario}"/>
                                     <p:ajax event="change" update="@this btn-salvar" />
                                 </p:selectOneListbox>
@@ -120,7 +120,7 @@
                         <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('ReagendarDialog').hide()"
                                          class="ui-button-secondary" >
                             <p:ajax event="click" listener="#{agendamentoController.setDtSelecionada(null)}" />
-                            <p:ajax event="click" listener="#{agendamentoController.setReagendamentoSelecionado(null)}" />
+                            <p:ajax event="click" listener="#{agendamentoController.setHorarioStrSelecionado(null)}" />
                         </p:commandButton>
                     </f:facet>
                 </p:dialog>

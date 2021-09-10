@@ -213,6 +213,24 @@ public class ProfissionalController implements Serializable{
         return bean.ProfissionaisLivres(agendamento);
     }
     
+    //Retorna uma lista de inteiros correspondetes ao dias da semana que o profissional NÃO trabalha - begin 0
+    public List<Integer> diasSemana(Long profissionalID){
+        ArrayList<Integer> diasSemana = new ArrayList<>();
+        diasSemana.add(0);diasSemana.add(1);diasSemana.add(2);diasSemana.add(3);
+        diasSemana.add(4);diasSemana.add(5);diasSemana.add(6);
+            System.out.println(profissionalID);
+        if(profissionalID != null){
+            Profissional prof = bean.consultarProfissional(profissionalID);
+            for(DiasSemana ds: prof.getDiasSemana()){
+                int dia = ds.getId().intValue() - 1;
+                System.out.println(dia);
+                diasSemana.remove(dia);
+            }
+        }
+        System.out.println(diasSemana.size());
+        return diasSemana;
+    }
+    
     public List<Profissional> getListaProfissional() {
         this.listaProfissional = bean.todosProfissionais();
         return listaProfissional;

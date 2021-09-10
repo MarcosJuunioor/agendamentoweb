@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <h:outputStylesheet library="css" name="geral.css"/>
+        <h:outputStylesheet library="css" name="agendar-cliente.css"/>
+        <h:outputScript library="js" name="reagendar.js" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
+    </h:head>
+    <h:body>
+        <ui:include src="resources/componentes/navbar.xhtml" />
+        <div class="container content">
+        <h:form id="form">
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <h5>Pesquisar Cliente: </h5>
+                    <span class="filter-container ui-input-icon-right">
+                        <p:autoComplete class="input-search" value="#{agendamentoController.idCliente}"
+                                        completeMethod="#{agendamentoController.pesquisaClientes}"
+                                        var="c" itemLabel="#{c.nome} #{c==null?'':'('}#{c.CPF}#{c==null?'':')'}"  itemValue="#{c.id}" forceSelection="true" scrollHeight="250" placeholder="Nome do Cliente ou CPF">
+                            <p:ajax update="pr-content cliente-content" event="change" listener="#{agendamentoController.clienteChange()}"/>
+                        </p:autoComplete>
+                        <i class="pi pi-search"></i>
+                    </span>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <div class="row">
+                <div class="col-12">
+                    <p:outputPanel id="cliente-content">
+                    <p:divider align="left" >
+                        <b>Informações do cliente</b>
+                    </p:divider>
+                    <div class="row">
+                        <div class="p-field col-12 col-md-6">
+                            <label for="@next">Nome</label>
+                            <p:inputText  type="text" disabled="true" value="#{agendamentoController.cliente.nome}"/>
+                        </div>
+                        <div class="p-field col-12 col-md-6">
+                            <label for="@next">CPF</label>
+                            <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.CPF}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="p-field col-12 col-md-8">
+                            <label for="@next">E-mail</label>
+                            <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.email}"/>
+                        </div>
+                        <div class="p-field col-12 col-md-4">
+                            <label for="@next">Telefone</label>
+                            <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.telefone}"/>
+                        </div>
+                    </div>
+                </p:outputPanel>
+                <p:outputPanel id="pr-content">
+                    <p:divider align="left" >
+                        <b>Profissional e Procedimento</b>
+                    </p:divider>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label for="@next">Selecione um procedimento</label>
+                            <p:selectOneListbox value="#{agendamentoController.idProcedimento}">
+                                <f:selectItems var="procedimento"  value="#{procedimentoController.listaProcedimento}"
+                                               itemValue="#{procedimento.id}" itemLabel="#{procedimento.nome} - #{procedimento.natureza}"
+                                               itemDisabled="#{agendamentoController.idCliente == null}"/>
+                                <p:ajax update="lista-profissionais data-content" event="change" listener="#{agendamentoController.procedimentoChange()}"/>
+                            </p:selectOneListbox>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="@next">Selecione um profissional</label>
+                            <p:selectOneListbox id="lista-profissionais" value="#{agendamentoController.idProfissional}">
+                                <f:selectItems var="profissional"  value="#{profissionalController.listaProfissional}"
+                                               itemValue="#{profissional.id}" itemLabel="#{profissional.nome} - #{profissional.especializacao}"
+                                               itemDisabled="#{!agendamentoController.idProfissionais.contains(profissional.id)}" />
+                                <p:ajax update="data-content" event="change" listener="#{agendamentoController.profissionalChange(request.getSession())}" oncomplete="requestAtualizarProfissional(null)"/>
+                            </p:selectOneListbox>
+                        </div>
+                    </div>
+                </p:outputPanel>
+                <p:outputPanel id="data-content">
+                    <p:divider align="left" >
+                        <b>Dia e Horário</b>
+                    </p:divider>
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <label for="@next">Selecione um dia</label>
+                            
+                            <p:calendar id="c1" pattern="dd/MM/yyyy" mindate="today" locale="pt" mode="inline" disabled="#{agendamentoController.idProfissional == null}"
+                                        widgetVar="calendarWidget" 
+                                        beforeShowDay="desabilitarDias" value="#{agendamentoController.agendamentoSelecionado.data}">
+                                <p:ajax event="dateSelect" update="lista-hora" listener="#{agendamentoController.dataChange()}"/>
+                            </p:calendar>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="row">
+                                <label for="@next">Selecione um horário</label>
+                            </div>
+                            <div class="row">    
+                                <p:selectOneListbox id="lista-hora" value="#{agendamentoController.horarioStrSelecionado}">
+                                    <f:selectItems var="horario" value="#{agendamentoController.horarioEstabelecimento}"
+                                                   itemLabel="#{horario}" itemValue="#{horario}" itemDisabled="#{!agendamentoController.horarioDisponiveis.contains(horario)}"/>
+                                    <p:ajax event="change" update="btn-salvar"/>
+                                </p:selectOneListbox>
+                                
+                            </div>
+                            <div class="row">
+                                
+                                <p:commandButton id="btn-salvar" value="Salvar" icon="pi pi-check" actionListener="#{agendamentoController.criarAgendamento(request.getSession())}"
+                                                 disabled="#{agendamentoController.horarioStrSelecionado == null}"/>
+
+                                <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary" action="calendario-estabelecimento.xhtml?faces-redirect=true"/>
+                            </div>
+                        </div>
+                    </div>
+                </p:outputPanel>
+                </div>
+            </div>
+        </h:form>
+        </div>
+    </h:body>
+</html>

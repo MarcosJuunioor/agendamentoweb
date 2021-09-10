@@ -38,10 +38,9 @@ xhttpDatasIndisponiveis.send();
 
 //Pega os dias da semana em que o profissional trabalha
 function atualizarDiasProfissional(idProfissional){
-    console.log(idProfissional);
+    disabledDays = [];
     let xhttpDiasProfissional = new XMLHttpRequest();
     xhttpDiasProfissional.onload = function () {
-        console.log(this.responseText);
         diasProfissional = JSON.parse(this.responseText);
         diasSemana.forEach(function (diaSemana) {
             var exibir = false;
@@ -83,6 +82,24 @@ function disableAllTheseDays(date) {
 
 }
 
+//Rotina para desabilitar datas 
+function desabilitarDias(date) {
+    var day = date.getDay();
+    var disable = true;
+    disabledDays.forEach(function (disableDay) {
+        if (disableDay === day) {
+            disable = false;
+        }
+    });
+    disabledDates.forEach(function (disableDate) {
+        if (disableDate === formatDate(date) && !disable) {
+            disable = false;
+        }
+    });
+    return [disable, ''];
+
+}
+
 function formatDate(date) {
     var d = new Date(date),
             month = '' + (d.getMonth() + 1),
@@ -105,4 +122,8 @@ function enviarData() {
 function listarHorarios(procedimentoID, profissionalID) {
     var data = document.getElementById("calendario:c1_input").value;
     window.location.href = "http://localhost:8080/agendamentoweb/agendamentos/horarios?profissional=" + profissionalID + "&procedimento=" + procedimentoID + "&dataSelecionada=" + data;
+}
+
+function requestAtualizarProfissional(){
+    atualizarDiasProfissional(sessionStorage.getItem('idProfissional'));
 }

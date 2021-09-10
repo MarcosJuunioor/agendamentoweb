@@ -27,6 +27,9 @@
                                     beforeShowDay="disableAllTheseDays" locale="pt" mode="inline" >
                             <p:ajax event="dateSelect" oncomplete="listarAgendamentos()" />
                         </p:calendar>
+                        <p:commandButton value="Agendar um Cliente" icon="pi pi-plus" action="agendar-cliente.xhtml?faces-redirect=true"
+                                             styleClass="ui-button-info" style="margin-top: 1rem;" >
+                        </p:commandButton>
                     </h:form>
                 </div>
                 <div class="col">
