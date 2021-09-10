@@ -17,3 +17,11 @@ and open the template in the editor.
 .ui-inputtext{
     width: inherit;
 }
+
+.lista .ui-selectlistbox-list{
+    max-height: 155px;
+}
+
+.btn-row {
+    margin: 15px 0 !important;
+}

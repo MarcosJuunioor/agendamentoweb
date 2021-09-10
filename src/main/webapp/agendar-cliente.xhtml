@@ -33,91 +33,91 @@
             <div class="row">
                 <div class="col-12">
                     <p:outputPanel id="cliente-content">
-                    <p:divider align="left" >
-                        <b>Informações do cliente</b>
-                    </p:divider>
+                        <p:divider align="left" >
+                            <b>Informações do cliente</b>
+                        </p:divider>
+                        <div class="row">
+                            <div class="p-field col-12 col-md-6">
+                                <label for="@next">Nome</label>
+                                <p:inputText  type="text" disabled="true" value="#{agendamentoController.cliente.nome}"/>
+                            </div>
+                            <div class="p-field col-12 col-md-6">
+                                <label for="@next">CPF</label>
+                                <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.CPF}"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="p-field col-12 col-md-8">
+                                <label for="@next">E-mail</label>
+                                <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.email}"/>
+                            </div>
+                            <div class="p-field col-12 col-md-4">
+                                <label for="@next">Telefone</label>
+                                <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.telefone}"/>
+                            </div>
+                        </div>
+                    </p:outputPanel>
                     <div class="row">
-                        <div class="p-field col-12 col-md-6">
-                            <label for="@next">Nome</label>
-                            <p:inputText  type="text" disabled="true" value="#{agendamentoController.cliente.nome}"/>
-                        </div>
-                        <div class="p-field col-12 col-md-6">
-                            <label for="@next">CPF</label>
-                            <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.CPF}"/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="p-field col-12 col-md-8">
-                            <label for="@next">E-mail</label>
-                            <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.email}"/>
-                        </div>
-                        <div class="p-field col-12 col-md-4">
-                            <label for="@next">Telefone</label>
-                            <p:inputText type="text" disabled="true" value="#{agendamentoController.cliente.telefone}"/>
-                        </div>
-                    </div>
-                </p:outputPanel>
-                <p:outputPanel id="pr-content">
-                    <p:divider align="left" >
-                        <b>Profissional e Procedimento</b>
-                    </p:divider>
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <label for="@next">Selecione um procedimento</label>
-                            <p:selectOneListbox value="#{agendamentoController.idProcedimento}">
+                        <div class="col-12 col-md-5">
+                            <p:divider align="left" >
+                                <b>Procedimento e Profissional</b>
+                            </p:divider>
+                            <label for="pr-content">Selecione um procedimento</label>
+                            <p:selectOneListbox id="pr-content" value="#{agendamentoController.idProcedimento}" class="lista">
                                 <f:selectItems var="procedimento"  value="#{procedimentoController.listaProcedimento}"
                                                itemValue="#{procedimento.id}" itemLabel="#{procedimento.nome} - #{procedimento.natureza}"
                                                itemDisabled="#{agendamentoController.idCliente == null}"/>
                                 <p:ajax update="lista-profissionais data-content" event="change" listener="#{agendamentoController.procedimentoChange()}"/>
                             </p:selectOneListbox>
-                        </div>
-                        <div class="col-12 col-md-6">
                             <label for="@next">Selecione um profissional</label>
-                            <p:selectOneListbox id="lista-profissionais" value="#{agendamentoController.idProfissional}">
+                            <p:selectOneListbox id="lista-profissionais" value="#{agendamentoController.idProfissional}" class="lista">
                                 <f:selectItems var="profissional"  value="#{profissionalController.listaProfissional}"
                                                itemValue="#{profissional.id}" itemLabel="#{profissional.nome} - #{profissional.especializacao}"
                                                itemDisabled="#{!agendamentoController.idProfissionais.contains(profissional.id)}" />
                                 <p:ajax update="data-content" event="change" listener="#{agendamentoController.profissionalChange(request.getSession())}" oncomplete="requestAtualizarProfissional(null)"/>
                             </p:selectOneListbox>
                         </div>
-                    </div>
-                </p:outputPanel>
-                <p:outputPanel id="data-content">
-                    <p:divider align="left" >
-                        <b>Dia e Horário</b>
-                    </p:divider>
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <label for="@next">Selecione um dia</label>
-                            
-                            <p:calendar id="c1" pattern="dd/MM/yyyy" mindate="today" locale="pt" mode="inline" disabled="#{agendamentoController.idProfissional == null}"
-                                        widgetVar="calendarWidget" 
-                                        beforeShowDay="desabilitarDias" value="#{agendamentoController.agendamentoSelecionado.data}">
-                                <p:ajax event="dateSelect" update="lista-hora" listener="#{agendamentoController.dataChange()}"/>
-                            </p:calendar>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="row">
-                                <label for="@next">Selecione um horário</label>
-                            </div>
-                            <div class="row">    
-                                <p:selectOneListbox id="lista-hora" value="#{agendamentoController.horarioStrSelecionado}">
-                                    <f:selectItems var="horario" value="#{agendamentoController.horarioEstabelecimento}"
-                                                   itemLabel="#{horario}" itemValue="#{horario}" itemDisabled="#{!agendamentoController.horarioDisponiveis.contains(horario)}"/>
-                                    <p:ajax event="change" update="btn-salvar"/>
-                                </p:selectOneListbox>
-                                
-                            </div>
-                            <div class="row">
-                                
-                                <p:commandButton id="btn-salvar" value="Salvar" icon="pi pi-check" actionListener="#{agendamentoController.criarAgendamento(request.getSession())}"
-                                                 disabled="#{agendamentoController.horarioStrSelecionado == null}"/>
+                        <div class="col-12 col-md-7">
+                            <p:outputPanel id="data-content">
+                                <p:divider align="left" >
+                                    <b>Dia e Horário</b>
+                                </p:divider>
+                                <div class="row">
+                                    <div class="col-12 col-md-9">
+                                        <label for="@next">Selecione um dia</label>
 
-                                <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary" action="calendario-estabelecimento.xhtml?faces-redirect=true"/>
-                            </div>
+                                        <p:calendar id="c1" pattern="dd/MM/yyyy" mindate="today" locale="pt" mode="inline" disabled="#{agendamentoController.idProfissional == null}"
+                                                    widgetVar="calendarWidget" 
+                                                    beforeShowDay="desabilitarDias" value="#{agendamentoController.agendamentoSelecionado.data}">
+                                            <p:ajax event="dateSelect" update="lista-hora" listener="#{agendamentoController.dataChange()}"/>
+                                        </p:calendar>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="row">
+                                            <label for="@next">Selecione um horário</label>
+                                        </div>
+                                        <div class="row">    
+                                            <p:selectOneListbox id="lista-hora" value="#{agendamentoController.horarioStrSelecionado}">
+                                                <f:selectItems var="horario" value="#{agendamentoController.horarioEstabelecimento}"
+                                                               itemLabel="#{horario}" itemValue="#{horario}" itemDisabled="#{!agendamentoController.horarioDisponiveis.contains(horario)}"/>
+                                                <p:ajax event="change" update="btn-salvar"/>
+                                            </p:selectOneListbox>
+
+                                        </div>
+                                        <div class="row justify-content-center align-items-center">
+                                            <div class="col-12">
+                                                <p:commandButton class="btn-row" id="btn-salvar" value="Salvar" icon="pi pi-check" actionListener="#{agendamentoController.criarAgendamento(request.getSession())}"
+                                                                 disabled="#{agendamentoController.horarioStrSelecionado == null}"/>
+
+                                                <p:commandButton value="Cancelar" icon="pi pi-times" class="ui-button-secondary btn-row" action="calendario-estabelecimento.xhtml?faces-redirect=true"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p:outputPanel>
                         </div>
                     </div>
-                </p:outputPanel>
+                
                 </div>
             </div>
         </h:form>
