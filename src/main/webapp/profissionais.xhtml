@@ -39,10 +39,10 @@
                             <p:column headerText="Nome">
                                 <h:outputText value="#{profissional.nome}"/>
                             </p:column>
-                            <p:column headerText="Profiss�o">
+                            <p:column headerText="Profissão">
                                 <h:outputText value="#{profissional.profissao}"/>
                             </p:column>
-                            <p:column headerText="Especializa��o">
+                            <p:column headerText="Especialização">
                                 <h:outputText value="#{profissional.especializacao}"/>
                             </p:column>
                             <p:column headerText="Dias da semana">
@@ -89,18 +89,18 @@
                         <p:outputPanel id="profissional-conteudo" class="ui-fluid">
                             <p:outputLabel for="nome">Nome</p:outputLabel>
                             <p:inputText id="nome" value="#{profissionalController.profissionalSelecionado.nome}" required="true"/>
-                            <p:outputLabel for="profissao">Profiss�o</p:outputLabel>
+                            <p:outputLabel for="profissao">Profissão</p:outputLabel>
                             <p:inputText id="profissao" value="#{profissionalController.profissionalSelecionado.profissao}" required="true"/>
-                            <p:outputLabel for="especializacao">Especializa��o</p:outputLabel>
+                            <p:outputLabel for="especializacao">Especialização</p:outputLabel>
                             <p:inputText id="especializacao" value="#{profissionalController.profissionalSelecionado.especializacao}" required="true"/>
                             <p:outputLabel>Dias da semana</p:outputLabel>
                             <p:selectManyCheckbox value="#{profissionalController.diasSelecionados}" layout="responsive" columns="3">
                                 <f:selectItem itemLabel="Segunda" itemValue="Segunda"/>
-                                <f:selectItem itemLabel="Ter�a" itemValue="Ter�a"/>
+                                <f:selectItem itemLabel="Terça" itemValue="Terça"/>
                                 <f:selectItem itemLabel="Quarta" itemValue="Quarta"/>
                                 <f:selectItem itemLabel="Quinta" itemValue="Quinta"/>
                                 <f:selectItem itemLabel="Sexta" itemValue="Sexta"/>
-                                <f:selectItem itemLabel="S�bado" itemValue="S�bado"/>
+                                <f:selectItem itemLabel="Sábado" itemValue="Sábado"/>
                                 <f:selectItem itemLabel="Domingo" itemValue="Domingo"/>
                             </p:selectManyCheckbox >
                             
@@ -130,18 +130,18 @@
                     </p:dialog>
                     
                     <p:confirmDialog widgetVar="alertaApagarProfissional" showEffect="fade" width="500" styleClass="confirm"
-                                     message="Realmente deseja deletar este profissional?" header="Confirma��o" severity="warn">
+                                     message="Realmente deseja deletar este profissional?" header="Confirmação" severity="warn">
                         <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.checarDeleteProfissionalSelecionado}"
                                          process="@this" oncomplete="PF('alertaApagarProfissional').hide(); PF('realocBTN').disable();" update="form:dt-funcs"/>
-                        <p:commandButton value="N�o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                        <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                          onclick="PF('alertaApagarProfissional').hide()"/>
                     </p:confirmDialog>
 
                     <p:confirmDialog widgetVar="alertaApagarProfissionaisSelecionados" showEffect="fade" width="500" styleClass="confirm"
-                                    message="Realmente deseja deletar os profissionais selecionados?" header="Confirma��o" severity="warn">
+                                    message="Realmente deseja deletar os profissionais selecionados?" header="Confirmação" severity="warn">
                        <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{profissionalController.apagarProfissionais}"
                                         process="@this" oncomplete="PF('alertaApagarProfissionaisSelecionados').hide()" update="btnApagarProfissionais"/>
-                       <p:commandButton value="N�o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                       <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                         onclick="PF('alertaApagarProfissionaisSelecionados').hide()"/>
                     </p:confirmDialog>
                     

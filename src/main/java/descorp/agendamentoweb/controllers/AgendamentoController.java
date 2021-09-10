@@ -167,7 +167,7 @@ public class AgendamentoController implements Serializable {
 
         Long idProc = this.agendamentoSelecionado.getProcedimento().getId();
         Long idProf = this.agendamentoSelecionado.getProfissional().getId();
-
+        Long idUsuario = this.agendamentoSelecionado.getUsuario().getId();
 
         try {
 
@@ -184,6 +184,23 @@ public class AgendamentoController implements Serializable {
                         }
                     }
                 }
+            }
+            if(idUsuario != null){
+            //Recupera os agendamentos para o dia selecionado deste usuário
+            agendamentosDia = this.bean.getAgendamentosUsuario(idUsuario, this.dtSelecionada);
+
+            //Remove da lista de horários disponíveis os horário que já estão ocupados
+            if (agendamentosDia.size() > 0) {
+                for (Agendamento a : agendamentosDia) {
+                    String hora = getDuracaoFMT(a.getHora());
+                    for (int i = 0; i < horarios.size(); i++) {
+                        if (horarios.get(i).equals(hora)) {
+                            horarios.remove(i);
+                        }
+                    }
+                }
+            }
+            
             }
 
         } catch (NumberFormatException e) {
