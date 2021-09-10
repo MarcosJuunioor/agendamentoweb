@@ -46,7 +46,7 @@
                             <p:column headerText="Natureza">
                                 <h:outputText value="#{procedimento.natureza}"/>
                             </p:column>
-                            <p:column headerText="Duracao">
+                            <p:column headerText="DuraÃ§Ã£o">
                                 <h:outputText value="#{procedimentoController.getDuracaoFMT(procedimento.duracao)}" />
                             </p:column>
                             <p:column headerText="Qtd Profissionais">
@@ -95,7 +95,7 @@
                                 <p:outputLabel for="natureza">Natureza</p:outputLabel>
                                 <p:inputText id="natureza" value="#{procedimentoController.procedimentoSelecionado.natureza}" required="true"/>
 
-                                <p:outputLabel for="duracao">Duraï¿½ï¿½o</p:outputLabel>
+                                <p:outputLabel for="duracao">DuraÃ§Ã£o</p:outputLabel>
                                 <p:inputMask id="duracao" value="#{procedimentoController.duracao}" mask="99:99" required="true">
                                     <f:validateRegex pattern="([0-1]?[0-9]|2[0-3]):[0-5][0-9]"/>
                                 </p:inputMask>
@@ -121,18 +121,18 @@
                         </p:dialog>
 
                         <p:confirmDialog widgetVar="alertaApagarProcedimento" showEffect="fade" width="500" styleClass="confirm"
-                                         message="Realmente deseja deletar este procedimento? Os agendamentos serão cancelados e os clientes, notificados via e-mail." header="Confirmação" severity="warn">
+                                         message="Realmente deseja deletar este procedimento? Os agendamentos serÃ£o cancelados e os clientes, notificados via e-mail." header="ConfirmaÃ§Ã£o" severity="warn">
                             <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimento}"
                                              process="@this" oncomplete="PF('alertaApagarProcedimento').hide()" update="form:dt-procs"/>
-                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                            <p:commandButton value="NÃ£o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('alertaApagarProcedimento').hide()"/>
                         </p:confirmDialog>
 
                         <p:confirmDialog widgetVar="alertaApagarProcedimentosSelecionados" showEffect="fade" width="500" styleClass="confirm"
-                                         message="Realmente deseja deletar os procedimentos selecionados? Os agendamentos serão cancelados e os clientes, notificados via e-mail." header="Confirmação" severity="warn">
+                                         message="Realmente deseja deletar os procedimentos selecionados? Os agendamentos serÃ£o cancelados e os clientes, notificados via e-mail." header="ConfirmaÃ§Ã£o" severity="warn">
                             <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{procedimentoController.apagarProcedimentos}"
                                              process="@this" oncomplete="PF('alertaApagarProcedimentosSelecionados').hide()" update="btnApagarProcedimentos form"/>
-                            <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                            <p:commandButton value="NÃ£o" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                                              onclick="PF('alertaApagarProcedimentosSelecionados').hide()"/>
                         </p:confirmDialog>
                     </div>

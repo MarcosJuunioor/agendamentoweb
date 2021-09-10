@@ -118,12 +118,12 @@ public class AgendamentoController implements Serializable {
                 //Recupera os agendamentos para o dia selecionado
                 agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
 
-                //Cria a lista de objetos que serÃƒÂ£o exibidos na tela
+                //Cria a lista de objetos que serão exibidos na tela
                 for (int a = 0; a < horariosEstabelecimento.size(); a++) {
                     this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional, (Long) session.getAttribute("idUsuario")));
                 }
 
-                //Remove da lista de horÃƒÂ¡rios disponÃƒÂ­veis os horÃƒÂ¡rio que jÃƒÂ¡ estÃƒÂ£o ocupados
+                //Remove da lista de horários disponíveis os horário que já estão ocupados
                 if (agendamentosDia.size() > 0) {
 
                     for (Agendamento a : agendamentosDia) {
@@ -137,7 +137,7 @@ public class AgendamentoController implements Serializable {
                 }
 
             } catch (NumberFormatException e) {
-                System.err.println("ParÃƒÂ¢metros nÃƒÂ£o localizados: " + e.getMessage());
+                System.err.println("Parâmetros não localizados: " + e.getMessage());
             } catch (ParseException ex) {
                 Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -155,7 +155,7 @@ public class AgendamentoController implements Serializable {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.getAgendamentosUsuario(idUsuario, dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("ParÃƒÂ¢metros nÃƒÂ£o localizados: " + e.getMessage());
+            System.err.println("Parâmetros não localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -220,7 +220,7 @@ public class AgendamentoController implements Serializable {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.consultarAgendamentosPorData(dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("ParÃ¢metros nÃ£o localizados: " + e.getMessage());
+            System.err.println("ParÃ¢metros não localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -231,7 +231,7 @@ public class AgendamentoController implements Serializable {
         try {
             cliente = this.clienteModel.consultarClientePorId(idUsuario);
         } catch (Exception e) {
-            System.err.println("ExceÃ§Ã£o ao consultar cliente por ID: "+e.getMessage());
+            System.err.println("ExceÃ§ão ao consultar cliente por ID: "+e.getMessage());
         } 
         return this.cliente;
     }
@@ -262,8 +262,8 @@ public class AgendamentoController implements Serializable {
         }
     }
 
-    /* A cada 24h, verifica se hÃ¡ agendamentos prÃ³ximos.
-       Se faltar um dia, o usuÃ¡rio deve ser notificado.
+    /* A cada 24h, verifica se há agendamentos próximos.
+       Se faltar um dia, o usuário deve ser notificado.
      */
     public static void verificarSeTemNotificacao() {
         final Runnable notification = new Runnable() {
@@ -280,7 +280,7 @@ public class AgendamentoController implements Serializable {
 
         scheduler.scheduleAtFixedRate(new Runnable() {
             public void run() {
-                //Cancela caso nÃ£o haja agendamentos atuais ou futuros.
+                //Cancela caso não haja agendamentos atuais ou futuros.
                 notificationHandle.cancel(true);
             }
         }, 0, 1, DAYS);
