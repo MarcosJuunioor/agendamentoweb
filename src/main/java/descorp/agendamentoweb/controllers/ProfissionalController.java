@@ -1,6 +1,5 @@
 package descorp.agendamentoweb.controllers;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.DiasSemana;
 import descorp.agendamentoweb.entities.Profissional;
@@ -18,9 +17,7 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import org.primefaces.PrimeFaces;
 
 
@@ -32,9 +29,8 @@ import org.primefaces.PrimeFaces;
 @ViewScoped
 public class ProfissionalController implements Serializable{
 
-    @EJB
-    private ProfissionalModel bean;
     
+    private ProfissionalModel bean;
     private List<Profissional> listaProfissional;
     private List<String> diasSelecionados;
     private Profissional profissionalSelecionado;
@@ -53,9 +49,12 @@ public class ProfissionalController implements Serializable{
         this.hrFinal = "";
     }
     
-    public String formatarData(Date data){
+    public String formatarData(Agendamento agendamento){
         DateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
-        return fmt.format(data);
+        String datahora = fmt.format(agendamento.getData());
+        fmt = new SimpleDateFormat("hh:mm");
+        datahora += " "+fmt.format(agendamento.getHora());
+        return datahora;
     }   
     
     public boolean exibirMenuTodos(){
@@ -111,7 +110,7 @@ public class ProfissionalController implements Serializable{
     public void apagarProfissional(){
         //this.listaProfissional.remove(this.profissionalSelecionado);
         bean.deletarProfissional(this.profissionalSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("FuncionÃ¡rio Removido"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionário Removido"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     public boolean selecionouProfissionais(){
@@ -171,7 +170,7 @@ public class ProfissionalController implements Serializable{
     public String getMensagemBotao() {
         if(this.selecionouProfissionais()){
             int qtd = this.profissionaisSelecionados.size();
-            return qtd > 1 ? qtd + " funcionÃ¡rios selecionados" : "1 funcionÃ¡rio selecionado";
+            return qtd > 1 ? qtd + " funcionários selecionados" : "1 funcionário selecionado";
         }
         return "Excluir";
     }
@@ -180,7 +179,7 @@ public class ProfissionalController implements Serializable{
         this.listaProfissional.removeAll(this.profissionaisSelecionados);
         bean.deletarProfissionais(this.profissionaisSelecionados);
         this.profissionaisSelecionados = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("FuncionÃ¡rios Removidos"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionários Removidos"));
         PrimeFaces.current().ajax().update("form:msgs", "form:dt-funcs", "btnApagarFuncionarios");
     }
     
@@ -208,6 +207,29 @@ public class ProfissionalController implements Serializable{
             this.apagarProfissional();
         }
     } 
+    
+    //Checa quais profissionais estao livres para o agendamento
+    public List<Profissional> getProfissionaisLivre(Agendamento agendamento){
+        return bean.ProfissionaisLivres(agendamento);
+    }
+    
+    //Retorna uma lista de inteiros correspondetes ao dias da semana que o profissional NÃO trabalha - begin 0
+    public List<Integer> diasSemana(Long profissionalID){
+        ArrayList<Integer> diasSemana = new ArrayList<>();
+        diasSemana.add(0);diasSemana.add(1);diasSemana.add(2);diasSemana.add(3);
+        diasSemana.add(4);diasSemana.add(5);diasSemana.add(6);
+            System.out.println(profissionalID);
+        if(profissionalID != null){
+            Profissional prof = bean.consultarProfissional(profissionalID);
+            for(DiasSemana ds: prof.getDiasSemana()){
+                int dia = ds.getId().intValue() - 1;
+                System.out.println(dia);
+                diasSemana.remove(dia);
+            }
+        }
+        System.out.println(diasSemana.size());
+        return diasSemana;
+    }
     
     public List<Profissional> getListaProfissional() {
         this.listaProfissional = bean.todosProfissionais();

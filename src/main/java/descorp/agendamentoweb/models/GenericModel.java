@@ -15,19 +15,16 @@ import javax.persistence.Persistence;
  * @author marco
  */
 public class GenericModel {
-    protected static EntityManagerFactory emf;
     protected static EntityManager em;
     protected EntityTransaction et;
     
     public GenericModel(){
-        emf = Persistence.createEntityManagerFactory("agendamento_web");
-        em = emf.createEntityManager();
-    }
+        em = EntityManagerFactorySingleton.INSTANCE.emf.createEntityManager();
+    } 
     
     public void beginTransaction() {
         if(em == null){
-            emf = Persistence.createEntityManagerFactory("agendamento_web");
-            em = emf.createEntityManager();
+            em = EntityManagerFactorySingleton.INSTANCE.emf.createEntityManager();
         }
         et = em.getTransaction();
         et.begin();
@@ -42,8 +39,6 @@ public class GenericModel {
             }
         } finally {
             em.close();
-            emf.close();
-            emf = null;
             em = null;
             et = null;
         }
@@ -51,8 +46,7 @@ public class GenericModel {
     
     public void checkEM(){
         if(em == null){
-            emf = Persistence.createEntityManagerFactory("agendamento_web");
-            em = emf.createEntityManager();
+            em = EntityManagerFactorySingleton.INSTANCE.emf.createEntityManager();
         }
     }
 }

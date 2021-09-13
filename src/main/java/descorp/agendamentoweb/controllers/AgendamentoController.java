@@ -7,14 +7,18 @@ package descorp.agendamentoweb.controllers;
 
 import descorp.agendamentoweb.entities.Agendamento;
 import descorp.agendamentoweb.entities.Cliente;
+import descorp.agendamentoweb.entities.Procedimento;
+import descorp.agendamentoweb.entities.Profissional;
 import descorp.agendamentoweb.models.AgendamentoModel;
 import descorp.agendamentoweb.models.ClienteModel;
+import descorp.agendamentoweb.models.ProcedimentoModel;
 import descorp.agendamentoweb.servlets.AgendamentoServlet;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executors;
@@ -30,6 +34,7 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.PrimeFaces;
 import static java.util.concurrent.TimeUnit.*;
 import javax.faces.context.FacesContext;
+import org.eclipse.persistence.sdo.helper.extension.SDOUtil;
 
 /**
  *
@@ -41,9 +46,9 @@ public class AgendamentoController implements Serializable {
 
     List<Agendamento> agendamentosDia;
 
-    @EJB
     private final AgendamentoModel bean;
     private final ClienteModel clienteModel;
+    private final ProcedimentoModel procedimentoModel;
     private Cliente cliente;
     private final ArrayList<String> horariosEstabelecimento;
     private final ArrayList<Agendamento> horariosDisponiveis;
@@ -51,13 +56,38 @@ public class AgendamentoController implements Serializable {
     private Agendamento agendamentoSelecionado;
     private List<Agendamento> agendamentosSelecionados;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private String horarioStrSelecionado;
+    private Date dtSelecionada;
+    private ArrayList<Long> idProfissionais;
+    private Long idUsuario; 
+    private Long idCliente; 
+    private Long idProcedimento; 
+    private Long idProfissional; 
+    private String data;
+    private ArrayList<String> horarioDisponiveis;
 
     public AgendamentoController() {
         this.bean = new AgendamentoModel ();
         this.clienteModel = new ClienteModel();
+        this.procedimentoModel = new ProcedimentoModel();
         this.horariosEstabelecimento = new ArrayList<String>();
         this.horariosDisponiveis = new ArrayList<Agendamento>();
+        this.agendamentoSelecionado = new Agendamento();
+        this.horarioDisponiveis = new ArrayList<>();
+    }
+    
+    public ArrayList<String> getHorarioEstabelecimento(){
+        ArrayList<String> horarios = new ArrayList<>();
 
+        //Horários nos quais o estabelecimento faz agendamentos     
+        horarios.add("08:00");
+        horarios.add("10:00");
+        horarios.add("12:00");
+        horarios.add("14:00");
+        horarios.add("16:00");
+        horarios.add("18:00");
+        
+        return horarios;
     }
 
     public List<Agendamento> getHorariosIndisponiveis(String dataSelecionada, String idProf, String idProc, HttpSession session) {
@@ -69,7 +99,7 @@ public class AgendamentoController implements Serializable {
             Long idProcedimento = Long.valueOf(idProc);
             Long idProfissional = Long.valueOf(idProf);
 
-            //HorÃ¡rios nos quais o estabelecimento faz agendamentos            
+            //Horários nos quais o estabelecimento faz agendamentos   
             this.horariosEstabelecimento.add("08:00");
             this.horariosEstabelecimento.add("10:00");
             this.horariosEstabelecimento.add("12:00");
@@ -88,12 +118,12 @@ public class AgendamentoController implements Serializable {
                 //Recupera os agendamentos para o dia selecionado
                 agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProfissional, idProcedimento, dataSaida);
 
-                //Cria a lista de objetos que serÃ£o exibidos na tela
+                //Cria a lista de objetos que serão exibidos na tela
                 for (int a = 0; a < horariosEstabelecimento.size(); a++) {
                     this.horariosDisponiveis.add(agendamentoModel.criarAgendamento(dataSaida, agendamentoModel.criarHora(Integer.parseInt(this.horariosEstabelecimento.get(a).substring(0, 2)), 0, 0), idProcedimento, idProfissional, (Long) session.getAttribute("idUsuario")));
                 }
 
-                //Remove da lista de horÃ¡rios disponÃ­veis os horÃ¡rio que jÃ¡ estÃ£o ocupados
+                //Remove da lista de horários disponíveis os horário que já estão ocupados
                 if (agendamentosDia.size() > 0) {
 
                     for (Agendamento a : agendamentosDia) {
@@ -107,7 +137,7 @@ public class AgendamentoController implements Serializable {
                 }
 
             } catch (NumberFormatException e) {
-                System.err.println("ParÃ¢metros nÃ£o localizados: " + e.getMessage());
+                System.err.println("Parâmetros não localizados: " + e.getMessage());
             } catch (ParseException ex) {
                 Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -116,18 +146,85 @@ public class AgendamentoController implements Serializable {
         return this.horariosDisponiveis;
     }
 
-    public List<Agendamento> getAgendamentosUsuario(Long idUsuario, String data) {
+    public List<Agendamento> getAgendamentosUsuario(Long id, String dt) {
+        if(idUsuario==null && data==null){
+            this.idUsuario = id;
+            this.data = dt;
+        }
         try {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.getAgendamentosUsuario(idUsuario, dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("ParÃ¢metros nÃ£o localizados: " + e.getMessage());
+            System.err.println("Parâmetros não localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this.agendamentos;
     }
     
+    public ArrayList<String> listarHorarios(){
+        ArrayList<String> horarios = this.getHorarioEstabelecimento();
+
+        Long idProc = this.agendamentoSelecionado.getProcedimento().getId();
+        Long idProf = this.agendamentoSelecionado.getProfissional().getId();
+        Long idUsuario = this.agendamentoSelecionado.getUsuario().getId();
+
+        try {
+
+            //Recupera os agendamentos para o dia selecionado
+            agendamentosDia = this.bean.consultarHorariosIndisponiveis(idProf, idProc, this.dtSelecionada);
+
+            //Remove da lista de horários disponíveis os horário que já estão ocupados
+            if (agendamentosDia.size() > 0) {
+                for (Agendamento a : agendamentosDia) {
+                    String hora = getDuracaoFMT(a.getHora());
+                    for (int i = 0; i < horarios.size(); i++) {
+                        if (horarios.get(i).equals(hora)) {
+                            horarios.remove(i);
+                        }
+                    }
+                }
+            }
+            if(idUsuario != null){
+            //Recupera os agendamentos para o dia selecionado deste usuário
+            agendamentosDia = this.bean.getAgendamentosUsuario(idUsuario, this.dtSelecionada);
+
+            //Remove da lista de horários disponíveis os horário que já estão ocupados
+            if (agendamentosDia.size() > 0) {
+                for (Agendamento a : agendamentosDia) {
+                    String hora = getDuracaoFMT(a.getHora());
+                    for (int i = 0; i < horarios.size(); i++) {
+                        if (horarios.get(i).equals(hora)) {
+                            horarios.remove(i);
+                        }
+                    }
+                }
+            }
+            
+            }
+
+        } catch (NumberFormatException e) {
+            System.err.println("Parâmetros não localizados: " + e.getMessage());
+        }
+
+        return horarios;
+    }
+    
+    //Realiza a troca da data e hora de uma agendamento
+    public void reagendar(){
+        //Trocar data e hora
+        this.agendamentoSelecionado.setData(this.dtSelecionada);
+        this.data = getDataFMT(dtSelecionada);
+        Date hora = agendamentoSelecionado.getHora();
+        hora.setHours(Integer.parseInt(this.horarioStrSelecionado.split(":")[0]));
+        hora.setMinutes(Integer.parseInt(this.horarioStrSelecionado.split(":")[1]));
+        this.agendamentoSelecionado.setHora(hora);
+        //Atualizar agendamento
+        bean.atualizarAgendamento(agendamentoSelecionado);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Editado!", "Nova data e hora: "+getDataFMT(this.dtSelecionada)+" "+getDuracaoFMT(hora)));
+        
+        this.dtSelecionada = null;
+    }
     public List<String> getAgendamentosDoDia(Date data){
         
         List<String> mListaEmail = this.bean.getDatasAgendamentosDoDia(data);
@@ -140,7 +237,7 @@ public class AgendamentoController implements Serializable {
             Date dataObj = this.getDateByString(data);
             this.agendamentos = this.bean.consultarAgendamentosPorData(dataObj);
         } catch (NumberFormatException e) {
-            System.err.println("Parâmetros não localizados: " + e.getMessage());
+            System.err.println("ParÃ¢metros não localizados: " + e.getMessage());
         } catch (ParseException ex) {
             Logger.getLogger(AgendamentoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -151,7 +248,7 @@ public class AgendamentoController implements Serializable {
         try {
             cliente = this.clienteModel.consultarClientePorId(idUsuario);
         } catch (Exception e) {
-            System.err.println("Exceção ao consultar cliente por ID: "+e.getMessage());
+            System.err.println("ExceÃ§ão ao consultar cliente por ID: "+e.getMessage());
         } 
         return this.cliente;
     }
@@ -160,6 +257,12 @@ public class AgendamentoController implements Serializable {
         SimpleDateFormat fmt = new SimpleDateFormat("HH:mm");
         String duracaoSTR = fmt.format(duracao);
         return duracaoSTR;
+    }
+    
+    public String getDataFMT(Date data) {
+        SimpleDateFormat fmt = new SimpleDateFormat("dd/MM/yyyy");
+        String dataSTR = fmt.format(data);
+        return dataSTR;
     }
 
     public Date getDateByString(String data) throws ParseException {
@@ -201,18 +304,39 @@ public class AgendamentoController implements Serializable {
     }
 
     public void apagarAgendamento() {
-        this.bean.apagarAgendamento(this.agendamentoSelecionado);
-        this.agendamentos.remove(this.agendamentoSelecionado);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+        String agora = getDataFMT(Calendar.getInstance().getTime());
+        String dataSelecionada = getDataFMT(this.agendamentoSelecionado.getData());
+        if(agora.equals(dataSelecionada)){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode apagar!", "Agendamento na data atual não podem ser cancelados"));
+            PrimeFaces.current().ajax().update("form:msgs");
+        } else {
+            this.bean.apagarAgendamento(this.agendamentoSelecionado);
+            this.agendamentos.remove(this.agendamentoSelecionado);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamento Removido"));
+            PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+        }
     }
 
     public void apagarAgendamentos() {
-        this.bean.apagarAgendamentos(this.agendamentosSelecionados);
-        this.agendamentos.removeAll(this.agendamentosSelecionados);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamentos Removidos"));
-        PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
-        this.agendamentosSelecionados = null;
+        String agora = getDataFMT(Calendar.getInstance().getTime());
+        boolean apagar = true;
+        for(Agendamento agendamento: this.agendamentosSelecionados){
+            //Verifica se há algum agendamento na data atual
+            if(agora.equals( getDataFMT(agendamento.getData()) )){
+                apagar = false;
+            }
+        }
+        if(apagar){
+            this.bean.apagarAgendamentos(this.agendamentosSelecionados);
+            this.agendamentos.removeAll(this.agendamentosSelecionados);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agendamentos Removidos"));
+            PrimeFaces.current().ajax().update("form:msgs", "form:agendamentos", "btnApagarAgendamentos");
+            this.agendamentosSelecionados = null;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Não pode apagar!", "Há algum agendamento para data de hoje, e este não pode ser cancelado, desmarque e tente novamente"));
+            PrimeFaces.current().ajax().update("form:msgs");
+        }
+        
     }
 
     public boolean selecionouAgendamentos() {
@@ -226,7 +350,77 @@ public class AgendamentoController implements Serializable {
         }
         return "Excluir";
     }
+    
+    //Metodo que faz a pesquisa de clientes por nome
+    public List<Cliente> pesquisaClientes(String query){
+        String q = query.toLowerCase();
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        //if(q.length() > 2){
+            for(Cliente c: clienteModel.todosClientes()){
+                if(c.getCPF().contains(q) || c.getNome().toLowerCase().contains(q)){
+                    clientes.add(c);
+                }
+            }
+        //}
+        return clientes;
+    }
+    
+    
+    //Método chamado quando a variavel idCliente sofrer alteração do valor na interface
+    public void clienteChange(){
+        this.horarioDisponiveis = new ArrayList<>();
+        this.agendamentoSelecionado = new Agendamento();
+        this.cliente = clienteModel.consultarClientePorId(this.idCliente);
+        this.agendamentoSelecionado.setUsuario(this.cliente);
+    }
+    
+    //Método chamado quando a variavel idProcedimento sofrer alteração do valor na interface
+    public void procedimentoChange(){
+        this.agendamentoSelecionado.setProcedimento(procedimentoModel.consultarProcediemnto(idProcedimento));
+        this.agendamentoSelecionado.setProfissional(null);
+        this.agendamentoSelecionado.setData(null);
+        this.agendamentoSelecionado.setHora(null);
+        this.horarioDisponiveis = new ArrayList<>();
+        this.idProfissional = null;
+        this.idProfissionais = new ArrayList<>();
+        //salva na lista de id, os ids dos profissionais do procedimento selecionado
+        for(Profissional profissional: this.agendamentoSelecionado.getProcedimento().getProfissionais()){
+            this.idProfissionais.add(profissional.getId());
+        }
+    }
+    
+    //Método chamado quando a variavel idProfissional sofrer alteração do valor na interface
+    public void profissionalChange(HttpSession sessao){
+        sessao.setAttribute("idProfissional", this.idProfissional);
+        this.agendamentoSelecionado.setData(null);
+        this.agendamentoSelecionado.setHora(null);
+        this.horarioDisponiveis = new ArrayList<>();
+        for(Profissional profissional: this.agendamentoSelecionado.getProcedimento().getProfissionais()){
+            if(profissional.getId().equals(this.idProfissional)){
+                 this.agendamentoSelecionado.setProfissional(profissional);
+                 break;
+            }
+        }
+    }
+    //Método chamado quando a data do agendamento sofrer alteração do valor na interface
+    public void dataChange(){
+        this.agendamentoSelecionado.setHora(null);
+        this.dtSelecionada = this.agendamentoSelecionado.getData();
+        this.horarioDisponiveis = this.listarHorarios();
+        for(String h: this.horarioDisponiveis){
+            System.out.print(h+" |");
+        }
+                
+    }
 
+    public void criarAgendamento(HttpSession sessao) throws IOException{
+        String[] hora = this.horarioStrSelecionado.split(":");
+        this.agendamentoSelecionado.setHora(bean.criarHora(Integer.parseInt(hora[0]), Integer.parseInt(hora[1]), 0));
+        this.bean.persistirAgendamento(agendamentoSelecionado);
+        String URLEstabelecimento = sessao.getServletContext().getContextPath()+"/agendamentos-estabelecimento.xhtml?dataSelecionada="+getDataFMT(agendamentoSelecionado.getData());
+        FacesContext.getCurrentInstance().getExternalContext().redirect(URLEstabelecimento);
+        
+    }
     /**
      * @return the agendamentoSelecionado
      */
@@ -255,13 +449,73 @@ public class AgendamentoController implements Serializable {
         this.agendamentosSelecionados = agendamentosSelecionados;
     }
 
+    public Date getDtSelecionada() {
+        return dtSelecionada;
+    }
+
+    public void setDtSelecionada(Date dataSelecionada) {
+        this.dtSelecionada = dataSelecionada;
+    }
+
+    public String getHorarioStrSelecionado() {
+        return horarioStrSelecionado;
+    }
+
+    public void setHorarioStrSelecionado(String horarioStrSelecionado) {
+        this.horarioStrSelecionado = horarioStrSelecionado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public Long getIdProcedimento() {
+        return idProcedimento;
+    }
+
+    public void setIdProcedimento(Long idProcedimento) {
+        this.idProcedimento = idProcedimento;
+    }
+
+    public Long getIdProfissional() {
+        return idProfissional;
+    }
+
+    public void setIdProfissional(Long idProfissional) {
+        this.idProfissional = idProfissional;
+    }
+
+    public ArrayList<Long> getIdProfissionais() {
+        return idProfissionais;
+    }
+
+    public void setIdProfissionais(ArrayList<Long> idProfissionais) {
+        this.idProfissionais = idProfissionais;
+    }
+
+    public ArrayList<String> getHorarioDisponiveis() {
+        return horarioDisponiveis;
+    }
+
+    public void setHorarioDisponiveis(ArrayList<String> horarioDisponiveis) {
+        this.horarioDisponiveis = horarioDisponiveis;
+    }
+    
     public List<Agendamento> getAgendamentos(String data) {
         
         List<Agendamento> agendamentos = new ArrayList<Agendamento>();
-        
-        
-        
         return agendamentos;
     }
-
 }

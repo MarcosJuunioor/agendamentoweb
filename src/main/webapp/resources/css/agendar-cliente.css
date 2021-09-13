@@ -1,0 +1,27 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04/09/2021, 19:49:47
+    Author     : Beatriz Silva
+*/
+.input-search {
+    margin-left: 15px;
+}
+.ui-autocomplete-input{
+    width: 400px; 
+}
+
+.ui-inputtext{
+    width: inherit;
+}
+
+.lista .ui-selectlistbox-list{
+    max-height: 155px;
+}
+
+.btn-row {
+    margin: 15px 0 !important;
+}

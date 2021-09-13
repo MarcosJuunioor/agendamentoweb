@@ -9,16 +9,25 @@ import descorp.agendamentoweb.entities.Cliente;
 import descorp.agendamentoweb.entities.Usuario;
 import static descorp.agendamentoweb.models.GenericModel.em;
 import java.io.Serializable;
+import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 
 /**
  *
  * @author marco
  */
+@Stateless
 public class ClienteModel extends GenericModel implements Serializable {
 
     public ClienteModel() {
         super();
+    }
+    
+    public List<Cliente> todosClientes(){
+        checkEM();
+        List<Cliente> clientes = em.createNamedQuery(Cliente.CLIENTES_TODOS).getResultList();
+        return clientes;
     }
 
     public Cliente consultarClientePorId(Long idUsuario) {

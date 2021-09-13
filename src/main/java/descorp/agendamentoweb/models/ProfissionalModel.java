@@ -6,6 +6,7 @@ import descorp.agendamentoweb.entities.Profissional;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -31,6 +32,16 @@ public class ProfissionalModel extends GenericModel implements Serializable{
     public List<Profissional> todosProfissionais(){
         checkEM();
         List<Profissional> profissionais = em.createNamedQuery(Profissional.PROFISSIONAL_TODOS).getResultList();
+        
+        return profissionais;
+    }
+    
+    public List<Profissional> ProfissionaisLivres(Agendamento agendamento){
+        checkEM();
+        TypedQuery<Profissional> query = em.createNamedQuery(Profissional.PROFISSIONAL_LIVRES, Profissional.class);
+        query.setParameter("data", agendamento.getData());
+        query.setParameter("hora", agendamento.getHora());
+        List<Profissional> profissionais = query.getResultList();
         
         return profissionais;
     }
