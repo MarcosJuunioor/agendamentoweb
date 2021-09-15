@@ -103,7 +103,7 @@ public class Agendamento implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "profissional_id", referencedColumnName = "id")
     private Profissional profissional;
-    @Column(columnDefinition = "varchar(1) default 'N'")
+    @Column(name = "notificado", columnDefinition = "varchar(1) default 'N'")
     private String notificado;
     
     public String getNotificado() {
