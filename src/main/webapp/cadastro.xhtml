@@ -6,36 +6,67 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <h:outputStylesheet library="css" name="geral.css"/>
+        <h:outputStylesheet library="css" name="login.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"></link>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>            
     </h:head>
-    <h:body>    
+    <h:body>
+        <div class="container content">
+        <div class=" d-flex align-items-center" style="height: 100vh;">
         <h:form id="cadastroForm">
-            <p:growl id="msg" showDetail="true" life="4000" />
-            <p:panel id="cadastroPnl" header="Cadastro"
-                     style="width: 350px; margin: 0 auto;">
-                <h:panelGrid id="cadastroPanel" columns="2" cellpadding="5">
-                    <h:outputText value="Email" />
-                    <p:inputText id="email" binding="#{userEmail}"/>
-                    <p:spacer /><p:spacer />	
-                    <h:outputText value="Senha" />
-                    <p:password id="password" binding="#{userPassword}"/>
-                    <p:spacer /><p:spacer />	
-                    <h:outputText value="Nome Completo" />
-                    <p:inputText id="name" binding="#{userName}"/>
-                    <p:spacer /><p:spacer />	
-                    <h:outputText value="CPF" />
-                    <p:inputText id="CPF" binding="#{userCPF}"/>
-                    <p:spacer /><p:spacer />	
-                    <h:outputText value="Telefone" />
-                    <p:inputText id="telefone" binding="#{userPhone}"/>
-                </h:panelGrid>                
-                <h:panelGrid columns="2" cellpadding="10" width="100%">
-                    <p:commandButton value="Cadastrar" action="#{loginController.registrar(request.getSession(), userEmail.value, userPassword.value, userName.value, userCPF.value, userPhone.value)}" style="float: left"/>                    
-                    <p:commandButton value="Voltar" onclick="window.location.href ='/agendamentoweb/login.xhtml'" style="float: right"/>                    
-                </h:panelGrid>
-            </p:panel>                             
+            <p:growl id="msgs" showDetail="true"/>
+            <div class="row">
+                <span id="aplication-title" >AgendamentoWeb</span>
+            </div>
+            <div class="row">
+                <h5>Cadastrar</h5>
+            </div>
+            <div class="row">
+                <div class="d-flex ">
+                    <div class="col-5"><span class='simple-text'><h:outputText value="Email:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" /></span></div>
+                    <div class="col"><p:inputText required="true" id="email" binding="#{userEmail}"/></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="d-flex ">
+                    <div class="col-5"><span class='simple-text'><h:outputText value="Senha:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" /></span></div>
+                    <div class="col"><p:password id="password" binding="#{userPassword}"/></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="d-flex">
+                    <div class="col-5"><span class='simple-text'><h:outputText value="Nome Completo:" /></span></div>
+                    <div class="col"><p:inputText required="true" id="name" binding="#{userName}"/></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="d-flex">
+                    <div class="col-5"><span class='simple-text'><h:outputText value="CPF:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" /></span></div>
+                    <div class="col"><p:inputText required="true" id="CPF" binding="#{userCPF}"/></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="d-flex">
+                    <div class="col-5"><span class='simple-text'><h:outputText value="Telefone:&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" /></span></div>
+                    <div class="col"><p:inputText required="true" id="telefone" binding="#{userPhone}"/></div>
+                </div>
+            </div>
+            <div class="row">
+                <p:commandButton value="Cadastrar" 
+                                 action="#{loginController.registrar(request.getSession(), userEmail.value, userPassword.value, userName.value, userCPF.value, userPhone.value)}" 
+                                 style="float: left" id="btn-cad"/>    
+            </div>
+            <div class="row">
+                <div class="d-flex justify-content-center">
+                    <span>
+                        Já possui uma conta? 
+                        <p:link value="Entrar" outcome="login.xhtml"/>
+                    </span>
+                </div>
+            </div>                            
         </h:form>
+        </div>    
+        </div>
     </h:body>
 </html>

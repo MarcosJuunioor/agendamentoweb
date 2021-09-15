@@ -11,6 +11,7 @@ import descorp.agendamentoweb.models.ClienteModel;
 import descorp.agendamentoweb.models.UsuarioModel;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -19,6 +20,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import org.primefaces.PrimeFaces;
 
 /**
@@ -60,24 +63,36 @@ public class LoginController implements Serializable {
                 session.setAttribute("tipoUsuario", "estabelecimento");
                 FacesContext.getCurrentInstance().getExternalContext().redirect(URLEstabelecimento);
             }
-           
-            
+            PrimeFaces.current().ajax().update("loginForm:msg");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
                     "Falha",
                     "Email ou senha incorretos!"));
+            PrimeFaces.current().ajax().update("loginForm:msg");
         }
     }
 
-    public void registrar(HttpSession session, String email, String senha, String nome, String cpf, String telefone) throws IOException {
+    public void registrar(HttpSession session, String email, String senha, String nome, String cpf, String telefone){
         Cliente cliente = new Cliente();
         cliente.setEmail(email);
         cliente.setSenha(senha);
         cliente.setNome(nome);
         cliente.setCPF(cpf);
         cliente.setTelefone(telefone);
-        clienteBean.registrarCliente(cliente);
-        FacesContext.getCurrentInstance().getExternalContext().redirect(session.getServletContext().getContextPath()+"/login.xhtml");
+        try {
+            clienteBean.registrarCliente(cliente);
+            FacesContext.getCurrentInstance().getExternalContext().redirect(session.getServletContext().getContextPath()+"/login.xhtml");
+        } catch (ConstraintViolationException ex) {
+            Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
+            constraintViolations.forEach(violation -> {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Erro",
+                    violation.getMessage()));
+                PrimeFaces.current().ajax().update("cadastroForm:msgs");
+            });
+        } catch (Exception ex){
+                System.out.println("Erro: "+ex.getMessage());
+        }
     }
 
     public Usuario getUsuario(String e, String p) {
