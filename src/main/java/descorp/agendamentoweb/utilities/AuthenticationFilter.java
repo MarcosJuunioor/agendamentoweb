@@ -34,7 +34,8 @@ public class AuthenticationFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
 
         String uri = req.getRequestURI();
-        String resource = uri.split("/")[2];
+        String[] path = uri.split("/");
+        String resource = path.length>2?path[2]:"";
         HttpSession session = req.getSession();
 
         this.context.log("URI:" + uri);
