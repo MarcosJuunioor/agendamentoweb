@@ -32,6 +32,7 @@ public class ProfissionalController implements Serializable{
     
     private ProfissionalModel bean;
     private List<Profissional> listaProfissional;
+    private List<DiasSemana> listaDiasSemana;
     private List<String> diasSelecionados;
     private Profissional profissionalSelecionado;
     private Long profissionalRealocado;
@@ -310,4 +311,16 @@ public class ProfissionalController implements Serializable{
     public void setIdProfissionalRealocado(Long idProfissionalRealocado) {
         this.idProfissionalRealocado = idProfissionalRealocado;
     }
+
+    public List<DiasSemana> getListaDiasSemana() {
+        DiasSemanaModel dsBean = new DiasSemanaModel();
+        this.listaDiasSemana = dsBean.todosDiasSemana();
+        return listaDiasSemana;
+    }
+
+    public void setListaDiasSemana(List<DiasSemana> listaDiasSemana) {
+        this.listaDiasSemana = listaDiasSemana;
+    }
+    
+    
 }

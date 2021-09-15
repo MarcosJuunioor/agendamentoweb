@@ -95,13 +95,7 @@
                             <p:inputText id="especializacao" value="#{profissionalController.profissionalSelecionado.especializacao}" required="true"/>
                             <p:outputLabel>Dias da semana</p:outputLabel>
                             <p:selectManyCheckbox value="#{profissionalController.diasSelecionados}" layout="responsive" columns="3">
-                                <f:selectItem itemLabel="Segunda" itemValue="Segunda"/>
-                                <f:selectItem itemLabel="Terça" itemValue="Terça"/>
-                                <f:selectItem itemLabel="Quarta" itemValue="Quarta"/>
-                                <f:selectItem itemLabel="Quinta" itemValue="Quinta"/>
-                                <f:selectItem itemLabel="Sexta" itemValue="Sexta"/>
-                                <f:selectItem itemLabel="Sábado" itemValue="Sábado"/>
-                                <f:selectItem itemLabel="Domingo" itemValue="Domingo"/>
+                                <f:selectItems value="#{profissionalController.listaDiasSemana}" var="diaSemana" itemLabel="#{diaSemana.nome}" itemValue="#{diaSemana.nome}"/>
                             </p:selectManyCheckbox >
                             
                             <div class="row">
